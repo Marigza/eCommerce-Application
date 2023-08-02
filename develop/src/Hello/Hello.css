@@ -1,0 +1,43 @@
+.container {
+  position: relative;
+  max-width: 1280px;
+  margin: 100px auto;
+}
+
+.Hello {
+  position: relative;
+  color: white;
+  font-size: 42px;
+  width: 420px;
+  height: 50px;
+  transform: translate(0px, 0px);
+  animation: circle 14s linear infinite;
+}
+
+@keyframes circle {
+
+  0% {
+    transform: translate(0px, 0px);
+    color: white;
+  }
+
+  25% {
+    transform: translate(800px, 400px);
+    color: red;
+  }
+
+  50% {
+    transform: translate(800px, 0px);
+    color: green;
+  }
+
+  75% {
+    transform: translate(0px, 400px);
+    color: blue;
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+    color: white;
+  }
+}
