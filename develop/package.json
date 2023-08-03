@@ -26,8 +26,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
-    "lint:fix": "npm run lint -- --fix"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --fix",
+    "prepare": "husky install",
+    "prettier": "prettier . --write"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 100
   },
   "browserslist": {
     "production": [
@@ -45,6 +50,11 @@
     "eslint-config-prettier": "^8.9.0",
     "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-prettier": "^5.0.0",
-    "prettier": "^3.0.0"
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "3.0.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

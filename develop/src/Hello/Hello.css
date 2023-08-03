@@ -15,7 +15,6 @@
 }
 
 @keyframes circle {
-
   0% {
     transform: translate(0px, 0px);
     color: white;
