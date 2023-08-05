@@ -23,7 +23,7 @@ To get started with the project locally on your machine, follow these step-by-st
 
 2.  Fork this repository: https://github.com/Marigza/eCommerce-Application
 
-3.  Clone your newly created repo to your local machine using `git clone https://github.com/Marigza/eCommerce-Application.git`.
+3.  Clone your newly created repo to your local machine using `git clone https://github.com/<%your_github_username%>/eCommerce-Application.git`.
     
 4.  Navigate to the project directory using `cd develop`.
     
