@@ -19,7 +19,7 @@
 
 To get started with the project locally on your machine, follow these step-by-step setup instructions:
 
-1.  Install Node.js
+1.  Install [Node.js](https://nodejs.org/en)
 
 2.  Fork this repository: https://github.com/Marigza/eCommerce-Application
 
