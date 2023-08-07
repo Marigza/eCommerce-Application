@@ -1,12 +1,7 @@
 import "./App.css";
-import Hello from "../Hello/Hello";
 
 function App(): JSX.Element {
-  return (
-    <body>
-      <Hello />
-    </body>
-  );
+  return <div>HELLO</div>;
 }
 
 export default App;
