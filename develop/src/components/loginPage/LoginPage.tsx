@@ -1,6 +1,25 @@
 import "./loginPage.scss";
 
 function LoginPage(): JSX.Element {
+  function passwordControl(): void {
+    const password = document.querySelector(".login-page__password") as HTMLDivElement;
+    if (
+      password.firstChild &&
+      password.firstChild instanceof HTMLInputElement &&
+      password.firstChild.getAttribute("type") === "password"
+    ) {
+      password.firstChild.setAttribute("type", "text");
+      password.classList.add("view");
+    } else if (
+      password.firstChild &&
+      password.firstChild instanceof HTMLInputElement &&
+      password.firstChild.getAttribute("type") === "text"
+    ) {
+      password.firstChild.setAttribute("type", "password");
+      password.classList.remove("view");
+    }
+  }
+
   return (
     <div className="login-page">
       <div className="login-page__container">
@@ -9,12 +28,15 @@ function LoginPage(): JSX.Element {
           <label>Login</label>
           <input type="email" name="auth_email" placeholder="Enter your email" required></input>
           <label>Password</label>
-          <input
-            type="password"
-            name="auth_pass"
-            placeholder="Enter your password"
-            required
-          ></input>
+          <div className="login-page__password">
+            <input
+              type="password"
+              name="auth_pass"
+              placeholder="Enter your password"
+              required
+            ></input>
+            <div onClick={passwordControl}></div>
+          </div>
           <button
             className="login-page__button login-page__button--log-in"
             type="submit"
