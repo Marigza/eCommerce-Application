@@ -1,12 +1,8 @@
+import "../assets/styles/normalize.css";
 import "./App.scss";
-import LoginPage from "../components/loginPage/LoginPage";
 
 function App(): JSX.Element {
-  return (
-    <div>
-      <LoginPage />
-    </div>
-  );
+  return <div>HELLO</div>;
 }
 
 export default App;

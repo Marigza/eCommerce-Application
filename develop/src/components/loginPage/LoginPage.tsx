@@ -1,6 +1,28 @@
 import "./loginPage.scss";
+import { userLoginValidate, userPasswordValidate } from "../../validation/validation";
 
 function LoginPage(): JSX.Element {
+  function validation(): void {
+    const login = (document.querySelector(".login-page__form") as HTMLFormElement).querySelector(
+      "input",
+    ) as HTMLInputElement;
+    const password = (
+      document.querySelector(".login-page__password") as HTMLDivElement
+    ).querySelector("input") as HTMLInputElement;
+    if (userLoginValidate(login.value)) {
+      alert("Логин валиден...");
+      if (userPasswordValidate(password.value)) {
+        alert("Пароль валиден...");
+        alert("Валидация прошла успешно !");
+        return;
+      }
+      alert("Пароль не валидный !");
+      return;
+    }
+    alert("Логин не валидный !");
+    return;
+  }
+
   function passwordControl(): void {
     const password = document.querySelector(".login-page__password") as HTMLDivElement;
     if (
@@ -24,7 +46,13 @@ function LoginPage(): JSX.Element {
     <div className="login-page">
       <div className="login-page__container">
         <p className="login-page__title">Authorization</p>
-        <form className="login-page__form" action="#" method="post">
+        <form
+          onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
+          className="login-page__form"
+          action="#"
+          method="post"
+          noValidate
+        >
           <label>Login</label>
           <input type="email" name="auth_email" placeholder="Enter your email" required></input>
           <label>Password</label>
@@ -32,12 +60,12 @@ function LoginPage(): JSX.Element {
             <input
               type="password"
               name="auth_pass"
-              placeholder="Enter your password"
-              required
+              placeholder="8 to 16 digit, also use special digit"
             ></input>
             <div onClick={passwordControl}></div>
           </div>
           <button
+            onClick={validation}
             className="login-page__button login-page__button--log-in"
             type="submit"
             name="form_auth_submit"
@@ -45,13 +73,8 @@ function LoginPage(): JSX.Element {
             Log in
           </button>
         </form>
-        <button
-          className="login-page__button login-page__button--sign-up"
-          type="submit"
-          name="form_auth_submit"
-        >
-          Sign up
-        </button>
+        <button className="login-page__button login-page__button--sign-up">Sign up</button>
+        <button className="login-page__button login-page__button--back">Back to main page</button>
       </div>
     </div>
   );
