@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: gainsboro;
+  padding: 10px 0;
+  justify-content: space-between;
+}
+
+.navigation {
+  display: flex;
+  gap: 10px;
+}
+
+.login__block {
+  display: flex;
+  gap: 10px;
+}
