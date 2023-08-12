@@ -1,3 +1,4 @@
+import "../assets/styles/normalize.css";
 import "./App.scss";
 
 function App(): JSX.Element {
