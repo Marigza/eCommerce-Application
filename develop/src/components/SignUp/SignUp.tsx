@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./RegistrationPage.scss";
+import "./SignUp.scss";
 
 interface PasswordVisibility {
   passw: boolean;
 }
 
-const RegistrationPage: React.FC = () => {
+const SignUp: React.FC = () => {
   const [registrationStep, setRegistrationStep] = useState(1);
   const [isFormValid, setIsFormValid] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState<PasswordVisibility>({
@@ -223,4 +223,4 @@ const RegistrationPage: React.FC = () => {
   );
 };
 
-export default RegistrationPage;
+export default SignUp;
