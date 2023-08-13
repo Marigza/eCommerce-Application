@@ -18,7 +18,7 @@
   font-size: 3vh;
 
   &-logo {
-    background-image: url(../../assets/image/png/full_logo.png);
+    background-image: url(../../assets/images/png/full_logo.png);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -136,7 +136,7 @@
       opacity: 1;
     }
     div > span{
-      background-image: url(../../assets/image/svg/password_invisible.svg);
+      background-image: url(../../assets/images/loginPage/password_invisible.svg);
       height: 4vh;
       width: 4vw;
       min-width: 43px;
@@ -150,7 +150,7 @@
       order: 5;
     }
     span.visible{
-      background-image: url(../../assets/image/svg/password_visible.svg);
+      background-image: url(../../assets/images/loginPage/password_visible.svg);
     }
     div{
       display: flex;

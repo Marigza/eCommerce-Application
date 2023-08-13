@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./RegistationPage.scss";
+import "./RegistrationPage.scss";
 
 interface PasswordVisibility {
   passw: boolean;
