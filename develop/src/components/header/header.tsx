@@ -1,6 +1,6 @@
-import "./header.scss";
+import "./Header.scss";
 
-function HeaderView(): JSX.Element {
+function Header(): JSX.Element {
   return (
     <header className="header">
       <div className="logo">logo</div>
@@ -19,4 +19,4 @@ function HeaderView(): JSX.Element {
   );
 }
 
-export default HeaderView;
+export default Header;

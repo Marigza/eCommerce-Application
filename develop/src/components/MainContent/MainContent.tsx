@@ -1,5 +1,5 @@
-import "./mainContent.scss";
-import Product from "./product";
+import "./MainContent.scss";
+import { Product } from "../Product";
 
 function MainContent(): JSX.Element {
   return (

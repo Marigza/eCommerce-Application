@@ -1,4 +1,4 @@
-import "./loginPage.scss";
+import "./Login.scss";
 import { userLoginValidate, userPasswordValidate } from "../../validation/validation";
 
 function LoginPage(): JSX.Element {

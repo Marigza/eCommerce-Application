@@ -1,4 +1,4 @@
-import "./mainContent.scss";
+import "./Product.scss";
 
 function Product(): JSX.Element {
   return (
