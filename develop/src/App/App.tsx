@@ -1,8 +1,13 @@
-import "../assets/styles/normalize.css";
-import "./App.scss";
+import '../assets/styles/normalize.css';
+import './App.scss';
+import { Login } from '../pages/Login';
 
-function App(): JSX.Element {
-  return <div>HELLO</div>;
-}
+const App: React.FC = () => {
+  return (
+    <div>
+      <Login />
+    </div>
+  );
+};
 
 export default App;
