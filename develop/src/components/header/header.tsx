@@ -1,6 +1,6 @@
 import "./Header.scss";
 
-function Header(): JSX.Element {
+const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="logo">logo</div>
@@ -17,6 +17,6 @@ function Header(): JSX.Element {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

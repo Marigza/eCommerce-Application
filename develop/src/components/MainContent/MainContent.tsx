@@ -1,7 +1,7 @@
 import "./MainContent.scss";
 import { Product } from "../Product";
 
-function MainContent(): JSX.Element {
+const MainContent: React.FC = () => {
   return (
     <main className="mainContent">
       <h1>Welcome to JustStore!</h1>
@@ -15,6 +15,6 @@ function MainContent(): JSX.Element {
       </div>
     </main>
   );
-}
+};
 
 export default MainContent;

@@ -1,6 +1,6 @@
 import "./Product.scss";
 
-function Product(): JSX.Element {
+const Product: React.FC = () => {
   return (
     <div className="product">
       <h3>Item</h3>
@@ -9,6 +9,6 @@ function Product(): JSX.Element {
       <button>more info...</button>
     </div>
   );
-}
+};
 
 export default Product;
