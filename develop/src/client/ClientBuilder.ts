@@ -17,7 +17,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
     clientSecret: process.env.REACT_APP_SECRET || '',
   },
   scopes: [
-    'view_products:just-develop23 manage_my_quotes:just-develop23 manage_my_payments:just-develop23 view_published_products:just-develop23 view_categories:just-develop23 create_anonymous_token:just-develop23 manage_my_business_units:just-develop23 manage_my_shopping_lists:just-develop23 manage_my_quote_requests:just-develop23 manage_my_profile:just-develop23 manage_my_orders:just-develop23',
+    'manage_customers:just-develop23 view_products:just-develop23 manage_my_quotes:just-develop23 manage_my_payments:just-develop23 view_published_products:just-develop23 view_categories:just-develop23 create_anonymous_token:just-develop23 manage_my_business_units:just-develop23 manage_my_shopping_lists:just-develop23 manage_my_quote_requests:just-develop23 manage_my_profile:just-develop23 manage_my_orders:just-develop23',
   ],
   fetch,
 };

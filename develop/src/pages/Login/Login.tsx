@@ -2,6 +2,7 @@ import { ChangeEventHandler, FC, useState } from 'react';
 
 import './Login.scss';
 import { createCustomer } from '../../client';
+import getToken from '../../client_Api';
 import { userLoginValidate, userPasswordValidate } from '../../validation/validation';
 
 const Login: FC = () => {
@@ -48,7 +49,8 @@ const Login: FC = () => {
       return;
     }
     // вот здесь вызывается функция //
-    const customer = { email: 'getting-started@example.com', password: 'Qerty123#' };
+    // getToken();
+    const customer = { email: '', password: '' };
     createCustomer(customer); // userData
 
     return;

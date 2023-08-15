@@ -1,4 +1,4 @@
-import "./Product.scss";
+import './Product.scss';
 
 const Product: React.FC = () => {
   return (

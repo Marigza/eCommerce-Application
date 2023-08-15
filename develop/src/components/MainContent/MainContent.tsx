@@ -1,5 +1,5 @@
-import "./MainContent.scss";
-import { Product } from "../Product";
+import './MainContent.scss';
+import { Product } from '../Product';
 
 const MainContent: React.FC = () => {
   return (

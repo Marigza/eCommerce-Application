@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "exo-2";
-  src: url("../../assets/fonts/exo-2.ttf");
+  font-family: 'exo-2';
+  src: url('../../assets/fonts/exo-2.ttf');
 }
 
 @font-face {
-  font-family: "inter";
-  src: url("../../assets/fonts/inter.ttf");
+  font-family: 'inter';
+  src: url('../../assets/fonts/inter.ttf');
 }
 
 .login-page {
@@ -18,7 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "inter";
+  font-family: 'inter';
 
   &__container {
     max-width: 1280px;
@@ -33,7 +33,7 @@
     display: block;
     text-align: center;
     padding: 10px;
-    font-family: "exo-2";
+    font-family: 'exo-2';
     font-size: 32px;
     font-weight: 800;
     background: #f5f5dc;
@@ -73,7 +73,7 @@
   }
 
   &__form input::placeholder {
-    font-family: "exo-2";
+    font-family: 'exo-2';
     font-size: 12px;
     color: #b2b2b2;
   }
@@ -104,7 +104,7 @@
   }
 
   &__button {
-    font-family: "exo-2";
+    font-family: 'exo-2';
     font-size: 14px;
     font-weight: 600;
     color: #545454;
