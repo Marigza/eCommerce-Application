@@ -1,4 +1,4 @@
-import "./App.module.scss";
+import "./App.css";
 
 function App(): JSX.Element {
   return <div>HELLO</div>;
