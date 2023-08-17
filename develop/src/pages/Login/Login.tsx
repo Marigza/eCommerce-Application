@@ -1,17 +1,29 @@
+import { ChangeEventHandler, FC, useState } from "react";
+
 import "./Login.scss";
 import { userLoginValidate, userPasswordValidate } from "../../validation/validation";
 
-function LoginPage(): JSX.Element {
-  function validation(): void {
-    const login = (document.querySelector(".login-page__form") as HTMLFormElement).querySelector(
-      "input",
-    ) as HTMLInputElement;
-    const password = (
-      document.querySelector(".login-page__password") as HTMLDivElement
-    ).querySelector("input") as HTMLInputElement;
-    if (userLoginValidate(login.value)) {
-      alert("Логин валиден...");
-      if (userPasswordValidate(password.value)) {
+const Login: FC = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const userDataChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setUserData((previousData) => ({
+      ...previousData,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const validation = () => {
+    const { email, password } = userData;
+    console.log(userLoginValidate(email));
+
+    if (userLoginValidate(email)) {
+      if (userPasswordValidate(password)) {
         alert("Пароль валиден...");
         alert("Валидация прошла успешно !");
         return;
@@ -21,26 +33,11 @@ function LoginPage(): JSX.Element {
     }
     alert("Логин не валидный !");
     return;
-  }
+  };
 
-  function passwordControl(): void {
-    const password = document.querySelector(".login-page__password") as HTMLDivElement;
-    if (
-      password.firstChild &&
-      password.firstChild instanceof HTMLInputElement &&
-      password.firstChild.getAttribute("type") === "password"
-    ) {
-      password.firstChild.setAttribute("type", "text");
-      password.classList.add("view");
-    } else if (
-      password.firstChild &&
-      password.firstChild instanceof HTMLInputElement &&
-      password.firstChild.getAttribute("type") === "text"
-    ) {
-      password.firstChild.setAttribute("type", "password");
-      password.classList.remove("view");
-    }
-  }
+  const passwordControl = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <div className="login-page">
@@ -54,15 +51,31 @@ function LoginPage(): JSX.Element {
           noValidate
         >
           <label>Login</label>
-          <input type="email" name="auth_email" placeholder="Enter your email" required></input>
+          <div className="login-page__login">
+            <div className="login-page__login--hint"></div>
+            <input
+              value={userData.email}
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+              onChange={userDataChangeHandler}
+            ></input>
+          </div>
           <label>Password</label>
           <div className="login-page__password">
             <input
-              type="password"
-              name="auth_pass"
+              value={userData.password}
+              type={showPassword ? "text" : "password"}
+              name="password"
               placeholder="8 to 16 digit, also use special digit"
+              onChange={userDataChangeHandler}
             ></input>
-            <div onClick={passwordControl}></div>
+            <div
+              className={`login-page__password--secure ${showPassword ? "view" : ""}`}
+              onClick={passwordControl}
+            ></div>
+            <div className="login-page__password--hint"></div>
           </div>
           <button
             onClick={validation}
@@ -78,6 +91,6 @@ function LoginPage(): JSX.Element {
       </div>
     </div>
   );
-}
+};
 
-export default LoginPage;
+export default Login;
