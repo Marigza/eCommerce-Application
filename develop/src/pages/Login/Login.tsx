@@ -1,9 +1,32 @@
 import { ChangeEventHandler, FC, useState } from "react";
 
 import "./Login.scss";
+import { singUpCustom } from "../../authentication/client_Api";
 import { userLoginValidate, userPasswordValidate } from "../../validation/validation";
 
 const Login: FC = () => {
+  const testBody = {
+    email: "puytsaioioma@mail.ru",
+    password: "#Qwc50puhgfdy8234$",
+    firstName: "Mikhail",
+    lastName: "Hancharuk",
+    dateOfBirth: "1985-01-27",
+  };
+  // addresses: [
+  //   {
+  //     city: "Grodno",
+  //     country: "Bialorus",
+  //     postalCode: "230017",
+  //     streetName: "Oginskogo",
+  //   },
+  //   {
+  //     city: "Grodno",
+  //     country: "Bialorus",
+  //     postalCode: "230023",
+  //     streetName: "Kupaly",
+  //   },
+  // ],
+
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -20,19 +43,18 @@ const Login: FC = () => {
 
   const validation = () => {
     const { email, password } = userData;
-    console.log(userLoginValidate(email));
-
-    if (userLoginValidate(email)) {
-      if (userPasswordValidate(password)) {
-        alert("Пароль валиден...");
-        alert("Валидация прошла успешно !");
-        return;
-      }
-      alert("Пароль не валидный !");
-      return;
-    }
-    alert("Логин не валидный !");
-    return;
+    singUpCustom(JSON.stringify(testBody)).then((data) => console.log(data));
+    // if (userLoginValidate(email)) {
+    // if (userPasswordValidate(password)) {
+    // alert("Пароль валиден...");
+    // alert("Валидация прошла успешно !");
+    // return;
+    // }
+    // alert("Пароль не валидный !");
+    // return;
+    // }
+    // alert("Логин не валидный !");
+    // return;
   };
 
   const passwordControl = () => {
