@@ -1,32 +1,11 @@
 import { ChangeEventHandler, FC, useState } from "react";
 
 import "./Login.scss";
-import { singUpCustom } from "../../authentication/client_Api";
+import { singUpCustomer, getCustomer } from "../../authentication/client_Api";
+import { IBodyOfSingUpCustomer } from "../../authentication/client_Api/types";
 import { userLoginValidate, userPasswordValidate } from "../../validation/validation";
 
 const Login: FC = () => {
-  const testBody = {
-    email: "puytsaioioma@mail.ru",
-    password: "#Qwc50puhgfdy8234$",
-    firstName: "Mikhail",
-    lastName: "Hancharuk",
-    dateOfBirth: "1985-01-27",
-  };
-  // addresses: [
-  //   {
-  //     city: "Grodno",
-  //     country: "Bialorus",
-  //     postalCode: "230017",
-  //     streetName: "Oginskogo",
-  //   },
-  //   {
-  //     city: "Grodno",
-  //     country: "Bialorus",
-  //     postalCode: "230023",
-  //     streetName: "Kupaly",
-  //   },
-  // ],
-
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -43,18 +22,44 @@ const Login: FC = () => {
 
   const validation = () => {
     const { email, password } = userData;
-    singUpCustom(JSON.stringify(testBody)).then((data) => console.log(data));
-    // if (userLoginValidate(email)) {
-    // if (userPasswordValidate(password)) {
-    // alert("Пароль валиден...");
-    // alert("Валидация прошла успешно !");
-    // return;
-    // }
-    // alert("Пароль не валидный !");
-    // return;
-    // }
-    // alert("Логин не валидный !");
-    // return;
+
+    const testBody: IBodyOfSingUpCustomer = {
+      email: "muinna666@mail.ru",
+      password: "#Qwcdkslb01894$",
+      firstName: "Mikhail",
+      lastName: "Hancharuk",
+      dateOfBirth: "1985-01-27",
+      addresses: [
+        {
+          country: "PL",
+          streetName: "Oginskogo",
+          postalCode: "230017",
+          city: "Grodno",
+        },
+        {
+          country: "PL",
+          streetName: "Kupaly",
+          postalCode: "230026",
+          city: "Grodno",
+        },
+      ],
+    };
+
+    // ------- Вызов функции регистрации и получения кастомера по ID ------- //
+    singUpCustomer(testBody).then((data) => console.log(data));
+    getCustomer("e7e98586-8150-48ba-96a9-dd164cc326d4").then((responce) => console.log(responce));
+
+    if (userLoginValidate(email)) {
+      if (userPasswordValidate(password)) {
+        alert("Пароль валиден...");
+        alert("Валидация прошла успешно !");
+        return;
+      }
+      alert("Пароль не валидный !");
+      return;
+    }
+    alert("Логин не валидный !");
+    return;
   };
 
   const passwordControl = () => {

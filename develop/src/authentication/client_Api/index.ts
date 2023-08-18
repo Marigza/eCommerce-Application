@@ -1,4 +1,4 @@
-import { IgetProject } from "./types";
+import { IgetProject, IBodyOfSingUpCustomer } from "./types";
 
 const projectKey: string = "just-develop23";
 const clientId: string = "2PT-eztNLU3wgvgDpf8UwSxZ";
@@ -25,8 +25,8 @@ const getToken = async () => {
   return responseData;
 };
 
-export const singUpCustom = async (body: string) => {
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers`;
+export const singUpCustomer = async (body: IBodyOfSingUpCustomer) => {
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customersss`;
   const objectToken: IgetProject = await getToken();
 
   try {
@@ -36,7 +36,7 @@ export const singUpCustom = async (body: string) => {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `${objectToken.token_type} ${objectToken.access_token}`,
       },
-      body: body,
+      body: JSON.stringify(body),
     });
     console.log(response);
     const result = await response.json();
@@ -46,10 +46,11 @@ export const singUpCustom = async (body: string) => {
   }
 };
 
-export const getInProject = async (objectToken: IgetProject, endPath: string) => {
-  const baseUrl = `https://api.${region}.commercetools.com/${projectKey}/${endPath}`;
+export const getCustomer = async (customerID: string) => {
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${customerID}`;
+  const objectToken: IgetProject = await getToken();
 
-  const response = await fetch(baseUrl, {
+  const response: Response = await fetch(url, {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
