@@ -18,3 +18,8 @@ export interface IBodyOfSingUpCustomer {
     city: string;
   }[];
 }
+
+export interface ILoginCustomer {
+  email: string;
+  password: string;
+}

@@ -1,8 +1,8 @@
 import { ChangeEventHandler, FC, useState } from "react";
 
 import "./Login.scss";
-import { singUpCustomer, getCustomer } from "../../authentication/client_Api";
-import { IBodyOfSingUpCustomer } from "../../authentication/client_Api/types";
+import { singUpCustomer, loginCustomer } from "../../authentication/client_Api";
+import { IBodyOfSingUpCustomer, ILoginCustomer } from "../../authentication/client_Api/types";
 import { userLoginValidate, userPasswordValidate } from "../../validation/validation";
 
 const Login: FC = () => {
@@ -22,6 +22,11 @@ const Login: FC = () => {
 
   const validation = () => {
     const { email, password } = userData;
+
+    const testLogin: ILoginCustomer = {
+      email: "muinna666@mail.ru",
+      password: "#Qwcdkslb01894$",
+    };
 
     const testBody: IBodyOfSingUpCustomer = {
       email: "muinna666@mail.ru",
@@ -45,9 +50,9 @@ const Login: FC = () => {
       ],
     };
 
-    // ------- Вызов функции регистрации и получения кастомера по ID ------- //
-    singUpCustomer(testBody).then((data) => console.log(data));
-    getCustomer("e7e98586-8150-48ba-96a9-dd164cc326d4").then((responce) => console.log(responce));
+    // ------- Вызов функции регистрации и логина ------- //
+    // singUpCustomer(testBody).then((data) => console.log(data));
+    // loginCustomer(testLogin).then((data) => console.log(data));
 
     if (userLoginValidate(email)) {
       if (userPasswordValidate(password)) {

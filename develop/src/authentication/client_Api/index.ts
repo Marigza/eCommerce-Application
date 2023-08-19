@@ -1,4 +1,4 @@
-import { IgetProject, IBodyOfSingUpCustomer } from "./types";
+import { IgetProject, IBodyOfSingUpCustomer, ILoginCustomer } from "./types";
 
 const projectKey: string = "just-develop23";
 const clientId: string = "2PT-eztNLU3wgvgDpf8UwSxZ";
@@ -9,10 +9,10 @@ const scope: string[] = [
 ];
 
 const getToken = async () => {
-  const baseUrl: string = `https://auth.${region}.commercetools.com/oauth/token`;
+  const url: string = `https://auth.${region}.commercetools.com/oauth/token`;
   const requestBody: string = `grant_type=client_credentials&scope=${scope.join(" ")}`;
 
-  const response: Response = await fetch(baseUrl, {
+  const response: Response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -38,25 +38,31 @@ export const singUpCustomer = async (body: IBodyOfSingUpCustomer) => {
       },
       body: JSON.stringify(body),
     });
-    console.log(response);
     const result = await response.json();
-    return result.status === 201 ? true : false;
+    return response.ok;
   } catch (error) {
     return null;
   }
 };
 
-export const getCustomer = async (customerID: string) => {
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${customerID}`;
-  const objectToken: IgetProject = await getToken();
+export const loginCustomer = async (bodyObject: ILoginCustomer) => {
+  const url: string = `https://auth.${region}.commercetools.com/oauth/${projectKey}/customers/token`;
+  const requestBody: string = `grant_type=password&username=${bodyObject.email}&password=${
+    bodyObject.password
+  }&scope=${scope.join(" ")}`;
 
-  const response: Response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `${objectToken.token_type} ${objectToken.access_token}`,
-    },
-  });
-
-  return await response.json();
+  try {
+    const response: Response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+      },
+      body: requestBody,
+    });
+    const result = await response.json();
+    return response.ok;
+  } catch (error) {
+    return null;
+  }
 };
