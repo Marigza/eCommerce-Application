@@ -45,28 +45,53 @@ const SignUp: React.FC = () => {
           if (clickedButton === "nextStep") {
             handleNextStep();
           } else if (clickedButton === "submit") {
-            const updatedValues = {
-              email: values.email,
-              password: values.password,
-              firstName: values.firstName,
-              lastName: values.lastName,
-              dateOfBirth: values.dateOfBirth,
-              addresses: [
-                {
-                  country: values.country,
-                  city: values.city,
-                  street: values.street,
-                  postalcode: values.postalcode,
-                },
-                {
-                  country: values.countryB,
-                  city: values.cityB,
-                  street: values.streetB,
-                  postalcode: values.postalcodeB,
-                },
-              ],
-            };
-            console.log(updatedValues);
+            if (registrationStep === 2) {
+              const updatedValues = {
+                email: values.email,
+                password: values.password,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                dateOfBirth: values.dateOfBirth,
+                addresses: [
+                  {
+                    country: values.country,
+                    city: values.city,
+                    street: values.street,
+                    postalcode: values.postalcode,
+                  },
+                  {
+                    country: values.country,
+                    city: values.city,
+                    street: values.street,
+                    postalcode: values.postalcode,
+                  },
+                ],
+              };
+              console.log(updatedValues);
+            } else {
+              const updatedValues = {
+                email: values.email,
+                password: values.password,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                dateOfBirth: values.dateOfBirth,
+                addresses: [
+                  {
+                    country: values.country,
+                    city: values.city,
+                    street: values.street,
+                    postalcode: values.postalcode,
+                  },
+                  {
+                    country: values.countryB,
+                    city: values.cityB,
+                    street: values.streetB,
+                    postalcode: values.postalcodeB,
+                  },
+                ],
+              };
+              console.log(updatedValues);
+            }
           }
           setSubmitting(false);
         }}
