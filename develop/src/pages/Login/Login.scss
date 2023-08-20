@@ -87,7 +87,7 @@
     position: relative;
   }
 
-  &__password div {
+  &__password--secure {
     cursor: pointer;
     position: absolute;
     top: 4px;
@@ -99,7 +99,7 @@
     background: url(../../assets/images/loginPage/password_invisible.svg);
   }
 
-  &__password.view div {
+  &__password--secure.view {
     background: url(../../assets/images/loginPage/password_visible.svg);
   }
 

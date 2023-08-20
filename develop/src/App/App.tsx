@@ -1,8 +1,14 @@
 import "../assets/styles/normalize.css";
 import "./App.scss";
 
+import { Login } from "../pages/Login";
+
 const App: React.FC = () => {
-  return <div>HELLO</div>;
+  return (
+    <div>
+      <Login />
+    </div>
+  );
 };
 
 export default App;
