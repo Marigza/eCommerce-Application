@@ -1,40 +1,17 @@
-import React, { useState, FormEventHandler } from "react";
+import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
 import "./SignUp.scss";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 
+import ValidationSchema from "../../validation/Validation";
+
 const SignUp: React.FC = () => {
+  const [clickedButton, setClickedButton] = useState("");
   const [registrationStep, setRegistrationStep] = useState(1);
   const [passwordVisible, setPasswordVisible] = useState({
     passw: false,
   });
-
-  const [formData, setFormData] = useState({
-    firstName: { value: "", filled: false },
-    lastName: { value: "", filled: false },
-    email: { value: "", filled: false },
-    password: { value: "", filled: false },
-    birthdate: { value: "", filled: false },
-    mainCountry: { value: "", filled: false },
-    mainCity: { value: "", filled: false },
-    mainStreet: { value: "", filled: false },
-    mainPostal: { value: "", filled: false },
-    billingCountry: { value: "", filled: false },
-    billingCity: { value: "", filled: false },
-    billingStreet: { value: "", filled: false },
-    billingPostal: { value: "", filled: false },
-  });
-
-  const handleChangeField =
-    (field: keyof typeof formData) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: {
-          value: event.target.value,
-          filled: event.target.value !== "",
-        },
-      }));
-    };
 
   const handleTogglePasswordVisibility = (field: keyof typeof passwordVisible) => {
     setPasswordVisible((prevState) => ({
@@ -42,236 +19,272 @@ const SignUp: React.FC = () => {
       [field]: !prevState[field],
     }));
   };
-
   const handleNextStep = () => {
     setRegistrationStep(registrationStep + 1);
   };
-
-  const handleSubmitForm: FormEventHandler = (e) => {
-    e.preventDefault();
-
-    const sendData = Object.fromEntries(
-      Object.entries(formData)
-        .filter(([key, { value }]) => value !== "")
-        .map(([key, { value }]) => [key, value]),
-    );
-
-    fetch("http://localhost:3000/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(sendData),
-    }).then((response) => response.json());
-  };
-
   return (
     <>
-      <Helmet>
-        <title>JustStore - Sing up</title>
-      </Helmet>
-      <div className="singup">
-        <Link to="/" className="background" />
-        <div className="singup-wrapper">
-          <div className="singup-wrapper__card">
-            <Link to="/">
-              <div className="singup-wrapper__card-logo"></div>
-            </Link>
-            {registrationStep === 1 && (
-              <>
-                <h2 className="singup-wrapper__card-title">Registration</h2>
-                <form className="singup-wrapper__card-form">
-                  <div>
-                    <input
-                      type="text"
-                      name="sign_firstname"
-                      maxLength={14}
-                      required
-                      onChange={handleChangeField("firstName")}
-                    />
-                    <label>Firstname</label>
-                    <input
-                      type="text"
-                      name="sign_lastname"
-                      maxLength={14}
-                      required
-                      onChange={handleChangeField("lastName")}
-                    />
-                    <label>Lastname</label>
-                  </div>
-                  <input
-                    type="text"
-                    name="sign_email"
-                    maxLength={35}
-                    required
-                    onChange={handleChangeField("email")}
-                  />
-                  <label>Email</label>
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+          firstName: "",
+          lastName: "",
+          dateOfBirth: "",
+          country: "",
+          city: "",
+          street: "",
+          postalcode: "",
+          countryB: "",
+          cityB: "",
+          streetB: "",
+          postalcodeB: "",
+        }}
+        validationSchema={ValidationSchema(registrationStep)}
+        onSubmit={(values, { setSubmitting }) => {
+          if (clickedButton === "nextStep") {
+            handleNextStep();
+          } else if (clickedButton === "submit") {
+            const updatedValues = {
+              email: values.email,
+              password: values.password,
+              firstName: values.firstName,
+              lastName: values.lastName,
+              dateOfBirth: values.dateOfBirth,
+              addresses: [
+                {
+                  country: values.country,
+                  city: values.city,
+                  street: values.street,
+                  postalcode: values.postalcode,
+                },
+                {
+                  country: values.countryB,
+                  city: values.cityB,
+                  street: values.streetB,
+                  postalcode: values.postalcodeB,
+                },
+              ],
+            };
+            console.log(updatedValues);
+          }
+          setSubmitting(false);
+        }}
+      >
+        {({ errors, touched }) => (
+          <>
+            <Helmet>
+              <title>JustStore - Sing up</title>
+            </Helmet>
+            <div className="singup">
+              <Link to="/" className="background" />
+              <div className="singup-wrapper">
+                <div className="singup-wrapper__card">
+                  <Link to="/">
+                    <div className="singup-wrapper__card-logo"></div>
+                  </Link>
+                  {registrationStep === 1 && (
+                    <>
+                      <h2 className="singup-wrapper__card-title">Registration</h2>
+                      <Form className="singup-wrapper__card-form">
+                        <div>
+                          <Field type="text" name="firstName" />
+                          <div className="left">
+                            <label>Firstname</label>
+                            {errors.firstName && touched.firstName ? (
+                              <div className="error">{errors.firstName}</div>
+                            ) : null}
+                          </div>
 
-                  <input
-                    type={passwordVisible.passw ? "text" : "password"}
-                    name="sign_passw"
-                    maxLength={25}
-                    required
-                    onChange={handleChangeField("password")}
-                  />
-                  <div>
-                    <label>Password</label>
-                    <span
-                      className={passwordVisible.passw ? "visible" : ""}
-                      onClick={() => handleTogglePasswordVisibility("passw")}
-                    />
-                  </div>
+                          <Field type="text" name="lastName" />
+                          <div className="right">
+                            <label>Lastname</label>
+                            {errors.lastName && touched.lastName ? (
+                              <div className="error">{errors.lastName}</div>
+                            ) : null}
+                          </div>
+                        </div>
 
-                  <input
-                    type="date"
-                    name="sign_birthdate"
-                    required
-                    onChange={handleChangeField("birthdate")}
-                  />
-                  <label>Date of birth</label>
+                        <Field type="text" name="email" />
+                        <div>
+                          <label>Email</label>
+                          {errors.email && touched.email ? (
+                            <div className="error">{errors.email}</div>
+                          ) : null}
+                        </div>
 
-                  <button
-                    type="button"
-                    disabled={
-                      !Object.values(formData)
-                        .slice(0, 5)
-                        .map((field) => field.filled)
-                        .every(Boolean)
-                    }
-                    onClick={handleNextStep}
-                  >
-                    fill in shipping adress
-                    <span className="arrow" />
-                  </button>
-                </form>
-              </>
-            )}
-            {registrationStep === 2 && (
-              <>
-                <h2 className="singup-wrapper__card-title">Shipping address</h2>
-                <form className="singup-wrapper__card-form" onSubmit={handleSubmitForm}>
-                  <div>
-                    <input
-                      type="text"
-                      name="sign_country"
-                      required
-                      onChange={handleChangeField("mainCountry")}
-                    />
-                    <label>Country</label>
+                        <Field type={passwordVisible.passw ? "text" : "password"} name="password" />
+                        <div>
+                          <label>Password</label>
+                          <span
+                            className={passwordVisible.passw ? "visible" : ""}
+                            onClick={() => handleTogglePasswordVisibility("passw")}
+                          />
+                          {errors.password && touched.password ? (
+                            <div className="error">{errors.password}</div>
+                          ) : null}
+                        </div>
 
-                    <input
-                      type="text"
-                      name="sign_city"
-                      required
-                      onChange={handleChangeField("mainCity")}
-                    />
-                    <label>City</label>
-                  </div>
+                        <Field type="date" name="dateOfBirth" id="date" />
+                        <div>
+                          <label>Date of birth</label>
+                          {errors.dateOfBirth && touched.dateOfBirth ? (
+                            <div className="error">{errors.dateOfBirth}</div>
+                          ) : null}
+                        </div>
+                        <button
+                          type="submit"
+                          onClick={() => {
+                            setClickedButton("nextStep");
+                            console.log("Errors:", errors);
+                          }}
+                        >
+                          fill in shipping address
+                          <span className="arrow" />
+                        </button>
+                      </Form>
+                    </>
+                  )}
+                  {registrationStep === 2 && (
+                    <>
+                      <h2 className="singup-wrapper__card-title">Shipping address</h2>
+                      <Form className="singup-wrapper__card-form">
+                        <div>
+                          <Field name="country" as="select" defaultValue="">
+                            <option value="" disabled>
+                              Wonderland
+                            </option>
+                            <option value="US">United States</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                            <option value="PL">Poland</option>
+                          </Field>
+                          <div className="left">
+                            <label>Country</label>
+                            {errors.country && touched.country ? (
+                              <div className="error">{errors.country}</div>
+                            ) : null}
+                          </div>
 
-                  <input
-                    type="text"
-                    name="sign_street"
-                    required
-                    onChange={handleChangeField("mainStreet")}
-                  />
-                  <label>Street</label>
+                          <Field type="text" name="city" />
+                          <div className="right">
+                            <label>City</label>
+                            {errors.city && touched.city ? (
+                              <div className="error">{errors.city}</div>
+                            ) : null}
+                          </div>
+                        </div>
 
-                  <input
-                    type="text"
-                    name="sign_postalcode"
-                    required
-                    onChange={handleChangeField("mainPostal")}
-                  />
-                  <label>Postal code</label>
+                        <Field type="text" name="street" />
+                        <div>
+                          <label>Street</label>
+                          {errors.street && touched.street ? (
+                            <div className="error">{errors.street}</div>
+                          ) : null}
+                        </div>
 
-                  <button
-                    type="submit"
-                    disabled={
-                      !Object.values(formData)
-                        .slice(5, 9)
-                        .map((field) => field.filled)
-                        .every(Boolean)
-                    }
-                    onClick={handleNextStep}
-                  >
-                    fill in billing adress
-                    <span className="arrow" />
-                  </button>
-                  <p> Or set address as default and</p>
-                  <button
-                    type="submit"
-                    disabled={
-                      !Object.values(formData)
-                        .slice(5, 9)
-                        .map((field) => field.filled)
-                        .every(Boolean)
-                    }
-                  >
-                    Sign up
-                  </button>
-                </form>
-              </>
-            )}
-            {registrationStep === 3 && (
-              <>
-                <h2 className="singup-wrapper__card-title">Billing address</h2>
-                <form className="singup-wrapper__card-form" onSubmit={handleSubmitForm}>
-                  <input
-                    type="text"
-                    name="sign_country"
-                    required
-                    onChange={handleChangeField("billingCountry")}
-                  />
-                  <label>Country</label>
+                        <Field type="text" name="postalcode" />
+                        <div>
+                          <label>Postal code</label>
+                          {errors.postalcode && touched.postalcode ? (
+                            <div className="error">{errors.postalcode}</div>
+                          ) : null}
+                        </div>
 
-                  <input
-                    type="text"
-                    name="sign_city"
-                    required
-                    onChange={handleChangeField("billingCity")}
-                  />
-                  <label>City</label>
+                        <button
+                          type="submit"
+                          onClick={() => {
+                            setClickedButton("nextStep");
+                            console.log("Errors:", errors);
+                          }}
+                        >
+                          fill in billing adress
+                          <span className="arrow" />
+                        </button>
+                        <p> Or set address as default and</p>
+                        <button
+                          type="submit"
+                          onClick={() => {
+                            setClickedButton("submit");
+                            console.log("Errors:", errors);
+                          }}
+                        >
+                          Sign up
+                        </button>
+                      </Form>
+                    </>
+                  )}
+                  {registrationStep === 3 && (
+                    <>
+                      <h2 className="singup-wrapper__card-title">Billing address</h2>
+                      <Form className="singup-wrapper__card-form">
+                        <div>
+                          <Field name="countryB" as="select" defaultValue="">
+                            <option value="" disabled>
+                              Wonderland
+                            </option>
+                            <option value="US">United States</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                            <option value="PL">Poland</option>
+                          </Field>
+                          <div className="left">
+                            <label>Country</label>
+                            {errors.countryB && touched.countryB ? (
+                              <div className="error">{errors.countryB}</div>
+                            ) : null}
+                          </div>
 
-                  <input
-                    type="text"
-                    name="sign_street"
-                    required
-                    onChange={handleChangeField("billingStreet")}
-                  />
-                  <label>Street</label>
+                          <Field type="text" name="cityB" />
+                          <div className="right">
+                            <label>City</label>
+                            {errors.cityB && touched.cityB ? (
+                              <div className="error">{errors.cityB}</div>
+                            ) : null}
+                          </div>
+                        </div>
 
-                  <input
-                    type="text"
-                    name="sign_postalcode"
-                    required
-                    onChange={handleChangeField("billingPostal")}
-                  />
-                  <label>Postal code</label>
+                        <Field type="text" name="streetB" />
+                        <div>
+                          <label>Street</label>
+                          {errors.streetB && touched.streetB ? (
+                            <div className="error">{errors.streetB}</div>
+                          ) : null}
+                        </div>
 
-                  <button
-                    type="submit"
-                    disabled={
-                      !Object.values(formData)
-                        .slice(9)
-                        .map((field) => field.filled)
-                        .every(Boolean)
-                    }
-                  >
-                    Sign up
-                  </button>
-                </form>
-              </>
-            )}
-            <p>
-              Do you already have an account?
-              <Link to="/login">
-                <span> Log in</span>
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
+                        <Field type="text" name="postalcodeB" />
+                        <div>
+                          <label>Postal code</label>
+                          {errors.postalcodeB && touched.postalcodeB ? (
+                            <div className="error">{errors.postalcodeB}</div>
+                          ) : null}
+                        </div>
+
+                        <button
+                          type="submit"
+                          onClick={() => {
+                            setClickedButton("submit");
+                          }}
+                        >
+                          Sign up
+                        </button>
+                      </Form>
+                    </>
+                  )}
+                  <p>
+                    Do you already have an account?
+                    <Link to="/login">
+                      <span> Log in</span>
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </Formik>
     </>
   );
 };

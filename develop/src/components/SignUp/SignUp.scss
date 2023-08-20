@@ -1,4 +1,4 @@
-.singup{
+.singup {
   position: fixed;
   top: 0;
   left: 0;
@@ -23,6 +23,7 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+
   &__card {
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
       sans-serif;
@@ -37,6 +38,7 @@
     align-items: center;
     align-self: center;
     padding: 5vh;
+    padding-bottom: 3vh;
     font-size: 3vh;
     z-index: 2;
     animation: slideUp 0.8s both;
@@ -75,37 +77,40 @@
 
       input:-webkit-autofill,
       input:-webkit-autofill:hover,
-      input:-webkit-autofill:focus {
+      input:-webkit-autofill:focus,
+      select:-webkit-autofill,
+      select:-webkit-autofill:hover,
+      select:-webkit-autofill:focus {
         -webkit-box-shadow: 0 0 0px 40rem #ffffff inset;
       }
 
-      input {
+      input,
+      select {
         background: none;
         z-index: 1;
-        border-bottom: 1px solid rgba(27, 31, 35, 0.15);
+        border-bottom: 0.2vh solid rgba(27, 31, 35, 0.15);
         padding: 0.5vh;
         height: 6vh;
         width: 30vw;
       }
 
-      input[type="date"]::-webkit-datetime-edit {
-        visibility: hidden;
+      select {
+        padding-left: 0;
       }
 
-      input:focus {
-        border-bottom: 1px solid black;
-        transition: border-bottom 0.3s;
-      }
-
-      input[type="date"]:focus::-webkit-datetime-edit,
-      input[type="date"]:valid::-webkit-datetime-edit {
-        visibility: visible;
+      input:focus,
+      select:focus {
+        border-bottom: 0.2vh solid black;
       }
 
       input:focus + label,
       input:focus + div > label,
-      input:valid + label,
-      input:valid + div > label {
+      input:not([value=""]) + label,
+      input:not([value=""]) + div > label,
+      select:focus + label,
+      select:focus + div > label,
+      select:not([value=""]) + label,
+      select:not([value=""]) + div > label {
         color: black;
         transform: translateY(-7vh) scale(0.5);
         z-index: 2;
@@ -202,20 +207,30 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-      }
 
-      div input {
-        width: 14vw;
-      }
+        div {
+          .error {
+            width: 14vw;
+            &::before {
+              width: 14vw;
+            }
+          }
+        }
 
-      div label {
-        order: 1;
-        width: 14vw;
-      }
+        input,
+        select {
+          width: 14vw;
+        }
 
-      div label:last-child {
-        order: 2;
-        justify-self: start;
+        label {
+          order: 1;
+          width: 14vw;
+        }
+
+        label:last-child {
+          order: 2;
+          justify-self: start;
+        }
       }
     }
 
@@ -230,12 +245,43 @@
   }
 }
 
+.left,
+.right {
+  order: 1;
+}
+
 .login-wrapper__card {
   height: 73vh;
 }
 
+.error {
+  z-index: 2;
+  color: red;
+  font-size: 1.5vh;
+  position: absolute;
+  transform: translateY(calc(0.7vh));
+  visibility: visible;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 30vw;
+    height: 0.2vh;
+    top: -0.9vh;
+    background-color: red;
+  }
+}
+
+#date::-webkit-datetime-edit {
+  visibility: hidden;
+}
+
+#date:focus::-webkit-datetime-edit,
+#date:not([value=""])::-webkit-datetime-edit {
+  visibility: visible;
+}
+
 @media (max-aspect-ratio: 3/2) {
-  
   .singup-wrapper__card,
   .login-wrapper__card {
     width: 50vw;
@@ -246,8 +292,18 @@
 
     &-form {
       div input,
-      div label {
+      div select,
+      div label,
+      div div {
         width: 22vw;
+
+        &.left,
+        &.right {
+          .error,
+          .error::before {
+            width: 22vw;
+          }
+        }
       }
 
       input {
@@ -255,9 +311,13 @@
       }
     }
   }
+
+  .error,
+  .error::before {
+    width: 45vw;
+  }
 }
 @media (max-aspect-ratio: 1/1) {
-
   .singup-wrapper__card,
   .login-wrapper__card {
     width: 70vw;
@@ -268,8 +328,18 @@
 
     &-form {
       div input,
-      div label {
+      div select,
+      div label,
+      div div {
         width: 32vw;
+
+        &.left,
+        &.right {
+          .error,
+          .error::before {
+            width: 32vw;
+          }
+        }
       }
 
       input {
@@ -277,9 +347,13 @@
       }
     }
   }
+
+  .error,
+  .error::before {
+    width: 65vw;
+  }
 }
 @media (max-aspect-ratio: 32/45) {
-
   .singup-wrapper__card,
   .login-wrapper__card {
     width: 90vw;
@@ -290,8 +364,18 @@
 
     &-form {
       div input,
-      div label {
+      div select,
+      div label,
+      div div {
         width: 39.5vw;
+
+        &.left,
+        &.right {
+          .error,
+          .error::before {
+            width: 39.5vw;
+          }
+        }
       }
 
       input {
@@ -299,9 +383,13 @@
       }
     }
   }
+
+  .error,
+  .error::before {
+    width: 80vw;
+  }
 }
 @media (max-aspect-ratio: 5/9) {
-
   .singup-wrapper__card,
   .login-wrapper__card {
     width: 100vw;
@@ -312,15 +400,34 @@
 
     &-form {
       div input,
-      div label {
+      div select,
+      div label,
+      div div {
         width: 44vw;
+
+        &.left,
+        &.right {
+          .error,
+          .error::before {
+            width: 44vw;
+          }
+        }
       }
 
       input {
         width: 90vw;
         font-size: 2.5vh;
       }
+
+      select {
+        font-size: 2.5vh;
+      }
     }
+  }
+
+  .error,
+  .error::before {
+    width: 90vw;
   }
 }
 
