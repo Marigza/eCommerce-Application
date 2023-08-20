@@ -26,7 +26,7 @@ const getToken = async () => {
 };
 
 export const singUpCustomer = async (body: IBodyOfSingUpCustomer) => {
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customersss`;
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customers`;
   const objectToken: IgetProject = await getToken();
 
   try {
