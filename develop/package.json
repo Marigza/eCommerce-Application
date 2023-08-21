@@ -37,7 +37,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src --fix",
-    "prepare": "husky install",
+    "prepare": "cd ../ && husky install develop/.husky",
     "prettier": "prettier . --write",
     "test:jest": "jest"
   },
@@ -71,6 +71,6 @@
     "prettier": "3.0.1"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,scss}": "prettier --write --ignore-unknown"
+    "/*.{ts,tsx,scss}": "prettier --write --ignore-unknown"
   }
 }
