@@ -317,6 +317,18 @@
     width: 45vw;
   }
 }
+
+#incorrect,
+#incorrectSign{
+  position: absolute;
+  font-size: 2vh;
+  top: 77.5%;
+  color: red;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: max-content;
+}
 @media (max-aspect-ratio: 1/1) {
   .singup-wrapper__card,
   .login-wrapper__card {
