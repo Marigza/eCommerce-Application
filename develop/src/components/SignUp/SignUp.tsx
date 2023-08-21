@@ -4,9 +4,15 @@ import "./SignUp.scss";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 
+import { singUpCustomer } from "../../authentication/client_Api";
 import ValidationSchema from "../../validation/Validation";
 
 const SignUp: React.FC = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+    incorrect: false,
+  });
   const [clickedButton, setClickedButton] = useState("");
   const [registrationStep, setRegistrationStep] = useState(1);
   const [passwordVisible, setPasswordVisible] = useState({
@@ -41,12 +47,14 @@ const SignUp: React.FC = () => {
           postalcodeB: "",
         }}
         validationSchema={ValidationSchema(registrationStep)}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
+          let updatedValues; // Объявляем переменную здесь
+
           if (clickedButton === "nextStep") {
             handleNextStep();
           } else if (clickedButton === "submit") {
             if (registrationStep === 2) {
-              const updatedValues = {
+              updatedValues = {
                 email: values.email,
                 password: values.password,
                 firstName: values.firstName,
@@ -55,21 +63,20 @@ const SignUp: React.FC = () => {
                 addresses: [
                   {
                     country: values.country,
+                    streetName: values.street,
+                    postalCode: values.postalcode,
                     city: values.city,
-                    street: values.street,
-                    postalcode: values.postalcode,
                   },
                   {
                     country: values.country,
+                    streetName: values.street,
+                    postalCode: values.postalcode,
                     city: values.city,
-                    street: values.street,
-                    postalcode: values.postalcode,
                   },
                 ],
               };
-              console.log(updatedValues);
             } else {
-              const updatedValues = {
+              updatedValues = {
                 email: values.email,
                 password: values.password,
                 firstName: values.firstName,
@@ -78,22 +85,39 @@ const SignUp: React.FC = () => {
                 addresses: [
                   {
                     country: values.country,
+                    streetName: values.street,
+                    postalCode: values.postalcode,
                     city: values.city,
-                    street: values.street,
-                    postalcode: values.postalcode,
                   },
                   {
                     country: values.countryB,
+                    streetName: values.streetB,
+                    postalCode: values.postalcodeB,
                     city: values.cityB,
-                    street: values.streetB,
-                    postalcode: values.postalcodeB,
                   },
                 ],
               };
-              console.log(updatedValues);
             }
           }
-          setSubmitting(false);
+
+          if (updatedValues) {
+            const success = await singUpCustomer(updatedValues);
+            if (success) {
+              console.log("YEEEEEEEEEEEEEEEEEEEEES");
+              setUserData({
+                email: values.email,
+                password: values.password,
+                incorrect: false,
+              });
+            } else {
+              console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+              setUserData({
+                email: "",
+                password: "",
+                incorrect: true,
+              });
+            }
+          }
         }}
       >
         {({ errors, touched }) => (
@@ -237,6 +261,9 @@ const SignUp: React.FC = () => {
                         >
                           Sign up
                         </button>
+                        {userData.incorrect && (
+                          <div id="incorrectSign">Incorrect email or password</div>
+                        )}
                       </Form>
                     </>
                   )}
@@ -295,6 +322,9 @@ const SignUp: React.FC = () => {
                         >
                           Sign up
                         </button>
+                        {userData.incorrect && (
+                          <div id="incorrectSign">Incorrect email or password</div>
+                        )}
                       </Form>
                     </>
                   )}

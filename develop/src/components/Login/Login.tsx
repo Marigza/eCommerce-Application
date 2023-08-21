@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 
+import { loginCustomer } from "../../authentication/client_Api";
 import ValidationSchema from "../../validation/Validation";
 
 const Login: React.FC = () => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
+    incorrect: false,
   });
   const [passwordVisible, setPasswordVisible] = useState({
     passw: false,
@@ -40,12 +42,27 @@ const Login: React.FC = () => {
                 password: "",
               }}
               validationSchema={ValidationSchema(0)}
-              onSubmit={(values) => {
-                setUserData({
+              onSubmit={async (values) => {
+                const success = await loginCustomer({
                   email: values.email,
                   password: values.password,
                 });
-                console.log(setUserData);
+
+                if (success) {
+                  console.log("YEEEEEEEEEEEEEEEEEEEEES");
+                  setUserData({
+                    email: values.email,
+                    password: values.password,
+                    incorrect: false,
+                  });
+                } else {
+                  console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+                  setUserData({
+                    email: "",
+                    password: "",
+                    incorrect: true,
+                  });
+                }
               }}
             >
               {({ errors, touched }) => (
@@ -71,6 +88,7 @@ const Login: React.FC = () => {
                   <button type="submit" name="auth_submit">
                     Log in
                   </button>
+                  {userData.incorrect && <div id="incorrect">Incorrect email or password</div>}
                 </Form>
               )}
             </Formik>
