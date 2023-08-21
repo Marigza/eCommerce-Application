@@ -14,13 +14,13 @@ const ValidationSchema = (registrationStep: number) => {
       registrationStep === 1
         ? Yup.string()
             .required("Required field")
-            .matches(/^[a-zA-Z]+$/, "Must contain only letters")
+            .matches(/^[a-zA-Z]+$/, "Must contain only latin letters")
         : Yup.string(),
     lastName:
       registrationStep === 1
         ? Yup.string()
             .required("Required field")
-            .matches(/^[a-zA-Z]+$/, "Must contain only letters")
+            .matches(/^[a-zA-Z]+$/, "Must contain only latin letters")
         : Yup.string(),
     email:
       registrationStep === 0 || registrationStep === 1
@@ -63,8 +63,8 @@ const ValidationSchema = (registrationStep: number) => {
             )
             .required("Required field")
             .min(8, "Password must be at least 8 characters long")
-            .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-            .matches(/[a-z]/, "Password must contain at least one lowercase letter (a-z)")
+            .matches(/[A-Z]/, "Password must contain at least one latin uppercase letter")
+            .matches(/[a-z]/, "Password must contain at least one latin lowercase letter (a-z)")
             .matches(/[0-9]/, "Password must contain at least one digit")
             .matches(
               /[!@#$%^&*]/,
@@ -88,7 +88,7 @@ const ValidationSchema = (registrationStep: number) => {
       registrationStep === 2
         ? Yup.string()
             .required("Required field")
-            .matches(/^[a-zA-Z]+$/, "Must contain only letters")
+            .matches(/^[a-zA-Z]+$/, "Must contain only latin letters")
         : Yup.string(),
     street: registrationStep === 2 ? Yup.string().required("Required field") : Yup.string(),
     postalcode:
@@ -111,7 +111,7 @@ const ValidationSchema = (registrationStep: number) => {
       registrationStep === 3
         ? Yup.string()
             .required("Required field")
-            .matches(/^[a-zA-Z]+$/, "Must contain only letters")
+            .matches(/^[a-zA-Z]+$/, "Must contain only latin letters")
         : Yup.string(),
     streetB: registrationStep === 3 ? Yup.string().required("Required field") : Yup.string(),
     postalcodeB:

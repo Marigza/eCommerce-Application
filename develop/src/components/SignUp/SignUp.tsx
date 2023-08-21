@@ -1,23 +1,27 @@
 import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUp.scss";
 import Helmet from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { singUpCustomer } from "../../authentication/client_Api";
+import { useUserContext } from "../../context/UserContext";
 import ValidationSchema from "../../validation/Validation";
 
 const SignUp: React.FC = () => {
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-    incorrect: false,
-  });
+  const { userData, setUserData } = useUserContext();
+  const navigate = useNavigate();
   const [clickedButton, setClickedButton] = useState("");
   const [registrationStep, setRegistrationStep] = useState(1);
   const [passwordVisible, setPasswordVisible] = useState({
     passw: false,
   });
+
+  useEffect(() => {
+    if (userData.logged) {
+      navigate("/");
+    }
+  }, [userData.logged, navigate]);
 
   const handleTogglePasswordVisibility = (field: keyof typeof passwordVisible) => {
     setPasswordVisible((prevState) => ({
@@ -48,7 +52,7 @@ const SignUp: React.FC = () => {
         }}
         validationSchema={ValidationSchema(registrationStep)}
         onSubmit={async (values, { setSubmitting }) => {
-          let updatedValues; // Объявляем переменную здесь
+          let updatedValues;
 
           if (clickedButton === "nextStep") {
             handleNextStep();
@@ -103,19 +107,27 @@ const SignUp: React.FC = () => {
           if (updatedValues) {
             const success = await singUpCustomer(updatedValues);
             if (success) {
-              console.log("YEEEEEEEEEEEEEEEEEEEEES");
-              setUserData({
+              const updatedUserData = {
                 email: values.email,
                 password: values.password,
                 incorrect: false,
-              });
+                logged: true,
+              };
+              alert(
+                `Success registration. Welcom to our store ${
+                  values.firstName + " " + values.lastName
+                }`,
+              );
+              setUserData(updatedUserData);
+              navigate("/");
             } else {
-              console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-              setUserData({
+              const incorrectUserData = {
                 email: "",
                 password: "",
                 incorrect: true,
-              });
+                logged: false,
+              };
+              setUserData(incorrectUserData);
             }
           }
         }}
@@ -251,7 +263,7 @@ const SignUp: React.FC = () => {
                           fill in billing adress
                           <span className="arrow" />
                         </button>
-                        <p> Or set address as default and</p>
+                        <p> Or set address as billing too and</p>
                         <button
                           type="submit"
                           onClick={() => {
@@ -262,7 +274,7 @@ const SignUp: React.FC = () => {
                           Sign up
                         </button>
                         {userData.incorrect && (
-                          <div id="incorrectSign">Incorrect email or password</div>
+                          <div id="incorrectSign">The entered email is already in use</div>
                         )}
                       </Form>
                     </>
@@ -323,7 +335,7 @@ const SignUp: React.FC = () => {
                           Sign up
                         </button>
                         {userData.incorrect && (
-                          <div id="incorrectSign">Incorrect email or password</div>
+                          <div id="incorrectSign">The entered email is already in use</div>
                         )}
                       </Form>
                     </>

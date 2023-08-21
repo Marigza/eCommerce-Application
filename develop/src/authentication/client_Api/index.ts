@@ -39,7 +39,28 @@ export const singUpCustomer = async (body: IBodyOfSingUpCustomer) => {
       body: JSON.stringify(body),
     });
     const result = await response.json();
-    return response.ok;
+
+    if (response.ok) {
+      try {
+        fetch(`${url}/${result.customer.id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `${objectToken.token_type} ${objectToken.access_token}`,
+          },
+          body: JSON.stringify({
+            version: result.customer.version,
+            actions: [
+              { action: "addShippingAddressId", addressId: result.customer.addresses[0].id },
+              { action: "addBillingAddressId", addressId: result.customer.addresses[1].id },
+            ],
+          }),
+        });
+        return true;
+      } catch (err) {
+        return true;
+      }
+    } else return false;
   } catch (error) {
     return null;
   }
