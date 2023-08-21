@@ -67,7 +67,7 @@ const Login: React.FC = () => {
                     email: "",
                     password: "",
                     incorrect: true,
-                    logged: true,
+                    logged: false,
                   };
                   setUserData(incorrectUserData);
                 }
