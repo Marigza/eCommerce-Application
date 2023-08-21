@@ -273,7 +273,7 @@ const SignUp: React.FC = () => {
                         >
                           Sign up
                         </button>
-                        {userData.incorrect && (
+                        {clickedButton === "submit" && userData.incorrect && (
                           <div id="incorrectSign">The entered email is already in use</div>
                         )}
                       </Form>
@@ -334,7 +334,7 @@ const SignUp: React.FC = () => {
                         >
                           Sign up
                         </button>
-                        {userData.incorrect && (
+                        {clickedButton === "submit" && userData.incorrect && (
                           <div id="incorrectSign">The entered email is already in use</div>
                         )}
                       </Form>
