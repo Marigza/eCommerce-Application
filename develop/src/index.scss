@@ -477,3 +477,10 @@ html {
 *::after {
   box-sizing: inherit;
 }
+
+body {
+  background-color: #ffffff;
+  overflow-x: hidden;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
+    sans-serif;
+}

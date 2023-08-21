@@ -1,6 +1,9 @@
 .content__block {
+  margin: 0 auto;
+  margin-top: 10vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 90vw;
   gap: 10px;
 }
