@@ -1,8 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 
-import "../assets/styles/normalize.css";
-import "./App.scss";
-
 import { Login } from "../components/Login";
 import { SignUp } from "../components/SignUp";
 import { Main } from "../pages/Main";

@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import ValidationSchema from "../../validation/Validation";
 
 const Login: React.FC = () => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
   const [passwordVisible, setPasswordVisible] = useState({
     passw: false,
   });
@@ -37,7 +41,11 @@ const Login: React.FC = () => {
               }}
               validationSchema={ValidationSchema(0)}
               onSubmit={(values) => {
-                console.log(values);
+                setUserData({
+                  email: values.email,
+                  password: values.password,
+                });
+                console.log(setUserData);
               }}
             >
               {({ errors, touched }) => (
