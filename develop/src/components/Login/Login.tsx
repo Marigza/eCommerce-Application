@@ -1,17 +1,22 @@
 import { Formik, Form, Field } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Helmet from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { loginCustomer } from "../../authentication/client_Api";
+import { useUserContext } from "../../context/UserContext";
 import ValidationSchema from "../../validation/Validation";
 
 const Login: React.FC = () => {
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-    incorrect: false,
-  });
+  const { userData, setUserData } = useUserContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData.logged) {
+      navigate("/");
+    }
+  }, [userData.logged, navigate]);
+
   const [passwordVisible, setPasswordVisible] = useState({
     passw: false,
   });
@@ -49,32 +54,53 @@ const Login: React.FC = () => {
                 });
 
                 if (success) {
-                  console.log("YEEEEEEEEEEEEEEEEEEEEES");
-                  setUserData({
+                  const updatedUserData = {
                     email: values.email,
                     password: values.password,
                     incorrect: false,
-                  });
+                    logged: true,
+                  };
+                  setUserData(updatedUserData);
+                  navigate("/");
                 } else {
-                  console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-                  setUserData({
+                  const incorrectUserData = {
                     email: "",
                     password: "",
                     incorrect: true,
-                  });
+                    logged: false,
+                  };
+                  setUserData(incorrectUserData);
                 }
               }}
             >
               {({ errors, touched }) => (
                 <Form className="login-wrapper__card-form">
-                  <Field type="text" name="email" />
+                  <Field
+                    type="text"
+                    name="email"
+                    onFocus={() => {
+                      setUserData((prevUserData) => ({
+                        ...prevUserData,
+                        incorrect: false,
+                      }));
+                    }}
+                  />
                   <div>
                     <label>Login</label>
                     {errors.email && touched.email ? (
                       <div className="error">{errors.email}</div>
                     ) : null}
                   </div>
-                  <Field type={passwordVisible.passw ? "text" : "password"} name="password" />
+                  <Field
+                    type={passwordVisible.passw ? "text" : "password"}
+                    name="password"
+                    onFocus={() => {
+                      setUserData((prevUserData) => ({
+                        ...prevUserData,
+                        incorrect: false,
+                      }));
+                    }}
+                  />
                   <div>
                     <label>Password</label>
                     <span
