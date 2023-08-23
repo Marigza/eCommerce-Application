@@ -1,4 +1,4 @@
-import { IgetProject, IBodyOfSingUpCustomer, ILoginCustomer } from "./types";
+import { IgetToken, ICustomerInfoForSingUp, ICustomerInfoForLogin } from "./types";
 
 const projectKey: string = "just-develop23";
 const clientId: string = "2PT-eztNLU3wgvgDpf8UwSxZ";
@@ -8,65 +8,69 @@ const scope: string[] = [
   "manage_project:just-develop23 view_audit_log:just-develop23 manage_api_clients:just-develop23",
 ];
 
-const getToken = async () => {
+const getToken = async (): Promise<IgetToken | null> => {
   const url: string = `https://auth.${region}.commercetools.com/oauth/token`;
   const requestBody: string = `grant_type=client_credentials&scope=${scope.join(" ")}`;
-
-  const response: Response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
-    },
-    body: requestBody,
-  });
-
-  const responseData = await response.json();
-  return responseData;
-};
-
-export const singUpCustomer = async (body: IBodyOfSingUpCustomer) => {
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers`;
-  const objectToken: IgetProject = await getToken();
-
   try {
     const response: Response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `${objectToken.token_type} ${objectToken.access_token}`,
+        Authorization: `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
       },
-      body: JSON.stringify(body),
+      body: requestBody,
     });
-    const result = await response.json();
 
-    if (response.ok) {
-      try {
-        fetch(`${url}/${result.customer.id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `${objectToken.token_type} ${objectToken.access_token}`,
-          },
-          body: JSON.stringify({
-            version: result.customer.version,
-            actions: [
-              { action: "addShippingAddressId", addressId: result.customer.addresses[0].id },
-              { action: "addBillingAddressId", addressId: result.customer.addresses[1].id },
-            ],
-          }),
-        });
-        return true;
-      } catch (err) {
-        return true;
-      }
-    } else return false;
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     return null;
   }
 };
 
-export const loginCustomer = async (bodyObject: ILoginCustomer) => {
+export const singUpCustomer = async (body: ICustomerInfoForSingUp): Promise<boolean | null> => {
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customers`;
+  const objectToken: IgetToken | null = await getToken();
+  if (objectToken) {
+    try {
+      const response: Response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `${objectToken.token_type} ${objectToken.access_token}`,
+        },
+        body: JSON.stringify(body),
+      });
+      const result = await response.json();
+
+      if (response.ok) {
+        try {
+          fetch(`${url}/${result.customer.id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `${objectToken.token_type} ${objectToken.access_token}`,
+            },
+            body: JSON.stringify({
+              version: result.customer.version,
+              actions: [
+                { action: "addShippingAddressId", addressId: result.customer.addresses[0].id },
+                { action: "addBillingAddressId", addressId: result.customer.addresses[1].id },
+              ],
+            }),
+          });
+          return true;
+        } catch (err) {
+          return true;
+        }
+      } else return false;
+    } catch (error) {
+      return null;
+    }
+  } else return null;
+};
+
+export const loginCustomer = async (bodyObject: ICustomerInfoForLogin): Promise<boolean | null> => {
   const url: string = `https://auth.${region}.commercetools.com/oauth/${projectKey}/customers/token`;
   const requestBody: string = `grant_type=password&username=${bodyObject.email}&password=${
     bodyObject.password

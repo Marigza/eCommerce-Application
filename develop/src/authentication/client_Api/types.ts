@@ -1,13 +1,16 @@
-export interface IgetProject {
+export interface IgetToken {
   access_token: string;
   expires_in: number;
   scope: string[];
   token_type: string;
 }
 
-export interface IBodyOfSingUpCustomer {
+export interface ICustomerInfoForLogin {
   email: string;
   password: string;
+}
+
+export interface ICustomerInfoForSingUp extends ICustomerInfoForLogin {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
@@ -17,9 +20,4 @@ export interface IBodyOfSingUpCustomer {
     postalCode: string;
     city: string;
   }[];
-}
-
-export interface ILoginCustomer {
-  email: string;
-  password: string;
 }
