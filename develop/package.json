@@ -39,7 +39,7 @@
     "format": "prettier --write src/**/*.{ts,tsx,scss,css,json}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x} --color",
     "lint-staged": "lint-staged",
-    "prepare": "husky install",
+    "prepare": "cd ../ && husky install develop/.husky",
     "test:jest": "jest"
   },
   "eslintConfig": {
