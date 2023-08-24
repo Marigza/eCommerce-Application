@@ -1,7 +1,7 @@
 import React from "react";
 import Lottie from "react-lottie";
 
-import animation from "./Animation.json";
+import animation from "./AnimationCode.json";
 
 interface AnimationProps {
   isPlaying: boolean;

@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable import/no-named-as-default */
 import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 

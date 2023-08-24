@@ -33,7 +33,7 @@ const ValidationSchema = (registrationStep: number) => {
                   return false;
                 }
                 return true;
-              },
+              }
             )
             .required("Required field")
             .matches(/^[^@]+@/, "Email address must contain an '@'")
@@ -45,7 +45,7 @@ const ValidationSchema = (registrationStep: number) => {
                 const atSymbolCount = (value.match(/@/g) || []).length;
                 const dotSymbolCount = (value.match(/\./g) || []).length;
                 return atSymbolCount === 1 && dotSymbolCount === 1;
-              },
+              }
             )
         : Yup.string(),
     password:
@@ -59,7 +59,7 @@ const ValidationSchema = (registrationStep: number) => {
                   return false;
                 }
                 return true;
-              },
+              }
             )
             .required("Required field")
             .min(8, "Password must be at least 8 characters long")
@@ -68,7 +68,7 @@ const ValidationSchema = (registrationStep: number) => {
             .matches(/[0-9]/, "Password must contain at least one digit")
             .matches(
               /[!@#$%^&*]/,
-              "Password must contain at least one special character (!@#$%^&*)",
+              "Password must contain at least one special character (!@#$%^&*)"
             )
         : Yup.string(),
     dateOfBirth:
@@ -102,7 +102,7 @@ const ValidationSchema = (registrationStep: number) => {
                 return true;
               }
               return postalCodeRegexMap[selectedCountry].test(value || "");
-            },
+            }
           )
         : Yup.string(),
     countryB:
@@ -125,7 +125,7 @@ const ValidationSchema = (registrationStep: number) => {
                 return true;
               }
               return postalCodeRegexMap[selectedCountry].test(value || "");
-            },
+            }
           )
         : Yup.string(),
   });

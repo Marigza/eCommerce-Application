@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable import/no-named-as-default */
 import { Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import "./SignUp.scss";
@@ -116,7 +120,7 @@ const SignUp: React.FC = () => {
               alert(
                 `Success registration. Welcom to our store ${
                   values.firstName + " " + values.lastName
-                }`,
+                }`
               );
               setUserData(updatedUserData);
               navigate("/");

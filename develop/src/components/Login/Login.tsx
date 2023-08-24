@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable react/no-unescaped-entities */
 import { Formik, Form, Field } from "formik";
 import React, { useEffect, useState } from "react";
 import Helmet from "react-helmet";

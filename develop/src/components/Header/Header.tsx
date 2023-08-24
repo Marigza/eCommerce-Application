@@ -1,6 +1,5 @@
 import "./Header.scss";
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 
 import { Login } from "../../components/Login";

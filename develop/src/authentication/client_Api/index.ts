@@ -1,16 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IgetToken, ICustomerInfoForSingUp, ICustomerInfoForLogin } from "./types";
 
-const projectKey: string = "just-develop23";
-const clientId: string = "2PT-eztNLU3wgvgDpf8UwSxZ";
-const clientSecret: string = "IunouGO33BJdWp3ge2ocqTJBvuSSCJpq";
-const region: string = "europe-west1.gcp";
+const projectKey = "just-develop23";
+const clientId = "2PT-eztNLU3wgvgDpf8UwSxZ";
+const clientSecret = "IunouGO33BJdWp3ge2ocqTJBvuSSCJpq";
+const region = "europe-west1.gcp";
 const scope: string[] = [
   "manage_project:just-develop23 view_audit_log:just-develop23 manage_api_clients:just-develop23",
 ];
 
 const getToken = async (): Promise<IgetToken | null> => {
-  const url: string = `https://auth.${region}.commercetools.com/oauth/token`;
-  const requestBody: string = `grant_type=client_credentials&scope=${scope.join(" ")}`;
+  const url = `https://auth.${region}.commercetools.com/oauth/token`;
+  const requestBody = `grant_type=client_credentials&scope=${scope.join(" ")}`;
   try {
     const response: Response = await fetch(url, {
       method: "POST",
@@ -71,8 +72,8 @@ export const singUpCustomer = async (body: ICustomerInfoForSingUp): Promise<bool
 };
 
 export const loginCustomer = async (bodyObject: ICustomerInfoForLogin): Promise<boolean | null> => {
-  const url: string = `https://auth.${region}.commercetools.com/oauth/${projectKey}/customers/token`;
-  const requestBody: string = `grant_type=password&username=${bodyObject.email}&password=${
+  const url = `https://auth.${region}.commercetools.com/oauth/${projectKey}/customers/token`;
+  const requestBody = `grant_type=password&username=${bodyObject.email}&password=${
     bodyObject.password
   }&scope=${scope.join(" ")}`;
 
