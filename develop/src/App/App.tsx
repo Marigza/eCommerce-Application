@@ -7,6 +7,7 @@ import { Main } from "../pages/Main";
 import { NotFound } from "../pages/NotFound";
 
 const App: React.FC = () => {
+  console.log(6789);
   return (
     <>
       <UserProvider>
