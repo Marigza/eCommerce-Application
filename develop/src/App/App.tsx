@@ -1,7 +1,7 @@
 import "./App.css";
 
-function App(): JSX.Element {
+const App: React.FC = () => {
   return <div>HELLO</div>;
-}
+};
 
 export default App;
