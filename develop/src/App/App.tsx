@@ -8,17 +8,15 @@ import { NotFound } from "../pages/NotFound";
 
 const App: React.FC = () => {
   return (
-    <>
-      <UserProvider>
-        <Routes>
-          <Route path="/" element={<Main />}>
-            <Route path="registration" element={<SignUp />} />
-            <Route path="login" element={<Login />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </UserProvider>
-    </>
+    <UserProvider>
+      <Routes>
+        <Route path="/" element={<Main />}>
+          <Route path="registration" element={<SignUp />} />
+          <Route path="login" element={<Login />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </UserProvider>
   );
 };
 

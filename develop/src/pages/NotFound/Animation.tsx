@@ -3,11 +3,11 @@ import Lottie from "react-lottie";
 
 import animation from "./AnimationCode.json";
 
-interface AnimationProps {
+interface IAnimationProps {
   isPlaying: boolean;
 }
 
-const AnimationComponent: React.FC<AnimationProps> = ({ isPlaying }) => {
+const AnimationComponent: React.FC<IAnimationProps> = ({ isPlaying }) => {
   const defaultOptions = {
     loop: true,
     autoplay: isPlaying,

@@ -12,11 +12,8 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   React.useEffect(() => {
-    if (location.pathname === "/login" || location.pathname === "/registration") {
-      setDisableScroll(true);
-    } else {
-      setDisableScroll(false);
-    }
+    const scroll = location.pathname === "/login" || location.pathname === "/registration";
+    setDisableScroll(scroll);
 
     if (disableScroll) {
       document.body.style.padding = "0 calc(17px - (100vw - 100%)) 0 0";

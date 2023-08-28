@@ -201,7 +201,6 @@ const SignUp: React.FC = () => {
                           type="submit"
                           onClick={() => {
                             setClickedButton("nextStep");
-                            console.log("Errors:", errors);
                           }}
                         >
                           fill in shipping address
@@ -261,7 +260,6 @@ const SignUp: React.FC = () => {
                           type="submit"
                           onClick={() => {
                             setClickedButton("nextStep");
-                            console.log("Errors:", errors);
                           }}
                         >
                           fill in billing adress
@@ -272,7 +270,6 @@ const SignUp: React.FC = () => {
                           type="submit"
                           onClick={() => {
                             setClickedButton("submit");
-                            console.log("Errors:", errors);
                           }}
                         >
                           Sign up
