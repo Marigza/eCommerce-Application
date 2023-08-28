@@ -1,34 +1,57 @@
-/* eslint-disable import/no-named-as-default */
-/* eslint-disable react/no-unescaped-entities */
-import { Formik, Form, Field } from "formik";
-import React, { useEffect, useState } from "react";
-import Helmet from "react-helmet";
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-
+import { Formik, Form, Field } from "formik";
 import { loginCustomer } from "../../authentication/client_Api";
 import { useUserContext } from "../../context/UserContext";
 import ValidationSchema from "../../validation/Validation";
 
 const Login: React.FC = () => {
-  const { userData, setUserData } = useUserContext();
   const navigate = useNavigate();
+  const { userData, setUserData } = useUserContext();
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  useEffect(() => {
-    if (userData.logged) {
+  const handleTogglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handleFormSubmit = async (values: FormValues) => {
+    const success = await loginCustomer({
+      email: values.email,
+      password: values.password,
+    });
+
+    if (success) {
+      const updatedUserData = {
+        email: values.email,
+        password: values.password,
+        incorrect: false,
+        logged: true,
+      };
+      setUserData(updatedUserData);
       navigate("/");
+    } else {
+      const incorrectUserData = {
+        email: "",
+        password: "",
+        incorrect: true,
+        logged: false,
+      };
+      setUserData(incorrectUserData);
     }
-  }, [userData.logged, navigate]);
+  };
 
-  const [passwordVisible, setPasswordVisible] = useState({
-    passw: false,
-  });
-
-  const handleTogglePasswordVisibility = (field: keyof typeof passwordVisible) => {
-    setPasswordVisible((prevState) => ({
-      ...prevState,
-      [field]: !prevState[field],
+  const clearIncorrectFlag = () => {
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      incorrect: false,
     }));
   };
+
+  interface FormValues {
+    email: string;
+    password: string;
+  }
 
   return (
     <>
@@ -49,44 +72,11 @@ const Login: React.FC = () => {
                 password: "",
               }}
               validationSchema={ValidationSchema(0)}
-              onSubmit={async (values) => {
-                const success = await loginCustomer({
-                  email: values.email,
-                  password: values.password,
-                });
-
-                if (success) {
-                  const updatedUserData = {
-                    email: values.email,
-                    password: values.password,
-                    incorrect: false,
-                    logged: true,
-                  };
-                  setUserData(updatedUserData);
-                  navigate("/");
-                } else {
-                  const incorrectUserData = {
-                    email: "",
-                    password: "",
-                    incorrect: true,
-                    logged: false,
-                  };
-                  setUserData(incorrectUserData);
-                }
-              }}
+              onSubmit={handleFormSubmit}
             >
               {({ errors, touched }) => (
                 <Form className="login-wrapper__card-form">
-                  <Field
-                    type="text"
-                    name="email"
-                    onFocus={() => {
-                      setUserData((prevUserData) => ({
-                        ...prevUserData,
-                        incorrect: false,
-                      }));
-                    }}
-                  />
+                  <Field type="text" name="email" onFocus={clearIncorrectFlag} />
                   <div>
                     <label>Login</label>
                     {errors.email && touched.email ? (
@@ -94,20 +84,15 @@ const Login: React.FC = () => {
                     ) : null}
                   </div>
                   <Field
-                    type={passwordVisible.passw ? "text" : "password"}
+                    type={passwordVisible ? "text" : "password"}
                     name="password"
-                    onFocus={() => {
-                      setUserData((prevUserData) => ({
-                        ...prevUserData,
-                        incorrect: false,
-                      }));
-                    }}
+                    onFocus={clearIncorrectFlag}
                   />
                   <div>
                     <label>Password</label>
                     <span
-                      className={passwordVisible.passw ? "visible" : ""}
-                      onClick={() => handleTogglePasswordVisibility("passw")}
+                      className={passwordVisible ? "visible" : ""}
+                      onClick={handleTogglePasswordVisibility}
                     />
                     {errors.password && touched.password ? (
                       <div className="error">{errors.password}</div>
@@ -121,7 +106,7 @@ const Login: React.FC = () => {
               )}
             </Formik>
             <p>
-              You don't have an account yet?
+              You don`&apos;`t have an account yet?
               <Link to="/registration">
                 <span> Sign up</span>
               </Link>

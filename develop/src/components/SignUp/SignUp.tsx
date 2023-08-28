@@ -1,41 +1,127 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable import/no-named-as-default */
 import { Field, Form, Formik } from "formik";
-import React, { useEffect, useState } from "react";
-import "./SignUp.scss";
-import Helmet from "react-helmet";
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-
 import { singUpCustomer } from "../../authentication/client_Api";
 import { useUserContext } from "../../context/UserContext";
 import ValidationSchema from "../../validation/Validation";
+import "./SignUp.scss";
 
 const SignUp: React.FC = () => {
-  const { userData, setUserData } = useUserContext();
   const navigate = useNavigate();
+  const { userData, setUserData } = useUserContext();
   const [clickedButton, setClickedButton] = useState("");
   const [registrationStep, setRegistrationStep] = useState(1);
-  const [passwordVisible, setPasswordVisible] = useState({
-    passw: false,
-  });
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
-  useEffect(() => {
-    if (userData.logged) {
-      navigate("/");
-    }
-  }, [userData.logged, navigate]);
-
-  const handleTogglePasswordVisibility = (field: keyof typeof passwordVisible) => {
-    setPasswordVisible((prevState) => ({
-      ...prevState,
-      [field]: !prevState[field],
-    }));
+  const handleTogglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
+
   const handleNextStep = () => {
     setRegistrationStep(registrationStep + 1);
   };
+
+  const handleFormSubmit = async (
+    values: FormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    let updatedValues;
+
+    if (clickedButton === "nextStep") {
+      handleNextStep();
+    } else if (clickedButton === "submit") {
+      const commonValues = {
+        email: values.email,
+        password: values.password,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        dateOfBirth: values.dateOfBirth,
+        addresses: [
+          {
+            country: values.country,
+            streetName: values.street,
+            postalCode: values.postalcode,
+            city: values.city,
+          },
+        ],
+      };
+
+      if (registrationStep === 2) {
+        updatedValues = {
+          ...commonValues,
+          addresses: [
+            ...commonValues.addresses,
+            {
+              country: values.country,
+              streetName: values.street,
+              postalCode: values.postalcode,
+              city: values.city,
+            },
+          ],
+        };
+      } else {
+        updatedValues = {
+          ...commonValues,
+          addresses: [
+            ...commonValues.addresses,
+            {
+              country: values.countryB,
+              streetName: values.streetB,
+              postalCode: values.postalcodeB,
+              city: values.cityB,
+            },
+          ],
+        };
+      }
+    }
+
+    if (updatedValues) {
+      const success = await singUpCustomer(updatedValues);
+      if (success) {
+        const updatedUserData = {
+          email: updatedValues.email,
+          password: updatedValues.password,
+          incorrect: false,
+          logged: true,
+        };
+        alert(
+          `Success registration. Welcome to our store ${
+            updatedValues.firstName + " " + updatedValues.lastName
+          }`
+        );
+        setUserData(updatedUserData);
+        navigate("/");
+      } else {
+        const incorrectUserData = {
+          email: "",
+          password: "",
+          incorrect: true,
+          logged: false,
+        };
+        setUserData(incorrectUserData);
+      }
+    }
+
+    setSubmitting(false);
+  };
+
+  interface FormValues {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+    country: string;
+    city: string;
+    street: string;
+    postalcode: string;
+    countryB: string;
+    cityB: string;
+    streetB: string;
+    postalcodeB: string;
+  }
+
   return (
     <>
       <Formik
@@ -55,86 +141,7 @@ const SignUp: React.FC = () => {
           postalcodeB: "",
         }}
         validationSchema={ValidationSchema(registrationStep)}
-        onSubmit={async (values, { setSubmitting }) => {
-          let updatedValues;
-
-          if (clickedButton === "nextStep") {
-            handleNextStep();
-          } else if (clickedButton === "submit") {
-            if (registrationStep === 2) {
-              updatedValues = {
-                email: values.email,
-                password: values.password,
-                firstName: values.firstName,
-                lastName: values.lastName,
-                dateOfBirth: values.dateOfBirth,
-                addresses: [
-                  {
-                    country: values.country,
-                    streetName: values.street,
-                    postalCode: values.postalcode,
-                    city: values.city,
-                  },
-                  {
-                    country: values.country,
-                    streetName: values.street,
-                    postalCode: values.postalcode,
-                    city: values.city,
-                  },
-                ],
-              };
-            } else {
-              updatedValues = {
-                email: values.email,
-                password: values.password,
-                firstName: values.firstName,
-                lastName: values.lastName,
-                dateOfBirth: values.dateOfBirth,
-                addresses: [
-                  {
-                    country: values.country,
-                    streetName: values.street,
-                    postalCode: values.postalcode,
-                    city: values.city,
-                  },
-                  {
-                    country: values.countryB,
-                    streetName: values.streetB,
-                    postalCode: values.postalcodeB,
-                    city: values.cityB,
-                  },
-                ],
-              };
-            }
-          }
-
-          if (updatedValues) {
-            const success = await singUpCustomer(updatedValues);
-            if (success) {
-              const updatedUserData = {
-                email: values.email,
-                password: values.password,
-                incorrect: false,
-                logged: true,
-              };
-              alert(
-                `Success registration. Welcom to our store ${
-                  values.firstName + " " + values.lastName
-                }`
-              );
-              setUserData(updatedUserData);
-              navigate("/");
-            } else {
-              const incorrectUserData = {
-                email: "",
-                password: "",
-                incorrect: true,
-                logged: false,
-              };
-              setUserData(incorrectUserData);
-            }
-          }
-        }}
+        onSubmit={handleFormSubmit}
       >
         {({ errors, touched }) => (
           <>
@@ -178,12 +185,12 @@ const SignUp: React.FC = () => {
                           ) : null}
                         </div>
 
-                        <Field type={passwordVisible.passw ? "text" : "password"} name="password" />
+                        <Field type={passwordVisible ? "text" : "password"} name="password" />
                         <div>
                           <label>Password</label>
                           <span
-                            className={passwordVisible.passw ? "visible" : ""}
-                            onClick={() => handleTogglePasswordVisibility("passw")}
+                            className={passwordVisible ? "visible" : ""}
+                            onClick={handleTogglePasswordVisibility}
                           />
                           {errors.password && touched.password ? (
                             <div className="error">{errors.password}</div>
@@ -216,7 +223,7 @@ const SignUp: React.FC = () => {
                         <div>
                           <Field name="country" as="select" defaultValue="">
                             <option value="" disabled>
-                              Wonderland
+                              Choose the country
                             </option>
                             <option value="US">United States</option>
                             <option value="GB">United Kingdom</option>
@@ -287,7 +294,7 @@ const SignUp: React.FC = () => {
                         <div>
                           <Field name="countryB" as="select" defaultValue="">
                             <option value="" disabled>
-                              Wonderland
+                              Choose the country
                             </option>
                             <option value="US">United States</option>
                             <option value="GB">United Kingdom</option>
