@@ -1,0 +1,32 @@
+.not-found__page {
+  &-animation {
+    position: fixed;
+    z-index: -1;
+    margin: 0 auto;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    h2 {
+      font-size: 5vh;
+      text-align: center;
+      width: 90vw;
+    }
+  }
+
+  p {
+    margin: 0 auto;
+    font-size: 2.5vh;
+    text-align: center;
+    position: relative;
+    transform: translateY(60vh);
+    z-index: 0;
+    line-height: 1.4;
+    max-width: 90vw;
+  }
+
+  a {
+    color: #558cb7;
+    cursor: pointer;
+  }
+}

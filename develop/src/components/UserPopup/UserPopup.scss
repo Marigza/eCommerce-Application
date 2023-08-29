@@ -1,0 +1,50 @@
+.user-popup {
+  position: fixed;
+  right: 5vh;
+  top: 9vh;
+  background: white;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: rgba(17, 12, 46, 0.144) 0px 1px 10px 0px;
+  border-radius: 3vh;
+  padding: 0.5vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  animation: popupUp 0.5s both;
+
+  &__link {
+    font-size: 2.5vh;
+    color: rgb(40, 40, 40);
+    padding: 1.5vh;
+  }
+
+  &__link:hover {
+    background: rgb(240, 240, 240);
+  }
+
+  &__link:last-child {
+    margin-bottom: 0;
+    border-radius: 0 0 3vh 3vh;
+  }
+
+  &__link:nth-last-child(3) {
+    border-bottom: 0.2vh solid black;
+    padding-bottom: 1.5vh;
+  }
+
+  &__link:first-child {
+    border-radius: 3vh 3vh 0vh 0vh;
+  }
+}
+
+@keyframes popupUp {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
