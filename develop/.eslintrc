@@ -27,7 +27,6 @@
   },
   "plugins": ["react", "@typescript-eslint", "jest"],
   "rules": {
-    "no-alert": "warn",
     "no-console": "warn",
     "linebreak-style": "off",
     "prettier/prettier": [
