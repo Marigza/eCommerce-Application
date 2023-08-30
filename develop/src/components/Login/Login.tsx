@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { loginCustomer } from "../../authentication/client_Api";
+import { loginCustomer } from "../../client_Api/authentication";
 import { useUserContext } from "../../context/UserContext";
 import ValidationSchema from "../../validation/Validation";
 
