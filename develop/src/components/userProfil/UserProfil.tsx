@@ -1,8 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./UserProfil.scss";
 
 const UserProfil: React.FC = () => {
+  const hello = () => {
+    console.log("hello");
+  };
+
   return (
     <div className="user-profil">
       <div className="user-profil__wrapper">
@@ -42,7 +47,9 @@ const UserProfil: React.FC = () => {
               <div className="user-profil__addres-data_content"></div>
             </div>
           </div>
-          <button className="user-profil__button-back">Back</button>
+          <Link to="/" className="user-profil__button-back">
+            <button>Back</button>
+          </Link>
         </div>
       </div>
     </div>

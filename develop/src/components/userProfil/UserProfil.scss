@@ -4,11 +4,17 @@
   left: 0;
 
   button {
-    padding: 0.5vh 2vh;
-    border-radius: 3vh;
-    background: #838383;
-    color: #ffffff;
+    padding: 0.8vh 2vh;
+    border: 0.2vh solid #000000;
+    border-radius: 5vh;
+    background: #ffffff;
+    color: #000000;
     font-size: 2vh;
+    transition-duration: 0.3s;
+  }
+  button:hover {
+    background: #000000;
+    color: #ffffff;
   }
 
   h3 {
@@ -150,10 +156,9 @@
     }
   }
 
-  &__button-back {
-    margin: 0 2vh;
-    padding: 1vh 5vh;
-    color: bisque;
+  &__button-back > button {
+    margin: 0 3vh;
+    padding: 0.8vh 10vh;
   }
 }
 

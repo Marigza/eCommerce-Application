@@ -4,6 +4,7 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 
 import { Login } from "../../components/Login";
 import { SignUp } from "../../components/SignUp";
+import { UserProfil } from "../userProfil";
 import UserPopup from "../UserPopup/UserPopup";
 
 const Header: React.FC = () => {
@@ -12,7 +13,10 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   React.useEffect(() => {
-    const scroll = location.pathname === "/login" || location.pathname === "/registration";
+    const scroll =
+      location.pathname === "/login" ||
+      location.pathname === "/registration" ||
+      location.pathname === "/userProfil";
     setDisableScroll(scroll);
 
     if (disableScroll) {
@@ -52,6 +56,7 @@ const Header: React.FC = () => {
       <Routes>
         <Route path="registration" element={<SignUp />} />
         <Route path="login" element={<Login />} />
+        <Route path="userProfil" element={<UserProfil />} />
       </Routes>
     </>
   );
