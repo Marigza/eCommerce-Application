@@ -21,3 +21,13 @@ export interface ICustomerInfoForSingUp extends ICustomerInfoForLogin {
     city: string;
   }[];
 }
+
+export interface ITokenStorage {
+  access_token: string;
+  creation_time: number;
+}
+
+export interface ICustomerStorage {
+  ID: string;
+  email: string;
+}
