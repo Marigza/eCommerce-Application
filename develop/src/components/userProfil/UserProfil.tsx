@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserInfo } from "../../client_Api/userInfo";
-import { IAddresses, IUser } from "./interfaces";
+import { IAddresses, IUser, IUserInfoState } from "./interfaces";
 
 import "./UserProfil.scss";
 
@@ -44,6 +44,14 @@ const UserProfil: React.FC = () => {
     );
   };
 
+  const [state, setState] = useState<IUserInfoState>({
+    email: "",
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    addresses: [],
+  });
+
   const userInfo = async (): Promise<void> => {
     const user: IUser | null = await getUserInfo();
 
@@ -59,7 +67,18 @@ const UserProfil: React.FC = () => {
       return addres;
     });
 
-    const addresElement = addresCollection.map((el: IAddresses) => addressGenerate(el));
+    const addresElement: JSX.Element[] = addresCollection.map((el: IAddresses) =>
+      addressGenerate(el)
+    );
+
+    setState({
+      ...state,
+      email: `${user.email}`,
+      firstName: `${user.firstName}`,
+      lastName: `${user.lastName}`,
+      dateOfBirth: `${user.dateOfBirth}`,
+      addresses: addresElement,
+    });
   };
 
   return (
@@ -73,32 +92,32 @@ const UserProfil: React.FC = () => {
           <div className="user-profil__content">
             <div className="user-profil__personal-data">
               <div className="user-profil__email-box">
-                <p>hancharuk270185@mail.ru</p>
-                <button onClick={userInfo}>Change Email</button>
+                <p>{state.email}</p>
+                <button>Change Email</button>
               </div>
               <div className="user-profil__change-password">
                 <button>Change Password</button>
               </div>
               <div className="user-profil__data-title-box">
                 <h3>User Data</h3>
-                <button>Change Data</button>
+                <button onClick={userInfo}>Change Data</button> {/*  здесь вызывается функция ! */}
               </div>
               <div className="user-profil__first-name-box">
                 <div>Firs Name</div>
-                <p>Mikhail</p>
+                <p>{state.firstName}</p>
               </div>
               <div className="user-profil__last-name-box">
                 <div>Last Name</div>
-                <p>Hancharuk</p>
+                <p>{state.lastName}</p>
               </div>
               <div className="user-profil__birthday-box">
                 <div>Date of Birth</div>
-                <p>27-01-85</p>
+                <p>{state.dateOfBirth}</p>
               </div>
             </div>
             <div className="user-profil__addres-data">
               <h3>Addresses</h3>
-              <div className="user-profil__addres-data_content"></div>
+              <div className="user-profil__addres-data_content">{state.addresses}</div>
             </div>
           </div>
           <Link to="/" className="user-profil__button-back">

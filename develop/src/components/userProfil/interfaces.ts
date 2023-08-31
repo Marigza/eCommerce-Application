@@ -31,3 +31,11 @@ export interface IUser {
   defaultShippingAddressId?: string;
   defaultBillingAddressId?: string;
 }
+
+export interface IUserInfoState {
+  email: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  addresses: JSX.Element[];
+}
