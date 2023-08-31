@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserInfo } from "../../client_Api/userInfo";
 import { IAddresses, IUser, IUserInfoState } from "./interfaces";
+// import { getproductList } from "../../client_Api/productList";
 
 import "./UserProfil.scss";
 
@@ -14,6 +15,13 @@ class Address {
     public postalCode: string
   ) {}
 }
+
+/*
+const getProd = async () => {
+  const data = await getproductList(``);
+  console.log(data);
+};
+*/
 
 const UserProfil: React.FC = () => {
   const addressGenerate = (body: IAddresses): JSX.Element => {
@@ -93,7 +101,7 @@ const UserProfil: React.FC = () => {
             <div className="user-profil__personal-data">
               <div className="user-profil__email-box">
                 <p>{state.email}</p>
-                <button>Change Email</button>
+                <button /*onClick={getProd}*/>Change Email</button>
               </div>
               <div className="user-profil__change-password">
                 <button>Change Password</button>
