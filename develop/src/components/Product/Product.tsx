@@ -7,6 +7,11 @@ type ProductType = {
   product: IProduct;
 };
 
+const writeIdProduct = (ID: string): string => {
+  localStorage.setItem("ID", ID);
+  return ID;
+};
+
 const Product: React.FC<ProductType> = (props) => {
   return (
     <Link to="/product" className="product">
@@ -23,7 +28,9 @@ const Product: React.FC<ProductType> = (props) => {
         {props.product.masterData.staged.masterVariant.prices[0].value.centAmount / 100}
         {props.product.masterData.staged.masterVariant.prices[0].value.currencyCode}
       </div>
-      <button className="button__more_info">more info...</button>
+      <button className="button__more_info" onClick={() => writeIdProduct(props.product.id)}>
+        more info...
+      </button>
     </Link>
   );
 };
