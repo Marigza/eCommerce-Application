@@ -14,7 +14,7 @@ const writeIdProduct = (ID: string): string => {
 
 const Product: React.FC<ProductType> = (props) => {
   return (
-    <Link to="/product" className="product">
+    <Link to="/product" className="product" onClick={() => writeIdProduct(props.product.id)}>
       <h3>{props.product.masterData.staged.name["en-US"]}</h3>
       <div>
         <img
@@ -28,9 +28,7 @@ const Product: React.FC<ProductType> = (props) => {
         {props.product.masterData.staged.masterVariant.prices[0].value.centAmount / 100}
         {props.product.masterData.staged.masterVariant.prices[0].value.currencyCode}
       </div>
-      <button className="button__more_info" onClick={() => writeIdProduct(props.product.id)}>
-        more info...
-      </button>
+      <button className="button__more_info">more info...</button>
     </Link>
   );
 };
