@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
-import { IProduct } from "../../client_Api/interfaces";
+import { ProductType } from "../../client_Api/interfaces";
 
 import "./Product.scss";
-
-type ProductType = {
-  product: IProduct;
-};
 
 const writeIdProduct = (ID: string): string => {
   localStorage.setItem("ID", ID);

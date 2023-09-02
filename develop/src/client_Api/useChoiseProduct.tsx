@@ -8,7 +8,10 @@ export function useChioseProduct() {
 
   const getProduct = async (Id: string) => {
     const objectToken: string | null = await tokenGenerate();
-    if (objectToken) {
+
+    if (!objectToken) return null;
+
+    try {
       const response = await fetch(
         `https://api.europe-west1.gcp.commercetools.com/${projectKey}/products/${Id}`,
         {
@@ -20,8 +23,13 @@ export function useChioseProduct() {
         }
       );
       const product = await response.json();
+
+      if (!product) return null;
+
       setProduct(product);
       return product;
+    } catch (e) {
+      return null;
     }
   };
 
