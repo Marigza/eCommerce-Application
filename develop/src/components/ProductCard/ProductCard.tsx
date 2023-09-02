@@ -1,11 +1,7 @@
 import React from "react";
-import { IProduct } from "../../client_Api/interfaces";
+import { ProductType } from "../../client_Api/interfaces";
 
 import "./ProductCard.scss";
-
-type ProductType = {
-  product: IProduct;
-};
 
 const ProductCard: React.FC<ProductType> = (props) => {
   return (

@@ -147,3 +147,7 @@ export interface IProduct {
   priceMode: string;
   lastVariantId: number;
 }
+
+export type ProductType = {
+  product: IProduct;
+};
