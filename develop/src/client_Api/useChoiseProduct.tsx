@@ -23,6 +23,9 @@ export function useChioseProduct() {
         }
       );
       const product = await response.json();
+
+      if (!product) return null;
+
       setProduct(product);
       return product;
     } catch (e) {

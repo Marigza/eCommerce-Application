@@ -23,6 +23,9 @@ export function useAllProducts() {
         }
       );
       const products = await response.json();
+
+      if (!products.results) return null;
+
       setProducts(products.results);
       return products.results;
     } catch (e) {
