@@ -8,7 +8,10 @@ export function useAllProducts() {
 
   const getProducts = async () => {
     const objectToken: string | null = await tokenGenerate();
-    if (objectToken) {
+
+    if (!objectToken) return null;
+
+    try {
       const response = await fetch(
         `https://api.europe-west1.gcp.commercetools.com/${projectKey}/products`,
         {
@@ -22,6 +25,8 @@ export function useAllProducts() {
       const products = await response.json();
       setProducts(products.results);
       return products.results;
+    } catch (e) {
+      return null;
     }
   };
 
