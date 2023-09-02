@@ -22,8 +22,9 @@ export const getproductList = async (endPath: string) => {
   // }
 };
 
-//** Фильтры:                                                                                           */
-//**         1. По цвету (не работает)     `?filter=variants.attributes.color:"white,gray"`             */
-//**         2. По sku  (работает)     `?filter=variants.sku:"white"`                                   */
-//**         3. По type  (не работает)     `productType.id:"tablet"`                                    */
-//**         3. По category тоже не работает                                                            */
+//** Фильтры:                                                                                                   */
+//**         1. По цвету (не работает)     `?filter=variants.attributes.color:"white,gray"`                     */
+//**         2. По sku  (работает)     `?filter=variants.sku:"white"`                                           */
+//**         3. По type  (не работает)     `?filter=productType.id:"3acd22c7-8640-4b36-a37c-464e6078fc87"`      */
+//**         3. По цене  (работает)     `?filter=variants.price.centAmount:range (0 to 80000)`                  */
+//**         3. По category тоже не работает                                                                    */

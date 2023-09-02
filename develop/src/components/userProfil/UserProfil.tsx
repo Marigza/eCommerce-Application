@@ -17,8 +17,18 @@ class Address {
 }
 
 /*
+const tablet = "3acd22c7-8640-4b36-a37c-464e6078fc87";
+const laptop = "658b5da7-2f5b-479b-a2d8-b3bd8d96ee38";
+const phone = "17e4d0e0-174d-4e86-a8fd-ea1f2363193c";
+
+const startPrice = 650;
+const endPrice = 850;
+
+const language = `len`;
+
 const getProd = async () => {
-  const data = await getproductList(``);
+  const data = await getproductList(`?filter=variants.text.name:${language}`);
+  // const data = await getproductList(`phones`);
   console.log(data);
 };
 */
@@ -101,7 +111,9 @@ const UserProfil: React.FC = () => {
             <div className="user-profil__personal-data">
               <div className="user-profil__email-box">
                 <p>{state.email}</p>
-                <button /*onClick={getProd}*/>Change Email</button>
+                <button>
+                  <Link to="/userProfil/UserProfilPopup">Change Email</Link>
+                </button>
               </div>
               <div className="user-profil__change-password">
                 <button>Change Password</button>
