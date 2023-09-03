@@ -1,5 +1,6 @@
 import React from "react";
 import { ProductType } from "../../client_Api/interfaces";
+import { Slider } from "../../slider";
 
 import "./ProductCard.scss";
 
@@ -7,10 +8,14 @@ const ProductCard: React.FC<ProductType> = (props) => {
   return (
     <main className="cardcontent__block">
       <div className="productContent__content">
+        <Slider />
         <div className="slider_block">
           <div className="slider_controls">
-            <div className="control_prev">prev</div>
-            <div className="control_prev">next</div>
+            <div className="control control_prev"></div>
+            <div className="control_dot">o</div>
+            <div className="control_dot">o</div>
+            <div className="control_dot">o</div>
+            <div className="control control_next"></div>
           </div>
           <div className="product_images">
             {props.product.masterData.staged.masterVariant.images.length > 1 ? (

@@ -57,6 +57,26 @@
   font-size: 2rem;
 }
 
+.slider_controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1vh;
+}
+
+.control {
+  width: 20px;
+  height: 20px;
+  background: url(../../assets/images/loginPage/arrow.svg) center no-repeat;
+}
+.control_prev {
+  transform: rotate(90deg);
+}
+
+.control_next {
+  transform: rotate(-90deg);
+}
+
 @media (max-width: 800px) {
   .item_big {
     height: 300px;
@@ -76,5 +96,18 @@
 
   .slider_block {
     flex-direction: column;
+  }
+
+  .slider_controls {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .control_prev {
+    transform: rotate(0deg);
+  }
+
+  .control_next {
+    transform: rotate(180deg);
   }
 }
