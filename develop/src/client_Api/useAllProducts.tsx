@@ -34,7 +34,7 @@ export function useAllProducts() {
   };
 
   useEffect(() => {
-    getProducts();
+    // getProducts();
   });
 
   return { Products };

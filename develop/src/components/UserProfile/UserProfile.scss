@@ -1,4 +1,4 @@
-.user-profil {
+.user-profile {
   position: fixed;
   top: 0;
   left: 0;
@@ -134,6 +134,7 @@
     }
 
     &_info-box {
+      padding: 0 0 2vh 0;
       flex: 0 1 48%;
       display: flex;
       flex-direction: column;
@@ -163,7 +164,7 @@
 }
 
 @media (max-width: 1010px) {
-  .user-profil {
+  .user-profile {
     &__card {
       min-width: 490px;
       height: auto;

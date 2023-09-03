@@ -1,5 +1,5 @@
 import { region, projectKey, tokenGenerate } from "./tokenGenerate";
-import { IUser } from "../components/userProfil/interfaces";
+import { IUser } from "../components/UserProfile/interfaces";
 
 export const getUserInfo = async (): Promise<IUser | null> => {
   const customerStorage = <string | null>localStorage.getItem("customer_info");

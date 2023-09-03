@@ -2,9 +2,9 @@ import { Routes, Route } from "react-router-dom";
 
 import { Login } from "../components/Login";
 import { SignUp } from "../components/SignUp";
-import { UserProfil } from "../components/userProfil";
+import { UserProfile } from "../components/UserProfile";
 import { UserProvider } from "../context/UserContext";
-import UserProfilPopup from "../components/userProfilPopup";
+import UserProfilePopup from "../components/userProfilePopup";
 import { Main } from "../pages/Main";
 import { NotFound } from "../pages/NotFound";
 import { ProductPage } from "../pages/ProductPage";
@@ -16,11 +16,11 @@ const App: React.FC = () => {
         <Route path="/" element={<Main />}>
           <Route path="registration" element={<SignUp />} />
           <Route path="login" element={<Login />} />
-          <Route path="userProfil/" element={<UserProfil />} />
-          <Route path="userProfil/UserProfilPopup" element={<UserProfilPopup />} />
+          <Route path="userProfile" element={<UserProfile />}></Route>
+          <Route path="userProfile/userProfilePopup" element={<UserProfilePopup />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
         <Route path="product" element={<ProductPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </UserProvider>
   );

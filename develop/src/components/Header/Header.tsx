@@ -4,7 +4,8 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 
 import { Login } from "../../components/Login";
 import { SignUp } from "../../components/SignUp";
-import { UserProfil } from "../userProfil";
+import { UserProfile } from "../UserProfile";
+import UserProfilePopup from "../userProfilePopup";
 import UserPopup from "../UserPopup/UserPopup";
 
 const Header: React.FC = () => {
@@ -16,7 +17,7 @@ const Header: React.FC = () => {
     const scroll =
       location.pathname === "/login" ||
       location.pathname === "/registration" ||
-      location.pathname === "/userProfil";
+      location.pathname === "/userProfile";
     setDisableScroll(scroll);
 
     if (disableScroll) {
@@ -56,7 +57,8 @@ const Header: React.FC = () => {
       <Routes>
         <Route path="registration" element={<SignUp />} />
         <Route path="login" element={<Login />} />
-        <Route path="userProfil" element={<UserProfil />} />
+        <Route path="userProfile" element={<UserProfile />} />
+        <Route path="userProfile/userProfilePopup" element={<UserProfilePopup />} />
       </Routes>
     </>
   );
