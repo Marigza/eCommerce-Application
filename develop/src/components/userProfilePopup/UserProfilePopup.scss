@@ -1,36 +1,28 @@
+.user-profile-popup.email-active {
+  visibility: visible;
+  filter: opacity(1);
+  button {
+    padding: 0.8vh 10vh;
+  }
+}
+
 .user-profile-popup {
+  visibility: hidden;
+  filter: opacity(0);
   position: fixed;
+  height: 95vh;
+  width: 95vw;
   top: 0;
   left: 0;
-
-  h3 {
-    font-size: 4vh;
-    font-weight: bold;
-  }
-
-  h4 {
-    padding: 0 0 1vh 0;
-    font-size: 3vh;
-    font-weight: bold;
-    font-style: italic;
-  }
+  display: flex;
+  transition-duration: 0.8s;
 
   &__wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-  }
-
-  &__card {
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
       sans-serif;
     margin: 0 auto;
-    width: 95vw;
-    height: 95vh;
+    width: 75vw;
+    height: 70vh;
     box-shadow: rgba(17, 12, 46, 0.35) 0px 48px 100px 0px;
     background: white;
     border-radius: 5vh;
@@ -40,7 +32,6 @@
     flex-direction: column;
     font-size: 3vh;
     z-index: 3;
-    animation: slideUp 0.8s both;
   }
 
   &__header {
@@ -79,19 +70,19 @@
     padding: 0 3vh;
     display: flex;
     justify-content: space-between;
-    &_button {
-      padding: 0.8vh 10vh;
-      border: 0.2vh solid #000000;
-      border-radius: 5vh;
-      background: #ffffff;
-      color: #000000;
-      font-size: 2vh;
-      transition-duration: 0.3s;
+    // button {
+    //   padding: 0.8vh 10vh;
+    //   border: 0.2vh solid #000000;
+    //   border-radius: 5vh;
+    //   background: #ffffff;
+    //   color: #000000;
+    //   font-size: 2vh;
+    //   transition-duration: 0.3s;
 
-      &:hover {
-        background: #000000;
-        color: #ffffff;
-      }
-    }
+    //   &:hover {
+    //     background: #000000;
+    //     color: #ffffff;
+    //   }
+    // }
   }
 }

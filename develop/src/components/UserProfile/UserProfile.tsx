@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getUserInfo } from "../../client_Api/userInfo";
-import { IAddresses, IUser, IUserInfoState } from "./interfaces";
-// import { getproductList } from "../../client_Api/productList";
-// import UserProfilePopup from "../userProfilePopup";
+import { IAddresses, IUser, IUserInfoState, IUserPopupState } from "./interfaces";
+import { UserProfilePopupEmail } from "../userProfilePopup/UserProfilePopupEmail";
 
 import "./UserProfile.scss";
 
@@ -16,23 +15,6 @@ class Address {
     public postalCode: string
   ) {}
 }
-
-/*
-const tablet = "3acd22c7-8640-4b36-a37c-464e6078fc87";
-const laptop = "658b5da7-2f5b-479b-a2d8-b3bd8d96ee38";
-const phone = "17e4d0e0-174d-4e86-a8fd-ea1f2363193c";
-
-const startPrice = 650;
-const endPrice = 850;
-
-const language = `len`;
-
-const getProd = async () => {
-  const data = await getproductList(`?fuzzy=true&fuzzyLevel=1&text.en-US="xiaomi"`);
-  // const data = await getproductList(`phones`);
-  console.log(data);
-};
-*/
 
 const UserProfile: React.FC = () => {
   const addressGenerate = (body: IAddresses): JSX.Element => {
@@ -71,6 +53,10 @@ const UserProfile: React.FC = () => {
     addresses: [],
   });
 
+  const [isUserPopup, setUserPopup] = useState<IUserPopupState>({
+    emailPopupActive: false,
+  });
+
   const userInfo = async (): Promise<void> => {
     const user: IUser | null = await getUserInfo();
 
@@ -100,6 +86,17 @@ const UserProfile: React.FC = () => {
     });
   };
 
+  const userPopupActive = (arg: string): void => {
+    setUserPopup({
+      ...isUserPopup,
+      emailPopupActive: arg === "email",
+    });
+  };
+
+  useEffect(() => {
+    userInfo();
+  });
+
   return (
     <div className="user-profile">
       <div className="user-profile__wrapper">
@@ -111,10 +108,12 @@ const UserProfile: React.FC = () => {
           <div className="user-profile__content">
             <div className="user-profile__personal-data">
               <div className="user-profile__email-box">
+                <UserProfilePopupEmail
+                  email={state.email}
+                  isEmailActive={isUserPopup.emailPopupActive}
+                />
                 <p>{state.email}</p>
-                <button>
-                  <Link to="/userProfile/userProfilePopup">Change Email</Link>
-                </button>
+                <button onClick={() => userPopupActive("email")}>Change Email</button>
               </div>
               <div className="user-profile__change-password">
                 <button /* onClick={getProd} */>Change Password </button>
@@ -141,7 +140,7 @@ const UserProfile: React.FC = () => {
               <div className="user-profile__addres-data_content">{state.addresses}</div>
             </div>
           </div>
-          <Link to="/" className="user-profile__button-back">
+          <Link to="../" className="user-profile__button-back">
             <button>Back</button>
           </Link>
         </div>

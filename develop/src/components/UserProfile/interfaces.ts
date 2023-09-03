@@ -39,3 +39,11 @@ export interface IUserInfoState {
   dateOfBirth: string;
   addresses: JSX.Element[];
 }
+
+export interface IUserPopupState {
+  emailPopupActive: boolean;
+}
+
+export interface IEmailState extends IUserPopupState {
+  email: string;
+}

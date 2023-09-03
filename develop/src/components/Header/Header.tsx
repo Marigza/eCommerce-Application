@@ -5,7 +5,6 @@ import { Link, Route, Routes, useLocation } from "react-router-dom";
 import { Login } from "../../components/Login";
 import { SignUp } from "../../components/SignUp";
 import { UserProfile } from "../UserProfile";
-import UserProfilePopup from "../userProfilePopup";
 import UserPopup from "../UserPopup/UserPopup";
 
 const Header: React.FC = () => {
@@ -58,7 +57,6 @@ const Header: React.FC = () => {
         <Route path="registration" element={<SignUp />} />
         <Route path="login" element={<Login />} />
         <Route path="userProfile" element={<UserProfile />} />
-        <Route path="userProfile/userProfilePopup" element={<UserProfilePopup />} />
       </Routes>
     </>
   );
