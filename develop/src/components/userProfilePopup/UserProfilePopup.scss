@@ -18,6 +18,7 @@
   transition-duration: 0.8s;
 
   &__wrapper {
+    position: relative;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
       sans-serif;
     margin: 0 auto;
@@ -67,22 +68,26 @@
   }
 
   &__button-box {
+    position: absolute;
+    bottom: 3vh;
+    left: 3vh;
     padding: 0 3vh;
     display: flex;
     justify-content: space-between;
-    // button {
-    //   padding: 0.8vh 10vh;
-    //   border: 0.2vh solid #000000;
-    //   border-radius: 5vh;
-    //   background: #ffffff;
-    //   color: #000000;
-    //   font-size: 2vh;
-    //   transition-duration: 0.3s;
+    gap: 5vh;
+    button {
+      padding: 0.8vh 10vh;
+      border: 0.2vh solid #000000;
+      border-radius: 5vh;
+      background: #ffffff;
+      color: #000000;
+      font-size: 2vh;
+      transition-duration: 0.3s;
 
-    //   &:hover {
-    //     background: #000000;
-    //     color: #ffffff;
-    //   }
-    // }
+      &:hover {
+        background: #000000;
+        color: #ffffff;
+      }
+    }
   }
 }

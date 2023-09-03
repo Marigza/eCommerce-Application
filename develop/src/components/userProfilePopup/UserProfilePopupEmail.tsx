@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import ValidationSchema from "../../validation/Validation";
+import { Formik, Form, Field } from "formik";
+import ValidationSchema from "../../validation/Validation";
 import { IEmailState } from "../UserProfile/interfaces";
 
 import "./UserProfilePopup.scss";
@@ -16,10 +16,6 @@ export const UserProfilePopupEmail: React.FC<{ email: string; isEmailActive: boo
     email: props.email,
   });
 
-  const handleChange = (event: { target: { value: string } }) => {
-    setValue({ ...value, email: event.target.value });
-  };
-
   const emailPopupClose = (arg: boolean): void => {
     if (!arg) {
       setValue({ ...value, emailPopupActive: false });
@@ -27,24 +23,41 @@ export const UserProfilePopupEmail: React.FC<{ email: string; isEmailActive: boo
   };
 
   return (
-    <div className={`user-profile-popup ${value.emailPopupActive ? "email-active" : ""}`}>
+    <div className={`user-profile-popup ${props.isEmailActive ? "email-active" : ""}`}>
       <div className="user-profile-popup__wrapper">
         <div className="user-profile-popup__header">
           <h2 className="user-profile-popup__header_title">Change an Email</h2>
           <div className="user-profile-popup__header_logo"></div>
         </div>
         <div className="user-profile-popup__content">
-          <input type="text" value={value.email} onChange={handleChange} />
-        </div>
-        <div className="user-profile-popup__button-box">
-          <button
-            onClick={() => {
-              emailPopupClose(false);
+          <Formik
+            initialValues={{
+              email: `${props.email}`,
             }}
+            validationSchema={ValidationSchema(0)}
+            onSubmit={() => emailPopupClose(false)}
           >
-            Back
-          </button>
-          <button>Submit</button>
+            {({ errors, touched }) => (
+              <Form className="login-wrapper__card-form">
+                <Field type="text" name="email" />
+                <div>
+                  {errors.email && touched.email ? (
+                    <div className="error">{errors.email}</div>
+                  ) : null}
+                </div>
+                <div className="user-profile-popup__button-box">
+                  <button
+                    onClick={() => {
+                      emailPopupClose(false);
+                    }}
+                  >
+                    Back
+                  </button>
+                  <button>Submit</button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     </div>
