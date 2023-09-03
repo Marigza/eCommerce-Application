@@ -42,8 +42,15 @@ export interface IUserInfoState {
 
 export interface IUserPopupState {
   emailPopupActive: boolean;
+  passwordPopupActive: boolean;
 }
 
-export interface IEmailState extends IUserPopupState {
+export interface IEmailState {
+  emailPopupActive: boolean;
+  email: string;
+}
+
+export interface IPasswordState {
+  passwordPopupActive: boolean;
   email: string;
 }

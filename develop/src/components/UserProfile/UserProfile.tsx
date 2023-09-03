@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getUserInfo } from "../../client_Api/userInfo";
 import { IAddresses, IUser, IUserInfoState, IUserPopupState } from "./interfaces";
 import { UserProfilePopupEmail } from "../userProfilePopup/UserProfilePopupEmail";
+import { UserProfilePopupPassword } from "../userProfilePopup/UserProfilePopupPassword";
 
 import "./UserProfile.scss";
 
@@ -55,6 +56,7 @@ const UserProfile: React.FC = () => {
 
   const [isUserPopup, setUserPopup] = useState<IUserPopupState>({
     emailPopupActive: false,
+    passwordPopupActive: false,
   });
 
   const userInfo = async (): Promise<void> => {
@@ -90,12 +92,14 @@ const UserProfile: React.FC = () => {
     setUserPopup({
       ...isUserPopup,
       emailPopupActive: arg === "email",
+      passwordPopupActive: arg === "password",
     });
   };
 
   useEffect(() => {
     userInfo();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="user-profile">
@@ -116,7 +120,11 @@ const UserProfile: React.FC = () => {
                 <button onClick={() => userPopupActive("email")}>Change Email</button>
               </div>
               <div className="user-profile__change-password">
-                <button /* onClick={getProd} */>Change Password </button>
+                <UserProfilePopupPassword
+                  email={state.email}
+                  isPasswordActive={isUserPopup.passwordPopupActive}
+                />
+                <button onClick={() => userPopupActive("password")}>Change Password </button>
               </div>
               <div className="user-profile__data-title-box">
                 <h3>User Data</h3>

@@ -163,15 +163,79 @@
   }
 }
 
-@media (max-width: 1010px) {
+@media (max-width: 1240px) {
   .user-profile {
     &__card {
-      min-width: 490px;
       height: auto;
     }
     &__personal-data,
     &__addres-data {
       flex: 0 1 100%;
+    }
+  }
+}
+
+@media (max-width: 660px) {
+  .user-profile {
+    button {
+      padding: 0.5vh 1.2vh;
+      border: 0.2vh solid #000000;
+      border-radius: 4vh;
+      font-size: 1.5vh;
+    }
+
+    h3 {
+      font-size: 2.5vh;
+      font-weight: bold;
+    }
+
+    h4 {
+      font-size: 1.6vh;
+      font-weight: bold;
+    }
+
+    &__card {
+      min-width: 360px;
+      border-radius: 4vh;
+      padding: 1.5vh;
+      font-size: 1vh;
+      z-index: 2;
+    }
+
+    &__header {
+      &_logo {
+        margin-bottom: 3vh;
+      }
+
+      &_title {
+        font-size: 4vh;
+        margin-bottom: 3vh;
+      }
+    }
+
+    &__personal-data,
+    &__addres-data {
+      gap: 1.5vh;
+    }
+
+    &__data-title-box {
+      margin: 4vh 0 2vh 0;
+    }
+
+    &__addres-data {
+      &_content {
+        padding: 1.5vh 0;
+      }
+
+      &_button-box {
+        display: flex;
+        gap: 2vh;
+      }
+    }
+
+    &__button-back > button {
+      margin: 0 3vh;
+      padding: 0.8vh 10vh;
     }
   }
 }
