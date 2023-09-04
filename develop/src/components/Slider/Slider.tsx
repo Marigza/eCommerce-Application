@@ -62,7 +62,7 @@ const Slider: React.FC<SliderProps> = (props) => {
   };
 
   return (
-    <div style={{ width: 300, height: 400 }} className="slider">
+    <div style={{ width: 300, height: 500 }} className="slider">
       <SliderContext.Provider
         value={{
           goToSlide,
