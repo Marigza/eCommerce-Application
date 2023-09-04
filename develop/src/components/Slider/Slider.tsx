@@ -62,7 +62,7 @@ const Slider: React.FC<SliderProps> = (props) => {
   };
 
   return (
-    <div style={{ width: 300, height: 400 }} className="slider">
+    <div style={{ width: 300, height: 500 }} className="slider">
       <SliderContext.Provider
         value={{
           goToSlide,
@@ -72,9 +72,9 @@ const Slider: React.FC<SliderProps> = (props) => {
           items,
         }}
       >
-        <Arrows />
-        <SlidesList />
-        <Dots />
+        {items.length > 1 && <Arrows />}
+        {items.length > 1 && <SlidesList />}
+        {items.length > 1 && <Dots />}
       </SliderContext.Provider>
     </div>
   );
