@@ -38,10 +38,10 @@ const UserPopup: React.FC<IUserPopupProps> = ({ onClose }) => {
         </>
       )}
       <Link to="" className="user-popup__link" onClick={onClose}>
-        Сontact with support
+        Contact with support
       </Link>
       <Link to="/userProfile" className="user-popup__link" onClick={onClose}>
-        User profil
+        User profile
       </Link>
       <Link to="" className="user-popup__link" onClick={onClose}>
         User agreements

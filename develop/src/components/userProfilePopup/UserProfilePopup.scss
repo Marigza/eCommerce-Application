@@ -1,5 +1,6 @@
 .user-profile-popup.email-active,
-.user-profile-popup.password-active {
+.user-profile-popup.password-active,
+.user-profile-popup.data-active {
   visibility: visible;
   filter: opacity(1);
   button {
@@ -16,7 +17,7 @@
   top: 0;
   left: 0;
   display: flex;
-  transition-duration: 0.8s;
+  transition-duration: 0.5s;
 
   &__wrapper {
     position: relative;
