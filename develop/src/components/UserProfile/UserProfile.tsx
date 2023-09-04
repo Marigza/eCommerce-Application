@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getUserInfo } from "../../client_Api/userInfo";
-import { IAddresses, IUser, IUserInfoState } from "./interfaces";
-// import { getproductList } from "../../client_Api/productList";
+import { IAddresses, IUser, IUserInfoState, IUserPopupState } from "./interfaces";
+import { UserProfilePopupEmail } from "../userProfilePopup/UserProfilePopupEmail";
+import { UserProfilePopupPassword } from "../userProfilePopup/UserProfilePopupPassword";
 
-import "./UserProfil.scss";
+import "./UserProfile.scss";
 
 class Address {
   constructor(
@@ -16,17 +17,10 @@ class Address {
   ) {}
 }
 
-/*
-const getProd = async () => {
-  const data = await getproductList(``);
-  console.log(data);
-};
-*/
-
-const UserProfil: React.FC = () => {
+const UserProfile: React.FC = () => {
   const addressGenerate = (body: IAddresses): JSX.Element => {
     return (
-      <div className="user-profil__addres-data_info-box">
+      <div className="user-profile__addres-data_info-box">
         <h4>{body.id}</h4>
         <p>
           <span>Country</span>
@@ -44,7 +38,7 @@ const UserProfil: React.FC = () => {
           <span>Postal code</span>
           {body.postalCode}
         </p>
-        <div className="user-profil__addres-data_button-box">
+        <div className="user-profile__addres-data_button-box">
           <button>Change</button>
           <button>remove</button>
         </div>
@@ -58,6 +52,11 @@ const UserProfil: React.FC = () => {
     lastName: "",
     dateOfBirth: "",
     addresses: [],
+  });
+
+  const [isUserPopup, setUserPopup] = useState<IUserPopupState>({
+    emailPopupActive: false,
+    passwordPopupActive: false,
   });
 
   const userInfo = async (): Promise<void> => {
@@ -89,46 +88,67 @@ const UserProfil: React.FC = () => {
     });
   };
 
+  const userPopupActive = (arg: string): void => {
+    setUserPopup({
+      ...isUserPopup,
+      emailPopupActive: arg === "email",
+      passwordPopupActive: arg === "password",
+    });
+  };
+
+  useEffect(() => {
+    userInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <div className="user-profil">
-      <div className="user-profil__wrapper">
-        <div className="user-profil__card">
-          <div className="user-profil__header">
-            <h2 className="user-profil__header_title">User Profil</h2>
-            <div className="user-profil__header_logo"></div>
+    <div className="user-profile">
+      <div className="user-profile__wrapper">
+        <div className="user-profile__card">
+          <div className="user-profile__header">
+            <h2 className="user-profile__header_title">User Profile</h2>
+            <div className="user-profile__header_logo"></div>
           </div>
-          <div className="user-profil__content">
-            <div className="user-profil__personal-data">
-              <div className="user-profil__email-box">
+          <div className="user-profile__content">
+            <div className="user-profile__personal-data">
+              <div className="user-profile__email-box">
+                <UserProfilePopupEmail
+                  email={state.email}
+                  isEmailActive={isUserPopup.emailPopupActive}
+                />
                 <p>{state.email}</p>
-                <button /*onClick={getProd}*/>Change Email</button>
+                <button onClick={() => userPopupActive("email")}>Change Email</button>
               </div>
-              <div className="user-profil__change-password">
-                <button>Change Password</button>
+              <div className="user-profile__change-password">
+                <UserProfilePopupPassword
+                  email={state.email}
+                  isPasswordActive={isUserPopup.passwordPopupActive}
+                />
+                <button onClick={() => userPopupActive("password")}>Change Password </button>
               </div>
-              <div className="user-profil__data-title-box">
+              <div className="user-profile__data-title-box">
                 <h3>User Data</h3>
                 <button onClick={userInfo}>Change Data</button> {/*  здесь вызывается функция ! */}
               </div>
-              <div className="user-profil__first-name-box">
+              <div className="user-profile__first-name-box">
                 <div>Firs Name</div>
                 <p>{state.firstName}</p>
               </div>
-              <div className="user-profil__last-name-box">
+              <div className="user-profile__last-name-box">
                 <div>Last Name</div>
                 <p>{state.lastName}</p>
               </div>
-              <div className="user-profil__birthday-box">
+              <div className="user-profile__birthday-box">
                 <div>Date of Birth</div>
                 <p>{state.dateOfBirth}</p>
               </div>
             </div>
-            <div className="user-profil__addres-data">
+            <div className="user-profile__addres-data">
               <h3>Addresses</h3>
-              <div className="user-profil__addres-data_content">{state.addresses}</div>
+              <div className="user-profile__addres-data_content">{state.addresses}</div>
             </div>
           </div>
-          <Link to="/" className="user-profil__button-back">
+          <Link to="../" className="user-profile__button-back">
             <button>Back</button>
           </Link>
         </div>
@@ -137,4 +157,4 @@ const UserProfil: React.FC = () => {
   );
 };
 
-export default UserProfil;
+export default UserProfile;
