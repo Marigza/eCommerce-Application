@@ -1,0 +1,85 @@
+.slider {
+  overflow-x: hidden;
+  position: relative;
+
+  & .slide-list {
+    display: flex;
+    height: 60%;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    margin-top: 15px;
+
+    & .slide {
+      flex: 1 0 100%;
+
+      & .slide-image {
+        display: flex;
+        margin: 0 auto;
+        max-height: 300px;
+        width: 100%;
+        object-fit: contain;
+      }
+
+      & .slide-title {
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.arrows {
+  display: flex;
+  font-size: 30px;
+  justify-content: center;
+  gap: 15%;
+  background-color: transparent;
+  height: fit-content;
+  width: 100%;
+
+  & .arrow {
+    height: 30px;
+    width: 30px;
+    background: url(../../assets/images/svg/arrow.svg) center no-repeat;
+    background-size: contain;
+    transition: all ease 0.3s;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:active {
+      background: url(../../assets/images/svg/arrowActive.svg) center no-repeat;
+    }
+
+    &.left {
+      transform: rotate(0deg);
+    }
+
+    &.right {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+
+  & .dot {
+    background-color: #e7e7e7;
+    border-radius: 5px;
+    height: 10px;
+    margin: 5px;
+    width: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: rgb(69, 69, 69);
+    }
+  }
+}
