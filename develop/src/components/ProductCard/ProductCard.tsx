@@ -1,33 +1,25 @@
 import React from "react";
 import { ProductType } from "../../client_Api/interfaces";
+import Slider from "../Slider/Slider";
 
 import "./ProductCard.scss";
 
 const ProductCard: React.FC<ProductType> = (props) => {
   return (
     <main className="cardcontent__block">
+      <h2 className="product_name">{props.product.masterData.staged.name["en-US"]}</h2>
       <div className="productContent__content">
-        <div className="slider_block">
-          <div className="slider_controls">
-            <div className="control_prev">prev</div>
-            <div className="control_prev">next</div>
+        <div className="images">
+          <div className="main_image">
+            <img
+              className="image_item item_big"
+              src={props.product.masterData.staged.masterVariant.images[0].url}
+              alt="foto"
+            />
           </div>
-          <div className="product_images">
-            {props.product.masterData.staged.masterVariant.images.length > 1 ? (
-              props.product.masterData.staged.masterVariant.images.map((item, index) => (
-                <img className="image_item item_small" src={item.url} alt="foto" key={index} />
-              ))
-            ) : (
-              <img
-                className="image_item item_big"
-                src={props.product.masterData.staged.masterVariant.images[0].url}
-                alt="foto"
-              />
-            )}
-          </div>
+          <Slider images={props.product.masterData.staged.masterVariant.images} />
         </div>
-        <div>
-          <h2 className="product_name">{props.product.masterData.staged.name["en-US"]}</h2>
+        <div className="description">
           <div className="product_description">
             <span>Description</span>
             <span>{props.product.masterData.staged.description["en-US"]}</span>
