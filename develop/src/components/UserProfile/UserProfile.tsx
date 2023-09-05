@@ -5,6 +5,7 @@ import { IAddresses, IUser, IUserInfoState } from "./interfaces";
 import { UserProfilePopupEmail } from "../userProfilePopup/UserProfilePopupEmail";
 import { UserProfilePopupPassword } from "../userProfilePopup/UserProfilePopupPassword";
 import { UserProfilePopupData } from "../userProfilePopup/UserProfilePopupData";
+import { UserProfilePopupAddress } from "../userProfilePopup/UserProfilePopupAddress";
 
 import "./UserProfile.scss";
 
@@ -19,6 +20,35 @@ class Address {
 }
 
 const UserProfile: React.FC = () => {
+  const [addresState, setAddresState] = useState<IAddresses>({
+    id: "",
+    country: "",
+    city: "",
+    streetName: "",
+    postalCode: "",
+  });
+
+  const [isAddresPopupActive, setIsAddresPopupActive] = useState(false);
+
+  const openAddresPopup = () => {
+    setIsAddresPopupActive(true);
+  };
+  const closeAddresPopup = () => {
+    setIsAddresPopupActive(false);
+  };
+
+  const handlerChangeAddres = (body: IAddresses) => {
+    setAddresState({
+      ...addresState,
+      id: body.id,
+      country: body.country,
+      city: body.city,
+      streetName: body.streetName,
+      postalCode: body.postalCode,
+    });
+    openAddresPopup();
+  };
+
   const addressGenerate = (body: IAddresses): JSX.Element => {
     return (
       <div className="user-profile__addres-data_info-box">
@@ -40,7 +70,19 @@ const UserProfile: React.FC = () => {
           {body.postalCode}
         </p>
         <div className="user-profile__addres-data_button-box">
-          <button>Change</button>
+          <button
+            onClick={() =>
+              handlerChangeAddres({
+                id: body.id,
+                country: body.country,
+                city: body.city,
+                streetName: body.streetName,
+                postalCode: body.postalCode,
+              })
+            }
+          >
+            Change
+          </button>
           <button>remove</button>
         </div>
       </div>
@@ -124,33 +166,42 @@ const UserProfile: React.FC = () => {
             <div className="user-profile__header_logo"></div>
           </div>
           <div className="user-profile__content">
+            <UserProfilePopupEmail
+              email={state.email}
+              isEmailActive={isEmailPopupActive}
+              onClose={closeEmailPopup}
+            />
+            <UserProfilePopupPassword
+              email={state.email}
+              isPasswordActive={isPasswordPopupActive}
+              onClose={closePasswordPopup}
+            />
+            <UserProfilePopupData
+              email={state.email}
+              firstName={state.firstName}
+              lastName={state.lastName}
+              dateOfBirth={state.dateOfBirth}
+              isDataActive={isDataPopupActive}
+              onClose={closeDataPopup}
+            />
+            <UserProfilePopupAddress
+              id={addresState.id}
+              country={addresState.country}
+              streetName={addresState.streetName}
+              postalCode={addresState.postalCode}
+              city={addresState.city}
+              isAddressActive={isAddresPopupActive}
+              onClose={closeAddresPopup}
+            />
             <div className="user-profile__personal-data">
               <div className="user-profile__email-box">
-                <UserProfilePopupEmail
-                  email={state.email}
-                  isEmailActive={isEmailPopupActive}
-                  onClose={closeEmailPopup}
-                />
                 <p>{state.email}</p>
                 <button onClick={openEmailPopup}>Change Email</button>
               </div>
               <div className="user-profile__change-password">
-                <UserProfilePopupPassword
-                  email={state.email}
-                  isPasswordActive={isPasswordPopupActive}
-                  onClose={closePasswordPopup}
-                />
                 <button onClick={openPasswordPopup}>Change Password </button>
               </div>
               <div className="user-profile__data-title-box">
-                <UserProfilePopupData
-                  email={state.email}
-                  firstName={state.firstName}
-                  lastName={state.lastName}
-                  dateOfBirth={state.dateOfBirth}
-                  isDataActive={isDataPopupActive}
-                  onClose={closeDataPopup}
-                />
                 <h3>User Data</h3>
                 <button onClick={openDataPopup}>Change Data</button>
               </div>
