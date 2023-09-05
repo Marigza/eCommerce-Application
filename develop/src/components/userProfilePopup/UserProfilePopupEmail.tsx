@@ -4,19 +4,17 @@ import ValidationSchema from "../../validation/Validation";
 
 import "./UserProfilePopup.scss";
 
-export const UserProfilePopupEmail: React.FC<{ email: string; isEmailActive: boolean }> = (props: {
+export const UserProfilePopupEmail: React.FC<{
   email: string;
   isEmailActive: boolean;
-}) => {
-  let emailStyle = props.isEmailActive;
-
-  const emailPopupClose = (arg: boolean): void => {
-    if (!arg) {
-      emailStyle = false;
-    }
+  onClose: () => void;
+}> = (props) => {
+  const submitHandlerMail = () => {
+    props.onClose();
   };
+
   return (
-    <div className={`user-profile-popup ${emailStyle ? "email-active" : ""}`}>
+    <div className={`user-profile-popup ${props.isEmailActive ? "email-active" : ""}`}>
       <div className="user-profile-popup__wrapper">
         <div className="user-profile-popup__header">
           <h2 className="user-profile-popup__header_title">Change an Email...</h2>
@@ -28,7 +26,7 @@ export const UserProfilePopupEmail: React.FC<{ email: string; isEmailActive: boo
               email: props.email,
             }}
             validationSchema={ValidationSchema(0)}
-            onSubmit={() => emailPopupClose(false)}
+            onSubmit={submitHandlerMail}
             enableReinitialize
           >
             {({ errors, touched }) => (
@@ -39,17 +37,18 @@ export const UserProfilePopupEmail: React.FC<{ email: string; isEmailActive: boo
                     <div className="error">{errors.email}</div>
                   ) : null}
                 </div>
+
                 <div className="user-profile-popup__button-box">
                   <button
                     onClick={() => {
-                      emailPopupClose(false);
+                      props.onClose();
                     }}
                   >
                     Back
                   </button>
                   <button
                     onClick={() => {
-                      emailPopupClose(true);
+                      props.onClose();
                     }}
                   >
                     Submit

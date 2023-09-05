@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getUserInfo } from "../../client_Api/userInfo";
-import { IAddresses, IUser, IUserInfoState, IUserPopupState } from "./interfaces";
+import { IAddresses, IUser, IUserInfoState } from "./interfaces";
 import { UserProfilePopupEmail } from "../userProfilePopup/UserProfilePopupEmail";
 import { UserProfilePopupPassword } from "../userProfilePopup/UserProfilePopupPassword";
+import { UserProfilePopupData } from "../userProfilePopup/UserProfilePopupData";
 
 import "./UserProfile.scss";
 
@@ -54,10 +55,31 @@ const UserProfile: React.FC = () => {
     addresses: [],
   });
 
-  const [isUserPopup, setUserPopup] = useState<IUserPopupState>({
-    emailPopupActive: false,
-    passwordPopupActive: false,
-  });
+  const [isPasswordPopupActive, setIsPasswordPopupActive] = useState(false);
+
+  const [isEmailPopupActive, setIsEmailPopupActive] = useState(false);
+
+  const [isDataPopupActive, setIsDataPopupActive] = useState(false);
+
+  const openPasswordPopup = () => {
+    setIsPasswordPopupActive(true);
+  };
+  const openEmailPopup = () => {
+    setIsEmailPopupActive(true);
+  };
+  const openDataPopup = () => {
+    setIsDataPopupActive(true);
+  };
+
+  const closePasswordPopup = () => {
+    setIsPasswordPopupActive(false);
+  };
+  const closeEmailPopup = () => {
+    setIsEmailPopupActive(false);
+  };
+  const closeDataPopup = () => {
+    setIsDataPopupActive(false);
+  };
 
   const userInfo = async (): Promise<void> => {
     const user: IUser | null = await getUserInfo();
@@ -88,14 +110,6 @@ const UserProfile: React.FC = () => {
     });
   };
 
-  const userPopupActive = (arg: string): void => {
-    setUserPopup({
-      ...isUserPopup,
-      emailPopupActive: arg === "email",
-      passwordPopupActive: arg === "password",
-    });
-  };
-
   useEffect(() => {
     userInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -114,21 +128,31 @@ const UserProfile: React.FC = () => {
               <div className="user-profile__email-box">
                 <UserProfilePopupEmail
                   email={state.email}
-                  isEmailActive={isUserPopup.emailPopupActive}
+                  isEmailActive={isEmailPopupActive}
+                  onClose={closeEmailPopup}
                 />
                 <p>{state.email}</p>
-                <button onClick={() => userPopupActive("email")}>Change Email</button>
+                <button onClick={openEmailPopup}>Change Email</button>
               </div>
               <div className="user-profile__change-password">
                 <UserProfilePopupPassword
                   email={state.email}
-                  isPasswordActive={isUserPopup.passwordPopupActive}
+                  isPasswordActive={isPasswordPopupActive}
+                  onClose={closePasswordPopup}
                 />
-                <button onClick={() => userPopupActive("password")}>Change Password </button>
+                <button onClick={openPasswordPopup}>Change Password </button>
               </div>
               <div className="user-profile__data-title-box">
+                <UserProfilePopupData
+                  email={state.email}
+                  firstName={state.firstName}
+                  lastName={state.lastName}
+                  dateOfBirth={state.dateOfBirth}
+                  isDataActive={isDataPopupActive}
+                  onClose={closeDataPopup}
+                />
                 <h3>User Data</h3>
-                <button onClick={userInfo}>Change Data</button> {/*  здесь вызывается функция ! */}
+                <button onClick={openDataPopup}>Change Data</button>
               </div>
               <div className="user-profile__first-name-box">
                 <div>Firs Name</div>
