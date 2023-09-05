@@ -14,7 +14,7 @@ const HomeSlider: React.FC = () => {
   };
 
   return (
-    <Slider {...settings} className="slider">
+    <Slider {...settings} className="home-slider">
       <div className="slider-slide"></div>
       <div className="slider-slide"></div>
       <div className="slider-slide"></div>

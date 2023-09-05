@@ -7,11 +7,11 @@ import "./Breadcrumbs.scss";
 const routes = [
   { path: "/catalog", breadcrumb: "Catalog" },
   { path: "/catalog/phones", breadcrumb: "Phones" },
-  { path: "/catalog/phones/:productId", breadcrumb: "Details" },
-  { path: "/catalog/tables", breadcrumb: "Tables" },
-  { path: "/catalog/tables/:productId", breadcrumb: "Details" },
+  { path: "/catalog/phones/:prod", breadcrumb: "About" },
+  { path: "/catalog/tablets", breadcrumb: "Tablets" },
+  { path: "/catalog/tablets/:prod", breadcrumb: "About" },
   { path: "/catalog/laptops", breadcrumb: "Laptops" },
-  { path: "/catalog/laptops/:productId", breadcrumb: "Details" },
+  { path: "/catalog/laptops/:prod", breadcrumb: "About" },
 ];
 
 const Breadcrumbs: React.FC = () => {

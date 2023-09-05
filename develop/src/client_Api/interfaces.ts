@@ -106,3 +106,123 @@ export interface IProduct {
   createdAt: string;
   lastModifiedAt: string;
 }
+
+export interface IProductGet {
+  id: string;
+  version: number;
+  versionModifiedAt: string;
+  lastMessageSequenceNumber: number;
+  createdAt: string;
+  lastModifiedAt: string;
+  lastModifiedBy: {
+    isPlatformClient: boolean;
+    user: {
+      typeId: string;
+      id: string;
+    };
+  };
+  createdBy: {
+    isPlatformClient: boolean;
+    user: {
+      typeId: string;
+      id: string;
+    };
+  };
+  productType: {
+    typeId: string;
+    id: string;
+  };
+  masterData: {
+    current: {
+      name: {
+        "en-US": string;
+      };
+      description: {
+        "en-US": string;
+      };
+      categories: [];
+      categoryOrderHints: Record<string, never>;
+      slug: {
+        "en-US": string;
+      };
+      metaTitle: {
+        "en-US": string;
+      };
+      metaDescription: {
+        "en-US": string;
+      };
+      masterVariant: {
+        id: number;
+        sku: string;
+        key: string;
+        prices: [];
+        images: {
+          url: string;
+          dimensions: {
+            w: number;
+            h: number;
+          };
+        }[];
+        attributes: [];
+        assets: [];
+      };
+      variants: [];
+      searchKeywords: Record<string, never>;
+    };
+    staged: {
+      name: {
+        "en-US": string;
+      };
+      description: {
+        "en-US": string;
+      };
+      categories: [];
+      categoryOrderHints: Record<string, never>;
+      slug: {
+        "en-US": string;
+      };
+      metaTitle: {
+        "en-US": string;
+      };
+      metaDescription: {
+        "en-US": string;
+      };
+      masterVariant: {
+        id: number;
+        sku: string;
+        key: string;
+        prices: [
+          {
+            id: string;
+            value: {
+              type: string;
+              currencyCode: string;
+              centAmount: number;
+              fractionDigits: number;
+            };
+          },
+        ];
+        images: {
+          url: string;
+          dimensions: {
+            w: number;
+            h: number;
+          };
+        }[];
+        attributes: [];
+        assets: [];
+      };
+      variants: [];
+      searchKeywords: Record<string, never>;
+    };
+    published: boolean;
+    hasStagedChanges: boolean;
+  };
+  key: string;
+  priceMode: string;
+  lastVariantId: number;
+}
+
+export type ProductType = {
+  product: IProduct;
+};

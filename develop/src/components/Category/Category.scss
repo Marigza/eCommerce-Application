@@ -30,6 +30,7 @@
       border-radius: 2.6vh 0 0 2.6vh;
       border: none;
     }
+
     &:last-child {
       border-radius: 0 2.6vh 2.6vh 0;
       border: none;
@@ -42,11 +43,13 @@
   background-size: cover;
   height: 7vh;
 }
+
 #tablets {
   background-image: url(../../assets/images/png/tablets-cat.png);
   background-size: cover;
   height: 7vh;
 }
+
 #laptops {
   background-image: url(../../assets/images/png/laptops-cat.png);
   background-size: cover;

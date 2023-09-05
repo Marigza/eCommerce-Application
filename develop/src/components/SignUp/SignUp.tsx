@@ -2,7 +2,7 @@ import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-import { singUpCustomer } from "../../client_Api";
+import { signUpCustomer } from "../../client_Api/authentication";
 import { useUserContext } from "../../context/UserContext";
 import ValidationSchema from "../../validation/Validation";
 import "./SignUp.scss";
@@ -77,7 +77,7 @@ const SignUp: React.FC = () => {
     }
 
     if (updatedValues) {
-      const success = await singUpCustomer(updatedValues);
+      const success = await signUpCustomer(updatedValues);
       if (success) {
         const updatedUserData = {
           email: updatedValues.email,

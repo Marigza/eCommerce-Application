@@ -16,8 +16,25 @@ const writeIdProduct = (ID: string): string => {
 };
 
 const CatalogProduct: React.FC<ProductType> = (props) => {
+  const keyFirstChar = props.product.key.charAt(0);
+
+  const getPath = (firstChar: string) => {
+    switch (firstChar) {
+      case "1":
+        return `/catalog/phones/${props.product.key}`;
+      case "2":
+        return `/catalog/tablets/${props.product.key}`;
+      case "3":
+        return `/catalog/laptops/${props.product.key}`;
+      default:
+        return `/catalog/${props.product.key}`;
+    }
+  };
+
+  const toPath = getPath(keyFirstChar);
+
   return (
-    <Link to="/product" className="product" onClick={() => writeIdProduct(props.product.id)}>
+    <Link to={toPath} className="product" onClick={() => writeIdProduct(props.product.id)}>
       <div
         className="product-image"
         style={{ backgroundImage: `url(${props.product.masterVariant.images[0].url})` }}

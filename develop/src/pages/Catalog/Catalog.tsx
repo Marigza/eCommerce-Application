@@ -3,9 +3,9 @@ import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import { Product } from "../../components/CatalogProduct";
 import "./Catalog.scss";
 import { Filter } from "../../components/Filter";
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Category } from "../../components/Category";
-import { getproductList } from "../../client_Api/productList";
+import { getProductList } from "../../client_Api/productList";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../client_Api/interfaces";
 
@@ -24,22 +24,22 @@ const Catalog: React.FC = () => {
   useEffect(() => {
     const loadProducts = async () => {
       if (location.pathname === "/catalog/phones") {
-        const response = await getproductList(
+        const response = await getProductList(
           `?filter=categories.id:"${category.phones}"&${filterString}`
         );
         setProducts(response);
       } else if (location.pathname === "/catalog/tablets") {
-        const response = await getproductList(
+        const response = await getProductList(
           `?filter=categories.id:"${category.tablets}"&${filterString}`
         );
         setProducts(response);
       } else if (location.pathname === "/catalog/laptops") {
-        const response = await getproductList(
+        const response = await getProductList(
           `?filter=categories.id:"${category.laptops}"&${filterString}`
         );
         setProducts(response);
       } else {
-        const response = await getproductList(`?${filterString}`);
+        const response = await getProductList(`?${filterString}`);
         setProducts(response);
       }
     };
@@ -60,17 +60,22 @@ const Catalog: React.FC = () => {
       </Helmet>
       <main>
         <Breadcrumbs />
-        <div className="category-sort">
-          <Category />
-        </div>
-        <div className="catalog-wrapper">
-          <Filter onSearch={setFilterString} />
-          <div className="catalog-products">
-            {Products.map((product) => (
-              <Product product={product} key={product.id} />
-            ))}
-          </div>
-        </div>
+        <Outlet />
+        {!/\/\d+/.test(location.pathname) && (
+          <>
+            <div className="category-sort">
+              <Category />
+            </div>
+            <div className="catalog-wrapper">
+              <Filter onSearch={setFilterString} />
+              <div className="catalog-products">
+                {Products.map((product) => (
+                  <Product product={product} key={product.id} />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </main>
     </>
   );

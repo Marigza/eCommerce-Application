@@ -1,6 +1,6 @@
 import { region, projectKey, tokenGenerate } from "./tokenGenerate";
 
-export const getproductList = async (endPath: string) => {
+export const getProductList = async (endPath: string) => {
   const token: string | null = await tokenGenerate();
 
   if (!token) return null;

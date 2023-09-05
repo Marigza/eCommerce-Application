@@ -26,9 +26,14 @@ const UserPopup: React.FC<IUserPopupProps> = ({ onClose }) => {
       <div className="background" onClick={onClose} />
       <div className="user-popup">
         {userData.logged ? (
-          <Link to="" onClick={handleLogout} className="user-popup__link">
-            Log Out
-          </Link>
+          <>
+            <Link to="userProfile" className="user-popup__link" onClick={onClose}>
+              Profile
+            </Link>
+            <Link to="" onClick={handleLogout} className="user-popup__link">
+              Log Out
+            </Link>
+          </>
         ) : (
           <>
             <Link to="registration" className="user-popup__link" onClick={onClose}>

@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import HomeSlider from "../../components/HomeSlider/HomeSlider";
+import { MainContent } from "../../components/MainContent";
 
 const Main: React.FC = () => {
   return (
@@ -7,9 +7,7 @@ const Main: React.FC = () => {
       <Helmet>
         <title>JustStore - Homepage</title>
       </Helmet>
-      <main className="main">
-        <HomeSlider />
-      </main>
+      <MainContent />
     </>
   );
 };
