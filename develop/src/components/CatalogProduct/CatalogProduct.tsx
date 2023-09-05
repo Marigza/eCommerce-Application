@@ -15,7 +15,7 @@ const writeIdProduct = (ID: string): string => {
   return ID;
 };
 
-const Product: React.FC<ProductType> = (props) => {
+const CatalogProduct: React.FC<ProductType> = (props) => {
   return (
     <Link to="/product" className="product" onClick={() => writeIdProduct(props.product.id)}>
       <div
@@ -79,4 +79,4 @@ const Product: React.FC<ProductType> = (props) => {
   );
 };
 
-export default Product;
+export default CatalogProduct;

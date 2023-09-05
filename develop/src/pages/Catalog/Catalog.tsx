@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
-import { Product } from "../../components/Product";
+import { Product } from "../../components/CatalogProduct";
 import "./Catalog.scss";
 import { Filter } from "../../components/Filter";
 import { useLocation } from "react-router-dom";
