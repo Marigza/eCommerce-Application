@@ -149,7 +149,7 @@ const SignUp: React.FC = () => {
               <title>JustStore - Sing up</title>
             </Helmet>
             <div className="singup">
-              <Link to="/" className="background" />
+              <div className="background" />
               <div className="singup-wrapper">
                 <div className="singup-wrapper__card">
                   <Link to="/">

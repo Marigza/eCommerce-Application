@@ -1,6 +1,6 @@
 import { region, projectKey, tokenGenerate } from "./tokenGenerate";
 
-export const getproductList = async (endPath: string) => {
+export const getProductList = async (endPath: string) => {
   const token: string | null = await tokenGenerate();
 
   if (!token) return null;
@@ -15,16 +15,16 @@ export const getproductList = async (endPath: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
-
-  return response.json();
+  const products = await response.json();
+  if (!products.results) return null;
+  return products.results;
   // } catch (error) {
   // return null;
   // }
 };
 
-//** Фильтры:                                                                                                   */
-//**         1. По цвету (не работает)     `?filter=variants.attributes.color:"white,gray"`                     */
-//**         2. По sku  (работает)     `?filter=variants.sku:"white"`                                           */
-//**         3. По type  (не работает)     `?filter=productType.id:"3acd22c7-8640-4b36-a37c-464e6078fc87"`      */
-//**         3. По цене  (работает)     `?filter=variants.price.centAmount:range (0 to 80000)`                  */
-//**         3. По category тоже не работает                                                                    */
+//** Фильтры:                                                                                           */
+//**         1. По цвету (не работает)     `?filter=variants.attributes.color:"white,gray"`             */
+//**         2. По sku  (работает)     `?filter=variants.sku:"white"`                                   */
+//**         3. По type  (не работает)     `productType.id:"tablet"`                                    */
+//**         3. По category тоже не работает                                                            */

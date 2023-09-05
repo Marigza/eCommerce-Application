@@ -59,7 +59,7 @@ const Login: React.FC = () => {
         <title>JustStore - Login</title>
       </Helmet>
       <div className="singup">
-        <Link to="/" className="background" />
+        <div className="background" />
         <div className="login-wrapper">
           <div className="login-wrapper__card">
             <Link to="/">
@@ -106,7 +106,7 @@ const Login: React.FC = () => {
               )}
             </Formik>
             <p>
-              You don`&apos;`t have an account yet?
+              You don&apos;t have an account yet?
               <Link to="/registration">
                 <span> Sign up</span>
               </Link>

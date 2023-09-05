@@ -14,7 +14,46 @@
   padding: 0 5vh 0 5vh;
 }
 
-a + div {
+.header-links {
+  display: flex;
+  gap: 4vh;
+
+  nav {
+    ul {
+      display: flex;
+
+      a {
+        padding: 0 1vh 0 1vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 8vh;
+        color: black;
+        border: 0.1vh solid rgba(0, 0, 0, 0);
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 0.1vh;
+          background-color: black;
+          bottom: -0.1vh;
+          left: 0;
+          transform-origin: right;
+          transform: scaleX(0);
+          transition: transform 0.2s ease-in-out;
+        }
+
+        &:hover::before {
+          transform-origin: left;
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+}
+
+.header-links + div {
   display: flex;
   align-items: center;
   gap: 2vh;
@@ -54,6 +93,7 @@ a + div {
   height: 5vh;
   padding-left: 1.5vh;
   cursor: pointer;
+  z-index: 10;
 
   &.active {
     box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.18);

@@ -1,0 +1,128 @@
+.product {
+  flex-basis: calc(33.33% - 1.5vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2vh;
+  background-color: white;
+  color: black;
+  border-radius: 2vh;
+  padding: 2vh 0 0vh 0;
+  cursor: pointer;
+  position: relative;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0 0.5vh 2vh 0;
+  }
+
+  &:hover .buy-now {
+    transition:
+      color 0.3s,
+      background 0.3s,
+      border 0.6s,
+      opacity 0.3s;
+    opacity: 1;
+  }
+
+  &-image {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    min-height: 25vh;
+  }
+
+  &-description {
+    border-top: 0.5vh solid hsl(0, 0%, 96%);
+    display: flex;
+    flex-direction: column;
+    color: black;
+    font-size: 2vh;
+    width: 100%;
+    padding: 2vh;
+    padding-bottom: 0;
+
+    &__attributes {
+      p {
+        margin-top: 1vh;
+      }
+    }
+  }
+
+  &-price {
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .product-price__old {
+      display: flex;
+
+      .discount-percent {
+        align-self: center;
+        height: 2vh;
+        font-size: 1.5vh;
+        margin-left: 0.5vh;
+        border: 0.2vh red solid;
+        border-radius: 2vh;
+        padding: 0.2vh 0.5vh 1vh 0.5vh;
+        color: red;
+      }
+    }
+
+    .old-price {
+      color: gray;
+      font-size: 3vh;
+      text-decoration: line-through;
+    }
+
+    .normal-price {
+      font-size: 3vh;
+      margin-top: 3vh;
+      font-weight: bolder;
+    }
+
+    .discont-price {
+      font-size: 3vh;
+      font-weight: bolder;
+      width: fit-content;
+    }
+  }
+
+  h3 {
+    font-size: 2.5vh;
+    font-weight: bolder;
+    margin-bottom: 1vh;
+  }
+}
+.shipping {
+  display: flex;
+  gap: 0.5vh;
+  margin-top: 0.5vh;
+  font-size: 2vh;
+  color: gray;
+  margin-bottom: 2vh;
+}
+
+.buy-now {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  color: rgb(29, 164, 14);
+  border: 0.3vh solid rgb(29, 164, 14);
+  background: white;
+  width: 6vh;
+  height: 6vh;
+  border-radius: 2vh;
+  bottom: 2vh;
+  right: 2vh;
+  opacity: 0;
+
+  &:hover {
+    color: white;
+    background: rgb(29, 164, 14);
+    border: 0.3vh solid rgb(29, 164, 14);
+  }
+}

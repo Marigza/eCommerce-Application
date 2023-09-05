@@ -35,6 +35,81 @@ export interface ICustomerStorage {
 export interface IProduct {
   id: string;
   version: number;
+  productType: {
+    typeId: string;
+    id: string;
+  };
+  name: {
+    [locale: string]: string;
+  };
+  description: {
+    [locale: string]: string;
+  };
+  categories: {
+    typeId: string;
+    id: string;
+  }[];
+  categoryOrderHints: Record<string, unknown>;
+  slug: {
+    [locale: string]: string;
+  };
+  metaTitle: {
+    [locale: string]: string;
+  };
+  metaDescription: {
+    [locale: string]: string;
+  };
+  variants: unknown[];
+  masterVariant: {
+    attributes: {
+      name: string;
+      value: string;
+    }[];
+    assets: unknown[];
+    images: {
+      url: string;
+      dimensions: {
+        w: number;
+        h: number;
+      };
+    }[];
+    prices: {
+      id: string;
+      value: {
+        type: string;
+        currencyCode: string;
+        centAmount: number;
+        fractionDigits: number;
+      };
+      discounted?: {
+        value: {
+          type: string;
+          currencyCode: string;
+          centAmount: number;
+          fractionDigits: number;
+        };
+        discount: {
+          typeId: string;
+          id: string;
+        };
+      };
+    }[];
+    key: string;
+    sku: string;
+    id: number;
+  };
+  searchKeywords: Record<string, unknown>;
+  hasStagedChanges: boolean;
+  published: boolean;
+  key: string;
+  priceMode: string;
+  createdAt: string;
+  lastModifiedAt: string;
+}
+
+export interface IProductGet {
+  id: string;
+  version: number;
   versionModifiedAt: string;
   lastMessageSequenceNumber: number;
   createdAt: string;
