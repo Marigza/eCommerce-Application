@@ -1,0 +1,15 @@
+.catalog-wrapper {
+  margin-top: 2vh;
+  display: flex;
+  gap: 2vh;
+}
+.catalog-products {
+  width: 70%;
+  background: hsl(0, 0%, 96%);
+  height: fit-content;
+  border-radius: 4vh;
+  padding: 2vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vh;
+}

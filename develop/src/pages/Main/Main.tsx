@@ -1,8 +1,5 @@
-/* eslint-disable import/no-named-as-default */
-import Helmet from "react-helmet";
-
-import { Header } from "../../components/Header";
-import { MainContent } from "../../components/MainContent";
+import { Helmet } from "react-helmet";
+import HomeSlider from "../../components/HomeSlider/HomeSlider";
 
 const Main: React.FC = () => {
   return (
@@ -10,8 +7,9 @@ const Main: React.FC = () => {
       <Helmet>
         <title>JustStore - Homepage</title>
       </Helmet>
-      <Header />
-      <MainContent />
+      <main className="main">
+        <HomeSlider />
+      </main>
     </>
   );
 };

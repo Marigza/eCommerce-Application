@@ -1,0 +1,33 @@
+.breadcrumbs-container {
+  width: 100%;
+  background-color: black;
+  height: 6vh;
+  padding: 0 1vh 0 1vh;
+  background: hsl(0, 0%, 96%);
+  border-radius: 4vh;
+  display: flex;
+  align-items: center;
+
+  a {
+    display: flex;
+    align-items: center;
+    color: black;
+    background: white;
+    border-radius: 2vh;
+    padding: 0 2vh 0 2vh;
+    height: 4vh;
+    font-size: 2vh;
+    transition:
+      color 0.2s,
+      background 0.2s;
+
+    &:hover {
+      color: white;
+      background: black;
+    }
+  }
+
+  span {
+    display: contents;
+  }
+}

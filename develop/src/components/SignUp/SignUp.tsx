@@ -2,7 +2,7 @@ import { Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useNavigate } from "react-router-dom";
-import { singUpCustomer } from "../../authentication/client_Api";
+import { singUpCustomer } from "../../client_Api";
 import { useUserContext } from "../../context/UserContext";
 import ValidationSchema from "../../validation/Validation";
 import "./SignUp.scss";
@@ -149,7 +149,7 @@ const SignUp: React.FC = () => {
               <title>JustStore - Sing up</title>
             </Helmet>
             <div className="singup">
-              <Link to="/" className="background" />
+              <div className="background" />
               <div className="singup-wrapper">
                 <div className="singup-wrapper__card">
                   <Link to="/">

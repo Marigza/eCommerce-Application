@@ -1,0 +1,70 @@
+.catalog-filter {
+  width: 30%;
+  background: hsl(0, 0%, 96%);
+  height: min-content;
+  border-radius: 4vh;
+  display: flex;
+  flex-direction: column;
+
+  div:first-child {
+    margin-bottom: 0;
+  }
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vh;
+    margin-bottom: 4vh;
+
+    input {
+      opacity: 0;
+      position: absolute;
+    }
+
+    label {
+      font-size: 2.5vh;
+      display: block;
+      height: 5vh;
+      background-color: white;
+      border-radius: 4vh;
+      padding: 1vh;
+      cursor: pointer;
+      transition:
+        background-color 0.3s,
+        color 0.3s;
+    }
+
+    input:checked + label {
+      background-color: black;
+      color: white;
+    }
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    padding: 2vh;
+    height: 100%;
+
+    button {
+      color: black;
+      border: 0.1vh solid black;
+      background: white;
+      font-size: 3vh;
+      transition:
+        color 0.3s,
+        background 0.3s,
+        border 0.3s;
+      margin-top: auto;
+      height: 6vh;
+      border-radius: 4vh;
+
+      &:hover {
+        background: black;
+        color: white;
+      }
+    }
+  }
+}
+.filter-title {
+  font-size: 3.5vh;
+  margin-bottom: 1vh;
+}
