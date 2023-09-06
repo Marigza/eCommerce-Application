@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import ValidationSchema from "../../validation/Validation";
+import { changeDataOfUser } from "../../client_Api/userInfo";
 
 import "./UserProfilePopup.scss";
 
@@ -9,7 +10,13 @@ export const UserProfilePopupEmail: React.FC<{
   isEmailActive: boolean;
   onClose: () => void;
 }> = (props) => {
-  const submitHandlerMail = () => {
+  const submitHandlerMail = async () => {
+    const data = {
+      action: "changeEmail",
+      email: "email@example.com",
+    };
+    // const responce = await changeDataOfUser(data);
+
     props.onClose();
   };
 
@@ -46,13 +53,7 @@ export const UserProfilePopupEmail: React.FC<{
                   >
                     Back
                   </button>
-                  <button
-                    onClick={() => {
-                      props.onClose();
-                    }}
-                  >
-                    Submit
-                  </button>
+                  <button onClick={submitHandlerMail}>Submit</button>
                 </div>
               </Form>
             )}
