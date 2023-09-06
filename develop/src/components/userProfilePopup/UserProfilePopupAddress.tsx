@@ -14,6 +14,7 @@ export const UserProfilePopupAddress: React.FC<{
   postalCode: string;
   city: string;
   isAddressActive: boolean;
+  flag: boolean;
   onClose: () => void;
 }> = (props) => {
   const submitHandlerAddress = async (values: IBodyOfChangeUserAddres) => {
@@ -36,6 +37,7 @@ export const UserProfilePopupAddress: React.FC<{
               postalcode: props.postalCode,
               type: props.type,
               id: props.id,
+              flag: props.flag,
             }}
             validationSchema={ValidationSchema(2)}
             onSubmit={submitHandlerAddress}

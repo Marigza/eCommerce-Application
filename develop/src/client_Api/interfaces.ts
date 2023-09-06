@@ -234,4 +234,5 @@ export interface IBodyOfChangeUserAddres {
   street: string;
   id: string;
   type: string;
+  flag: boolean;
 }

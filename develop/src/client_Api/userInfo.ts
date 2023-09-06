@@ -35,31 +35,59 @@ export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres) => {
 
   const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        version: user.version,
-        actions: [
-          { action: "removeAddress", addressId: body.id },
-          {
-            action: "addAddress",
-            address: {
-              streetName: body.street,
-              postalCode: body.postalcode,
-              city: body.city,
-              country: body.country,
+  if (body.flag) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          version: user.version,
+          actions: [
+            { action: "removeAddress", addressId: body.id },
+            {
+              action: "addAddress",
+              address: {
+                streetName: body.street,
+                postalCode: body.postalcode,
+                city: body.city,
+                country: body.country,
+              },
             },
-          },
-        ],
-      }),
-    });
-  } catch (error) {
-    return null;
+          ],
+        }),
+      });
+    } catch (error) {
+      return null;
+    }
+  } else {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          version: user.version,
+          actions: [
+            {
+              action: "addAddress",
+              address: {
+                streetName: body.street,
+                postalCode: body.postalcode,
+                city: body.city,
+                country: body.country,
+              },
+            },
+          ],
+        }),
+      });
+    } catch (error) {
+      return null;
+    }
   }
 };
 

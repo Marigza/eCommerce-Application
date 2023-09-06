@@ -16,7 +16,8 @@ class Address {
     public country: string,
     public city: string,
     public streetName: string,
-    public postalCode: string
+    public postalCode: string,
+    public flag: boolean
   ) {}
 }
 
@@ -28,6 +29,7 @@ const UserProfile: React.FC = () => {
     city: "",
     streetName: "",
     postalCode: "",
+    flag: true,
   });
 
   const [isAddresPopupActive, setIsAddresPopupActive] = useState(false);
@@ -48,6 +50,7 @@ const UserProfile: React.FC = () => {
       city: body.city,
       streetName: body.streetName,
       postalCode: body.postalCode,
+      flag: body.flag,
     });
     openAddresPopup();
   };
@@ -88,6 +91,7 @@ const UserProfile: React.FC = () => {
                 city: body.city,
                 streetName: body.streetName,
                 postalCode: body.postalCode,
+                flag: true,
               })
             }
           >
@@ -150,7 +154,8 @@ const UserProfile: React.FC = () => {
         el.country,
         el.city,
         el.streetName,
-        el.postalCode
+        el.postalCode,
+        el.flag
       );
       return addres;
     });
@@ -210,6 +215,7 @@ const UserProfile: React.FC = () => {
               city={addresState.city}
               isAddressActive={isAddresPopupActive}
               onClose={closeAddresPopup}
+              flag={addresState.flag}
             />
             <div className="user-profile__personal-data">
               <div className="user-profile__email-box">
@@ -248,6 +254,7 @@ const UserProfile: React.FC = () => {
                       city: "",
                       streetName: "",
                       postalCode: "",
+                      flag: false,
                     })
                   }
                 >

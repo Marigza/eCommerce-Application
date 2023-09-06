@@ -5,6 +5,7 @@ export interface IAddresses {
   streetName: string;
   postalCode: string;
   city: string;
+  flag: boolean;
 }
 
 export interface IUser {
