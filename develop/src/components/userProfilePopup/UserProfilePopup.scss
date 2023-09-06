@@ -1,6 +1,7 @@
 .user-profile-popup.email-active,
 .user-profile-popup.password-active,
-.user-profile-popup.data-active {
+.user-profile-popup.data-active,
+.user-profile-popup.address-active {
   visibility: visible;
   filter: opacity(1);
   button {

@@ -39,3 +39,8 @@ export interface IUserInfoState {
   dateOfBirth: string;
   addresses: JSX.Element[];
 }
+
+export interface IBodyOfChangeUserData {
+  action: string;
+  email?: string;
+}
