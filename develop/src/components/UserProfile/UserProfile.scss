@@ -133,6 +133,11 @@
       flex-wrap: wrap;
     }
 
+    &_title {
+      display: flex;
+      justify-content: space-around;
+    }
+
     &_info-box {
       padding: 0 0 2vh 0;
       flex: 0 1 48%;

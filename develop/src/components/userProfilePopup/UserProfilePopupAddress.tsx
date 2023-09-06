@@ -1,20 +1,24 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import ValidationSchema from "../../validation/Validation";
+import { IBodyOfChangeUserAddres } from "../../client_Api/interfaces";
+import { changeAddressOfUser } from "../../client_Api/userInfo";
 
 import "./UserProfilePopup.scss";
 
 export const UserProfilePopupAddress: React.FC<{
   id: string;
+  type: string;
   country: string;
   streetName: string;
   postalCode: string;
   city: string;
   isAddressActive: boolean;
+  flag: boolean;
   onClose: () => void;
 }> = (props) => {
-  const submitHandlerAddress = () => {
-    props.onClose();
+  const submitHandlerAddress = async (values: IBodyOfChangeUserAddres) => {
+    changeAddressOfUser(values).then(() => props.onClose());
   };
 
   return (
@@ -31,6 +35,9 @@ export const UserProfilePopupAddress: React.FC<{
               city: props.city,
               street: props.streetName,
               postalcode: props.postalCode,
+              type: props.type,
+              id: props.id,
+              flag: props.flag,
             }}
             validationSchema={ValidationSchema(2)}
             onSubmit={submitHandlerAddress}
@@ -81,19 +88,25 @@ export const UserProfilePopupAddress: React.FC<{
                   ) : null}
                 </div>
 
+                <Field name="type" as="select" defaultValue="">
+                  <option value="" disabled>
+                    Choose an address type
+                  </option>
+                  <option value="Shipping">Shipping</option>
+                  <option value="Billing">Billing</option>
+                </Field>
+
                 <div className="user-profile-popup__button-box">
-                  <button
+                  <div
+                    className="user-profile-popup__button-box_back"
                     onClick={() => {
                       props.onClose();
                     }}
                   >
                     Back
-                  </button>
-                  <button
-                    onClick={() => {
-                      props.onClose();
-                    }}
-                  >
+                  </div>
+
+                  <button type="submit" name="address_submit">
                     Submit
                   </button>
                 </div>

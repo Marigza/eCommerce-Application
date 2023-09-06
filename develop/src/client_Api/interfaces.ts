@@ -226,3 +226,13 @@ export interface IProductGet {
 export type ProductType = {
   product: IProduct;
 };
+
+export interface IBodyOfChangeUserAddres {
+  city: string;
+  country: string;
+  postalcode: string;
+  street: string;
+  id: string;
+  type: string;
+  flag: boolean;
+}
