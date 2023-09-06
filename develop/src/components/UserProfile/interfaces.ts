@@ -1,5 +1,6 @@
 export interface IAddresses {
   id: string;
+  type: string;
   country: string;
   streetName: string;
   postalCode: string;
@@ -38,9 +39,4 @@ export interface IUserInfoState {
   lastName: string;
   dateOfBirth: string;
   addresses: JSX.Element[];
-}
-
-export interface IBodyOfChangeUserData {
-  action: string;
-  email?: string;
 }

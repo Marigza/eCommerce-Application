@@ -1,5 +1,6 @@
 import { region, projectKey, tokenGenerate } from "./tokenGenerate";
-import { IBodyOfChangeUserData, IUser } from "../components/UserProfile/interfaces";
+import { IUser } from "../components/UserProfile/interfaces";
+import { IBodyOfChangeUserAddres } from "./interfaces";
 
 export const getUserInfo = async (): Promise<IUser | null> => {
   const customerStorage = <string | null>localStorage.getItem("customer_info");
@@ -26,7 +27,7 @@ export const getUserInfo = async (): Promise<IUser | null> => {
   }
 };
 
-export const changeDataOfUser = async (body: IBodyOfChangeUserData) => {
+export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres) => {
   const user = await getUserInfo();
   const token: string | null = await tokenGenerate();
 
@@ -43,11 +44,44 @@ export const changeDataOfUser = async (body: IBodyOfChangeUserData) => {
       },
       body: JSON.stringify({
         version: user.version,
-        actions: [body],
+        actions: [
+          { action: "removeAddress", addressId: body.id },
+          {
+            action: "addAddress",
+            address: {
+              streetName: body.street,
+              postalCode: body.postalcode,
+              city: body.city,
+              country: body.country,
+            },
+          },
+        ],
       }),
     });
+  } catch (error) {
+    return null;
+  }
+};
 
-    return await response.json();
+export const removeAddressOfUser = async (id: string) => {
+  const user = await getUserInfo();
+  const token: string | null = await tokenGenerate();
+  if (!token || !user) return null;
+
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        version: user.version,
+        actions: [{ action: "removeAddress", addressId: id }],
+      }),
+    });
   } catch (error) {
     return null;
   }

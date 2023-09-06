@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getUserInfo } from "../../client_Api/userInfo";
+import { getUserInfo, removeAddressOfUser } from "../../client_Api/userInfo";
 import { IAddresses, IUser, IUserInfoState } from "./interfaces";
 import { UserProfilePopupEmail } from "../userProfilePopup/UserProfilePopupEmail";
 import { UserProfilePopupPassword } from "../userProfilePopup/UserProfilePopupPassword";
@@ -12,6 +12,7 @@ import "./UserProfile.scss";
 class Address {
   constructor(
     public id: string,
+    public type: string,
     public country: string,
     public city: string,
     public streetName: string,
@@ -22,6 +23,7 @@ class Address {
 const UserProfile: React.FC = () => {
   const [addresState, setAddresState] = useState<IAddresses>({
     id: "",
+    type: "",
     country: "",
     city: "",
     streetName: "",
@@ -41,6 +43,7 @@ const UserProfile: React.FC = () => {
     setAddresState({
       ...addresState,
       id: body.id,
+      type: body.type,
       country: body.country,
       city: body.city,
       streetName: body.streetName,
@@ -49,10 +52,16 @@ const UserProfile: React.FC = () => {
     openAddresPopup();
   };
 
+  const [count, setCount] = useState(0);
+
+  const handlerRemoveAddres = (id: string) => {
+    removeAddressOfUser(id).then(() => setCount(count + 1));
+  };
+
   const addressGenerate = (body: IAddresses): JSX.Element => {
     return (
       <div className="user-profile__addres-data_info-box">
-        <h4>{body.id}</h4>
+        <h4>{body.type}</h4>
         <p>
           <span>Country</span>
           {body.country}
@@ -74,6 +83,7 @@ const UserProfile: React.FC = () => {
             onClick={() =>
               handlerChangeAddres({
                 id: body.id,
+                type: body.type,
                 country: body.country,
                 city: body.city,
                 streetName: body.streetName,
@@ -83,7 +93,7 @@ const UserProfile: React.FC = () => {
           >
             Change
           </button>
-          <button>remove</button>
+          <button onClick={() => handlerRemoveAddres(body.id)}>remove</button>
         </div>
       </div>
     );
@@ -129,12 +139,19 @@ const UserProfile: React.FC = () => {
     if (!user) return;
 
     const addresCollection: IAddresses[] = user.addresses.map((el: IAddresses) => {
-      const id: string = user.billingAddressIds.includes(el.id)
+      const type: string = user.billingAddressIds.includes(el.id)
         ? "Billing"
         : user.shippingAddressIds.includes(el.id)
         ? "Shipping"
         : "";
-      const addres: IAddresses = new Address(id, el.country, el.city, el.streetName, el.postalCode);
+      const addres: IAddresses = new Address(
+        el.id,
+        type,
+        el.country,
+        el.city,
+        el.streetName,
+        el.postalCode
+      );
       return addres;
     });
 
@@ -155,7 +172,7 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     userInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAddresPopupActive, isPasswordPopupActive, isEmailPopupActive, isDataPopupActive, count]);
 
   return (
     <div className="user-profile">
@@ -186,6 +203,7 @@ const UserProfile: React.FC = () => {
             />
             <UserProfilePopupAddress
               id={addresState.id}
+              type={addresState.type}
               country={addresState.country}
               streetName={addresState.streetName}
               postalCode={addresState.postalCode}
@@ -219,7 +237,23 @@ const UserProfile: React.FC = () => {
               </div>
             </div>
             <div className="user-profile__addres-data">
-              <h3>Addresses</h3>
+              <div className="user-profile__addres-data_title">
+                <h3>Addresses</h3>
+                <button
+                  onClick={() =>
+                    handlerChangeAddres({
+                      id: "",
+                      type: "",
+                      country: "",
+                      city: "",
+                      streetName: "",
+                      postalCode: "",
+                    })
+                  }
+                >
+                  Add address
+                </button>
+              </div>
               <div className="user-profile__addres-data_content">{state.addresses}</div>
             </div>
           </div>
