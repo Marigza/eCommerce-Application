@@ -27,17 +27,16 @@ export const getUserInfo = async (): Promise<IUser | null> => {
   }
 };
 
-export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres) => {
+export const changeEmailOfUser = async (body: { email: string }): Promise<void> => {
   const user = await getUserInfo();
   const token: string | null = await tokenGenerate();
-
-  if (!token || !user) return null;
+  if (!token || !user) return;
 
   const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
 
-  if (body.flag) {
-    try {
-      const response = await fetch(url, {
+  try {
+    await Promise.all([
+      fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,56 +44,54 @@ export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres) => {
         },
         body: JSON.stringify({
           version: user.version,
-          actions: [
-            { action: "removeAddress", addressId: body.id },
-            {
-              action: "addAddress",
-              address: {
-                streetName: body.street,
-                postalCode: body.postalcode,
-                city: body.city,
-                country: body.country,
-              },
-            },
-          ],
+          actions: [{ action: "changeEmail", email: `${body.email}` }],
         }),
-      });
-    } catch (error) {
-      return null;
-    }
-  } else {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          version: user.version,
-          actions: [
-            {
-              action: "addAddress",
-              address: {
-                streetName: body.street,
-                postalCode: body.postalcode,
-                city: body.city,
-                country: body.country,
-              },
-            },
-          ],
-        }),
-      });
-    } catch (error) {
-      return null;
-    }
+      }),
+    ]);
+  } catch (error) {
+    return;
   }
 };
 
-export const removeAddressOfUser = async (id: string) => {
+export const changeDataOfUser = async (body: {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+}): Promise<void> => {
   const user = await getUserInfo();
   const token: string | null = await tokenGenerate();
-  if (!token || !user) return null;
+  if (!token || !user) return;
+
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+
+  try {
+    await Promise.all([
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          version: user.version,
+          actions: [
+            { action: "setFirstName", firstName: `${body.firstName}` },
+            { action: "setLastName", lastName: `${body.lastName}` },
+            { action: "setDateOfBirth", dateOfBirth: `${body.dateOfBirth}` },
+          ],
+        }),
+      }),
+    ]);
+  } catch (error) {
+    return;
+  }
+};
+
+export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres): Promise<void> => {
+  const user = await getUserInfo();
+  const token: string | null = await tokenGenerate();
+
+  if (!token || !user) return;
 
   const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
 
@@ -107,10 +104,135 @@ export const removeAddressOfUser = async (id: string) => {
       },
       body: JSON.stringify({
         version: user.version,
-        actions: [{ action: "removeAddress", addressId: id }],
+        actions: [
+          { action: "removeAddress", addressId: body.id },
+          {
+            action: "addAddress",
+            address: {
+              streetName: body.street,
+              postalCode: body.postalcode,
+              city: body.city,
+              country: body.country,
+            },
+          },
+        ],
       }),
     });
+
+    if (!response.ok) return;
+
+    const result = await response.json();
+
+    if (result.addresses && result.version && result.addresses[result.addresses.length - 1].id) {
+      {
+        await Promise.all([
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              version: result.version,
+              actions: [
+                {
+                  action: `add${body.type}AddressId`,
+                  addressId: result.addresses[result.addresses.length - 1].id,
+                },
+              ],
+            }),
+          }),
+        ]);
+      }
+    }
   } catch (error) {
-    return null;
+    return;
+  }
+};
+
+export const addAddressOfUser = async (body: IBodyOfChangeUserAddres): Promise<void> => {
+  const user = await getUserInfo();
+  const token: string | null = await tokenGenerate();
+
+  if (!token || !user) return;
+
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        version: user.version,
+        actions: [
+          {
+            action: "addAddress",
+            address: {
+              streetName: body.street,
+              postalCode: body.postalcode,
+              city: body.city,
+              country: body.country,
+            },
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) return;
+
+    const result = await response.json();
+
+    if (result.addresses && result.version && result.addresses[result.addresses.length - 1].id) {
+      {
+        await Promise.all([
+          fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              version: result.version,
+              actions: [
+                {
+                  action: `add${body.type}AddressId`,
+                  addressId: result.addresses[result.addresses.length - 1].id,
+                },
+              ],
+            }),
+          }),
+        ]);
+      }
+    }
+  } catch (error) {
+    return;
+  }
+};
+
+export const removeAddressOfUser = async (id: string): Promise<void> => {
+  const user = await getUserInfo();
+  const token: string | null = await tokenGenerate();
+  if (!token || !user) return;
+
+  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+
+  try {
+    await Promise.all([
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          version: user.version,
+          actions: [{ action: "removeAddress", addressId: id }],
+        }),
+      }),
+    ]);
+  } catch (error) {
+    return;
   }
 };

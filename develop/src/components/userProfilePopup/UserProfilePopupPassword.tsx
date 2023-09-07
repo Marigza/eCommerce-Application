@@ -5,7 +5,6 @@ import ValidationSchema from "../../validation/Validation";
 import "./UserProfilePopup.scss";
 
 export const UserProfilePopupPassword: React.FC<{
-  email: string;
   isPasswordActive: boolean;
   onClose: () => void;
 }> = (props) => {

@@ -194,12 +194,10 @@ const UserProfile: React.FC = () => {
               onClose={closeEmailPopup}
             />
             <UserProfilePopupPassword
-              email={state.email}
               isPasswordActive={isPasswordPopupActive}
               onClose={closePasswordPopup}
             />
             <UserProfilePopupData
-              email={state.email}
               firstName={state.firstName}
               lastName={state.lastName}
               dateOfBirth={state.dateOfBirth}
