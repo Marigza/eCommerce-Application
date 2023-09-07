@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form, Field } from "formik";
 import ValidationSchema from "../../validation/Validation";
 import { IBodyOfChangeUserAddres } from "../../client_Api/interfaces";
-import { changeAddressOfUser } from "../../client_Api/userInfo";
+import { changeAddressOfUser, addAddressOfUser } from "../../client_Api/userInfo";
 
 import "./UserProfilePopup.scss";
 
@@ -17,8 +17,10 @@ export const UserProfilePopupAddress: React.FC<{
   flag: boolean;
   onClose: () => void;
 }> = (props) => {
-  const submitHandlerAddress = async (values: IBodyOfChangeUserAddres) => {
-    changeAddressOfUser(values).then(() => props.onClose());
+  const submitHandlerAddress = async (values: IBodyOfChangeUserAddres): Promise<void> => {
+    if (values.flag) {
+      changeAddressOfUser(values).then(() => props.onClose());
+    } else addAddressOfUser(values).then(() => props.onClose());
   };
 
   return (
