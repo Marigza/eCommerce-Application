@@ -5,7 +5,7 @@
 }
 
 .catalog-products {
-  width: 70%;
+  width: 100%;
   background: hsl(0, 0%, 96%);
   height: fit-content;
   border-radius: 4vh;
@@ -13,4 +13,11 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2vh;
+}
+
+.category-sort {
+  gap: 2vh;
+  height: 8vh;
+  margin-top: 2vh;
+  display: flex;
 }

@@ -1,8 +1,11 @@
 .content__block {
   margin: 0 auto;
-  margin-top: 10vh;
+  margin-top: 5vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  border-radius: 4vh;
+  background: hsl(0, 0%, 96%);
+  padding: 2vh;
 }

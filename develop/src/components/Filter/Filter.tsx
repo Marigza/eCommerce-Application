@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Filter.scss";
 
 interface FilterProps {
@@ -5,6 +6,18 @@ interface FilterProps {
 }
 
 const Filter: React.FC<FilterProps> = ({ onSearch }) => {
+  const [isAnyCheckboxSelected, setIsAnyCheckboxSelected] = useState(false);
+  const handleClearAll = () => {
+    document
+      .querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked')
+      .forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+    setIsAnyCheckboxSelected(false);
+
+    onSearch("");
+  };
+
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -41,6 +54,10 @@ const Filter: React.FC<FilterProps> = ({ onSearch }) => {
     );
     const queryString = filters.join("&");
     onSearch(queryString);
+    const anySelected =
+      Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).length > 0;
+
+    setIsAnyCheckboxSelected(anySelected);
   };
 
   return (
@@ -93,7 +110,11 @@ const Filter: React.FC<FilterProps> = ({ onSearch }) => {
           <input type="checkbox" name="Memory" value="16GB" id="memory-16gb" />
           <label htmlFor="memory-16gb">16GB</label>
         </div>
-
+        {isAnyCheckboxSelected && (
+          <button type="button" onClick={handleClearAll}>
+            Clear
+          </button>
+        )}
         <button type="submit">Search</button>
       </form>
     </div>

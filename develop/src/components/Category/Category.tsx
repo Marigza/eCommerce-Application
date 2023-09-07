@@ -14,7 +14,7 @@ const Category: React.FC = () => {
           background: isActive ? "black" : "none",
         })}
       >
-        <PhoneIphoneIcon style={{ fontSize: "7vh" }} />
+        <PhoneIphoneIcon style={{ fontSize: "5vh" }} />
         <p>Phones</p>
       </NavLink>
       <NavLink
@@ -24,7 +24,7 @@ const Category: React.FC = () => {
           background: isActive ? "black" : "none",
         })}
       >
-        <TabletMacIcon style={{ fontSize: "7vh" }} />
+        <TabletMacIcon style={{ fontSize: "5vh" }} />
         <p>Tablets</p>
       </NavLink>
       <NavLink
@@ -34,7 +34,7 @@ const Category: React.FC = () => {
           background: isActive ? "black" : "none",
         })}
       >
-        <LaptopMacIcon style={{ fontSize: "7vh" }} />
+        <LaptopMacIcon style={{ fontSize: "5vh" }} />
         <p>Laptops</p>
       </NavLink>
     </div>

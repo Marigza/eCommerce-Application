@@ -1,10 +1,9 @@
 .catalog-categories {
-  margin-top: 2vh;
-  width: 100%;
-  height: 12vh;
+  flex: 2;
+  height: 100%;
   display: flex;
   align-items: center;
-  border-radius: 3vh;
+  border-radius: 4vh;
   background-color: hsl(0, 0%, 96%);
   align-self: center;
   border: 0.5vh solid hsl(0, 0%, 96%);
@@ -13,7 +12,6 @@
     flex: 1;
     height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     color: black;
     font-size: 2vh;
@@ -27,12 +25,12 @@
     border-right: 0.2vh solid black;
 
     &:first-child {
-      border-radius: 2.6vh 0 0 2.6vh;
+      border-radius: 4vh 0 0 4vh;
       border: none;
     }
 
     &:last-child {
-      border-radius: 0 2.6vh 2.6vh 0;
+      border-radius: 0 4vh 4vh 0;
       border: none;
     }
   }

@@ -8,6 +8,7 @@ import { Category } from "../../components/Category";
 import { getProductList } from "../../client_Api/productList";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../client_Api/interfaces";
+import { Sorting } from "../../components/Sorting";
 
 const Catalog: React.FC = () => {
   const location = useLocation();
@@ -20,26 +21,31 @@ const Catalog: React.FC = () => {
 
   const [Products, setProducts] = useState<IProduct[]>([]);
   const [filterString, setFilterString] = useState<string>("");
+  const [sort, setSort] = useState<string>("price asc");
+
+  const handleSortChange = (selectedSort: string) => {
+    setSort(selectedSort);
+  };
 
   useEffect(() => {
     const loadProducts = async () => {
       if (location.pathname === "/catalog/phones") {
         const response = await getProductList(
-          `?filter=categories.id:"${category.phones}"&${filterString}`
+          `?filter=categories.id:"${category.phones}"&${filterString}&sort=${sort}`
         );
         setProducts(response);
       } else if (location.pathname === "/catalog/tablets") {
         const response = await getProductList(
-          `?filter=categories.id:"${category.tablets}"&${filterString}`
+          `?filter=categories.id:"${category.tablets}"&${filterString}&sort=${sort}`
         );
         setProducts(response);
       } else if (location.pathname === "/catalog/laptops") {
         const response = await getProductList(
-          `?filter=categories.id:"${category.laptops}"&${filterString}`
+          `?filter=categories.id:"${category.laptops}"&${filterString}&sort=${sort}`
         );
         setProducts(response);
       } else {
-        const response = await getProductList(`?${filterString}`);
+        const response = await getProductList(`?${filterString}&sort=${sort}&sort=${sort}`);
         setProducts(response);
       }
     };
@@ -51,6 +57,7 @@ const Catalog: React.FC = () => {
     category.laptops,
     category.all,
     filterString,
+    sort,
   ]);
 
   return (
@@ -65,6 +72,7 @@ const Catalog: React.FC = () => {
           <>
             <div className="category-sort">
               <Category />
+              <Sorting selectedSort={sort} onSortChange={handleSortChange} />
             </div>
             <div className="catalog-wrapper">
               <Filter onSearch={setFilterString} />
