@@ -5,7 +5,6 @@ import ValidationSchema from "../../validation/Validation";
 import "./UserProfilePopup.scss";
 
 export const UserProfilePopupPassword: React.FC<{
-  email: string;
   isPasswordActive: boolean;
   onClose: () => void;
 }> = (props) => {
@@ -15,7 +14,7 @@ export const UserProfilePopupPassword: React.FC<{
     setPasswordVisible(!passwordVisible);
   };
 
-  const submitHandler = () => {
+  const submitHandlerPassword = async () => {
     props.onClose();
   };
 
@@ -32,7 +31,7 @@ export const UserProfilePopupPassword: React.FC<{
               password: "",
             }}
             validationSchema={ValidationSchema(0)}
-            onSubmit={submitHandler}
+            onSubmit={submitHandlerPassword}
           >
             {({ errors, touched }) => (
               <Form className="login-wrapper__card-form">
@@ -68,13 +67,7 @@ export const UserProfilePopupPassword: React.FC<{
                   >
                     Back
                   </button>
-                  <button
-                    onClick={() => {
-                      props.onClose();
-                    }}
-                  >
-                    Submit
-                  </button>
+                  <button onClick={submitHandlerPassword}>Submit</button>
                 </div>
               </Form>
             )}

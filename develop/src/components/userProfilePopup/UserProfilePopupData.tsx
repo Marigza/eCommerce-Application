@@ -1,19 +1,22 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import ValidationSchema from "../../validation/Validation";
+import { changeDataOfUser } from "../../client_Api/userInfo";
 
 import "./UserProfilePopup.scss";
 
 export const UserProfilePopupData: React.FC<{
-  email: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
   isDataActive: boolean;
   onClose: () => void;
 }> = (props) => {
-  const submitHandlerData = () => {
-    props.onClose();
+  const submitHandlerData = (values: {
+    firstName: string;
+    lastName: string;
+    dateOfBirth: string;
+  }): void => {
+    changeDataOfUser(values).then(() => props.onClose());
   };
 
   return (
@@ -30,7 +33,6 @@ export const UserProfilePopupData: React.FC<{
               lastName: props.lastName,
               dateOfBirth: props.dateOfBirth,
             }}
-            validationSchema={ValidationSchema(1)}
             onSubmit={submitHandlerData}
             enableReinitialize
           >
@@ -63,18 +65,16 @@ export const UserProfilePopupData: React.FC<{
                 </div>
 
                 <div className="user-profile-popup__button-box">
-                  <button
+                  <div
+                    className="user-profile-popup__button-box_back"
                     onClick={() => {
                       props.onClose();
                     }}
                   >
                     Back
-                  </button>
-                  <button
-                    onClick={() => {
-                      props.onClose();
-                    }}
-                  >
+                  </div>
+
+                  <button type="submit" name="data_submit">
                     Submit
                   </button>
                 </div>

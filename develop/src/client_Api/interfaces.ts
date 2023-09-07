@@ -191,17 +191,27 @@ export interface IProductGet {
         id: number;
         sku: string;
         key: string;
-        prices: [
-          {
-            id: string;
+        prices: {
+          id: string;
+          value: {
+            type: string;
+            currencyCode: string;
+            centAmount: number;
+            fractionDigits: number;
+          };
+          discounted?: {
             value: {
               type: string;
               currencyCode: string;
               centAmount: number;
               fractionDigits: number;
             };
-          },
-        ];
+            discount: {
+              typeId: string;
+              id: string;
+            };
+          };
+        }[];
         images: {
           url: string;
           dimensions: {
@@ -209,7 +219,10 @@ export interface IProductGet {
             h: number;
           };
         }[];
-        attributes: [];
+        attributes: {
+          name: string;
+          value: string;
+        }[];
         assets: [];
       };
       variants: [];
@@ -226,3 +239,13 @@ export interface IProductGet {
 export type ProductType = {
   product: IProduct;
 };
+
+export interface IBodyOfChangeUserAddres {
+  city: string;
+  country: string;
+  postalcode: string;
+  street: string;
+  id: string;
+  type: string;
+  flag: boolean;
+}

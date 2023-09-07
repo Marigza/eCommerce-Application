@@ -1,9 +1,11 @@
 export interface IAddresses {
   id: string;
+  type: string;
   country: string;
   streetName: string;
   postalCode: string;
   city: string;
+  flag: boolean;
 }
 
 export interface IUser {

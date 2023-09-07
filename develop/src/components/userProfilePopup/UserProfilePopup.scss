@@ -1,6 +1,7 @@
 .user-profile-popup.email-active,
 .user-profile-popup.password-active,
-.user-profile-popup.data-active {
+.user-profile-popup.data-active,
+.user-profile-popup.address-active {
   visibility: visible;
   filter: opacity(1);
   button {
@@ -78,7 +79,10 @@
     justify-content: space-between;
     gap: 5vh;
 
+    &_back,
     button {
+      display: flex;
+      align-items: center;
       padding: 0.8vh 10vh;
       border: 0.2vh solid #000000;
       border-radius: 5vh;

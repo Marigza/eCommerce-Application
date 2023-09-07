@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
-import ValidationSchema from "../../validation/Validation";
+import { changeEmailOfUser } from "../../client_Api/userInfo";
 
 import "./UserProfilePopup.scss";
 
@@ -9,8 +9,8 @@ export const UserProfilePopupEmail: React.FC<{
   isEmailActive: boolean;
   onClose: () => void;
 }> = (props) => {
-  const submitHandlerMail = () => {
-    props.onClose();
+  const submitHandlerMail = async (values: { email: string }) => {
+    changeEmailOfUser(values).then(() => props.onClose());
   };
 
   return (
@@ -25,7 +25,6 @@ export const UserProfilePopupEmail: React.FC<{
             initialValues={{
               email: props.email,
             }}
-            validationSchema={ValidationSchema(0)}
             onSubmit={submitHandlerMail}
             enableReinitialize
           >
@@ -39,18 +38,16 @@ export const UserProfilePopupEmail: React.FC<{
                 </div>
 
                 <div className="user-profile-popup__button-box">
-                  <button
+                  <div
+                    className="user-profile-popup__button-box_back"
                     onClick={() => {
                       props.onClose();
                     }}
                   >
                     Back
-                  </button>
-                  <button
-                    onClick={() => {
-                      props.onClose();
-                    }}
-                  >
+                  </div>
+
+                  <button type="submit" name="email_submit">
                     Submit
                   </button>
                 </div>

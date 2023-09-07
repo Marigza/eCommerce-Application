@@ -3,7 +3,7 @@ import { IProduct } from "../../client_Api/interfaces";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 
-import "./Product.scss";
+import "./CatalogProduct.scss";
 import { Rating } from "@mui/material";
 
 type ProductType = {
