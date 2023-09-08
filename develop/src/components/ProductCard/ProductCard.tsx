@@ -44,37 +44,54 @@ const ProductCard: React.FC<ProductType> = (props) => {
                 ))}
               </div>
             </div>
-            <div className="product-price price">
-              {propsData?.masterVariant?.prices[0]?.discounted && (
-                <div className="product-price__old">
-                  <p className="old-price">
-                    {propsData.masterVariant.prices[0].discounted?.value.centAmount
-                      ? propsData.masterVariant.prices[0].value.centAmount / 100
-                      : ""}
-                    $
-                  </p>
-                  <p className="discount-percent">
-                    -
-                    {propsData.masterVariant.prices[0].discounted?.value.centAmount
-                      ? ((propsData.masterVariant.prices[0].value.centAmount -
-                          propsData.masterVariant.prices[0].discounted.value.centAmount) /
-                          propsData.masterVariant.prices[0].value.centAmount) *
-                        100
-                      : ""}
-                    %
-                  </p>
-                </div>
-              )}
-              <p
-                className={
-                  propsData?.masterVariant?.prices[0].discounted ? "discont-price" : "normal-price"
-                }
-              >
-                {propsData?.masterVariant?.prices[0]?.discounted?.value?.centAmount
-                  ? Math.floor(propsData.masterVariant.prices[0].discounted.value.centAmount / 100)
-                  : propsData.masterVariant.prices[0].value.centAmount / 100}
-                ,00$
-              </p>
+            <div className="product-price-cart__wrapper">
+              <div className="product-price price">
+                {propsData?.masterVariant?.prices[0]?.discounted && (
+                  <div className="product-price__old">
+                    <p className="old-price">
+                      {propsData.masterVariant.prices[0].discounted?.value
+                        .centAmount
+                        ? propsData.masterVariant.prices[0].value.centAmount /
+                          100
+                        : ""}
+                      $
+                    </p>
+                    <p className="discount-percent">
+                      -
+                      {propsData.masterVariant.prices[0].discounted?.value
+                        .centAmount
+                        ? ((propsData.masterVariant.prices[0].value
+                            .centAmount -
+                            propsData.masterVariant.prices[0].discounted.value
+                              .centAmount) /
+                            propsData.masterVariant.prices[0].value
+                              .centAmount) *
+                          100
+                        : ""}
+                      %
+                    </p>
+                  </div>
+                )}
+                <p
+                  className={
+                    propsData?.masterVariant?.prices[0].discounted
+                      ? "discont-price"
+                      : "normal-price"
+                  }
+                >
+                  {propsData?.masterVariant?.prices[0]?.discounted?.value?.centAmount
+                    ? Math.floor(
+                        propsData.masterVariant.prices[0].discounted.value
+                          .centAmount / 100
+                      )
+                    : propsData.masterVariant.prices[0].value.centAmount /
+                      100}
+                  ,00$
+                </p>
+              </div>
+              <div className="product-cart" onClick={() => console.log(props.product.id)}>
+                Add to cart
+              </div>
             </div>
           </div>
         </div>

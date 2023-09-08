@@ -16,15 +16,6 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0 0.5vh 2vh 0;
   }
 
-  &:hover .buy-now {
-    transition:
-      color 0.3s,
-      background 0.3s,
-      border 0.6s,
-      opacity 0.3s;
-    opacity: 1;
-  }
-
   &-image {
     background-repeat: no-repeat;
     background-size: contain;
@@ -119,7 +110,7 @@
   border-radius: 2vh;
   bottom: 2vh;
   right: 2vh;
-  opacity: 0;
+  transition: all ease 0.3s;
 
   &:hover {
     color: white;
