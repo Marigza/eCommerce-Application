@@ -37,7 +37,7 @@ export function useChioseProduct() {
     if (getIDProduct) {
       getProduct(getIDProduct);
     }
-  });
+  }, [getIDProduct]);
 
   return { ProductItem };
 }

@@ -1,7 +1,14 @@
 export interface IToken {
   access_token: string;
+  token_type: string;
   expires_in: number;
-  scope: string[];
+  refresh_token: string;
+  scope: string;
+}
+
+export interface ITokenStorage {
+  access_token: string;
+  creation_time: number;
   token_type: string;
 }
 
@@ -20,11 +27,6 @@ export interface ICustomerInfoForSingUp extends ICustomerInfoForLogin {
     postalCode: string;
     city: string;
   }[];
-}
-
-export interface ITokenStorage {
-  access_token: string;
-  creation_time: number;
 }
 
 export interface ICustomerStorage {
@@ -248,4 +250,47 @@ export interface IBodyOfChangeUserAddres {
   id: string;
   type: string;
   flag: boolean;
+}
+
+export interface ICart {
+  anonymousId: string;
+  cartState: string;
+  createdAt: string;
+  createdBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+    anonymousId: string;
+  };
+  customLineItems: string[];
+  deleteDaysAfterLastModification: number;
+  directDiscounts: string[];
+  discountCodes: string[];
+  id: string;
+  inventoryMode: string;
+  itemShippingAddresses: string[];
+  lastMessageSequenceNumber: number;
+  lastModifiedAt: string;
+  lastModifiedBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+    anonymousId: string;
+  };
+  lineItems: IProduct[];
+  origin: string;
+  refusedGifts: string[];
+  shipping: string[];
+  shippingMode: string;
+  taxCalculationMode: string;
+  taxMode: string;
+  taxRoundingMode: string;
+  totalPrice: { type: string; currencyCode: string; centAmount: number; fractionDigits: number };
+  type: string;
+  version: number;
+  versionModifiedAt: string;
+}
+
+export interface ICartError {
+  errors: { code: string; message: string }[];
+  message: string;
+  statusCode: number;
 }
