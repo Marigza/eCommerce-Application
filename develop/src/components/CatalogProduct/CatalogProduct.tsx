@@ -7,6 +7,7 @@ import "./CatalogProduct.scss";
 import { Rating } from "@mui/material";
 
 type ProductType = {
+  //delete add import
   product: IProduct;
 };
 
