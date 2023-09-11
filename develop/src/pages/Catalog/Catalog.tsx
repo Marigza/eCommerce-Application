@@ -23,31 +23,31 @@ const Catalog: React.FC = () => {
   const [filterString, setFilterString] = useState<string>("");
   const [sort, setSort] = useState<string>("price asc");
 
-  const handleSortChange = (selectedSort: string) => {
+  const handleSortChange = (selectedSort: string): void => {
     setSort(selectedSort);
   };
 
   useEffect(() => {
-    const loadProducts = async () => {
-      if (location.pathname === "/catalog/phones") {
-        const response = await getProductList(
-          `?filter=categories.id:"${category.phones}"&${filterString}&sort=${sort}`
-        );
-        setProducts(response);
-      } else if (location.pathname === "/catalog/tablets") {
-        const response = await getProductList(
-          `?filter=categories.id:"${category.tablets}"&${filterString}&sort=${sort}`
-        );
-        setProducts(response);
-      } else if (location.pathname === "/catalog/laptops") {
-        const response = await getProductList(
-          `?filter=categories.id:"${category.laptops}"&${filterString}&sort=${sort}`
-        );
-        setProducts(response);
-      } else {
-        const response = await getProductList(`?${filterString}&sort=${sort}&sort=${sort}`);
-        setProducts(response);
+    const loadProducts = async (): Promise<void> => {
+      let path: string;
+      switch (location.pathname) {
+        case "/catalog/phones":
+          path = `?filter=categories.id:"${category.phones}"&${filterString}&sort=${sort}`;
+          break;
+        case "/catalog/tablets":
+          path = `?filter=categories.id:"${category.tablets}"&${filterString}&sort=${sort}`;
+          break;
+        case "/catalog/laptops":
+          path = `?filter=categories.id:"${category.laptops}"&${filterString}&sort=${sort}`;
+          break;
+        default:
+          path = `?${filterString}&sort=${sort}&sort=${sort}`;
       }
+
+      const response: IProduct[] | null = await getProductList(path);
+      if (!response) return;
+
+      setProducts(response);
     };
     loadProducts();
   }, [

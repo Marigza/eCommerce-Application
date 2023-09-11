@@ -32,23 +32,33 @@ export interface ICustomerStorage {
   email: string;
 }
 
+interface IValuePricesOfProduct {
+  type: string;
+  currencyCode: string;
+  centAmount: number;
+  fractionDigits: number;
+}
+
+interface ITypeIdOfProduct {
+  typeId: string;
+  id: string;
+}
+
+interface ICurrency {
+  "en-US": string;
+}
+
 export interface IProduct {
   id: string;
   version: number;
-  productType: {
-    typeId: string;
-    id: string;
-  };
+  productType: ITypeIdOfProduct;
   name: {
     [locale: string]: string;
   };
   description: {
     [locale: string]: string;
   };
-  categories: {
-    typeId: string;
-    id: string;
-  }[];
+  categories: ITypeIdOfProduct[];
   categoryOrderHints: Record<string, unknown>;
   slug: {
     [locale: string]: string;
@@ -75,23 +85,10 @@ export interface IProduct {
     }[];
     prices: {
       id: string;
-      value: {
-        type: string;
-        currencyCode: string;
-        centAmount: number;
-        fractionDigits: number;
-      };
+      value: IValuePricesOfProduct;
       discounted?: {
-        value: {
-          type: string;
-          currencyCode: string;
-          centAmount: number;
-          fractionDigits: number;
-        };
-        discount: {
-          typeId: string;
-          id: string;
-        };
+        value: IValuePricesOfProduct;
+        discount: ITypeIdOfProduct;
       };
     }[];
     key: string;
@@ -116,41 +113,22 @@ export interface IProductGet {
   lastModifiedAt: string;
   lastModifiedBy: {
     isPlatformClient: boolean;
-    user: {
-      typeId: string;
-      id: string;
-    };
+    user: ITypeIdOfProduct;
   };
   createdBy: {
     isPlatformClient: boolean;
-    user: {
-      typeId: string;
-      id: string;
-    };
+    user: ITypeIdOfProduct;
   };
-  productType: {
-    typeId: string;
-    id: string;
-  };
+  productType: ITypeIdOfProduct;
   masterData: {
     current: {
-      name: {
-        "en-US": string;
-      };
-      description: {
-        "en-US": string;
-      };
+      name: ICurrency;
+      description: ICurrency;
       categories: [];
       categoryOrderHints: Record<string, never>;
-      slug: {
-        "en-US": string;
-      };
-      metaTitle: {
-        "en-US": string;
-      };
-      metaDescription: {
-        "en-US": string;
-      };
+      slug: ICurrency;
+      metaTitle: ICurrency;
+      metaDescription: ICurrency;
       masterVariant: {
         id: number;
         sku: string;
@@ -170,42 +148,22 @@ export interface IProductGet {
       searchKeywords: Record<string, never>;
     };
     staged: {
-      name: {
-        "en-US": string;
-      };
-      description: {
-        "en-US": string;
-      };
+      name: ICurrency;
+      description: ICurrency;
       categories: [];
       categoryOrderHints: Record<string, never>;
-      slug: {
-        "en-US": string;
-      };
-      metaTitle: {
-        "en-US": string;
-      };
-      metaDescription: {
-        "en-US": string;
-      };
+      slug: ICurrency;
+      metaTitle: ICurrency;
+      metaDescription: ICurrency;
       masterVariant: {
         id: number;
         sku: string;
         key: string;
         prices: {
           id: string;
-          value: {
-            type: string;
-            currencyCode: string;
-            centAmount: number;
-            fractionDigits: number;
-          };
+          value: IValuePricesOfProduct;
           discounted?: {
-            value: {
-              type: string;
-              currencyCode: string;
-              centAmount: number;
-              fractionDigits: number;
-            };
+            value: IValuePricesOfProduct;
             discount: {
               typeId: string;
               id: string;

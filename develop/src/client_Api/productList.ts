@@ -16,7 +16,9 @@ export const getProductList = async (endPath: string) => {
       },
     });
     const products = await response.json();
+
     if (!products.results) return null;
+
     return products.results;
   } catch (error) {
     return null;

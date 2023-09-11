@@ -19,31 +19,26 @@ export const signUpCustomer = async (body: ICustomerInfoForSingUp): Promise<bool
 
     if (!response.ok) return false;
 
-    const result = await response.json();
+    const customer = (await response.json()).customer;
 
-    if (result.customer.id) {
-      const customerStorage: ICustomerStorage = { ID: result.customer.id, email: body.email };
+    if (customer.id) {
+      const customerStorage: ICustomerStorage = { ID: customer.id, email: body.email };
       localStorage.setItem("customer_info", JSON.stringify(customerStorage));
     }
 
-    if (
-      result.customer.id &&
-      result.customer.version &&
-      result.customer.addresses[0].id &&
-      result.customer.addresses[0].id
-    ) {
+    if (customer.id && customer.version && customer.addresses[0].id && customer.addresses[1].id) {
       await Promise.all([
-        fetch(`${url}/${result.customer.id}`, {
+        fetch(`${url}/${customer.id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            version: result.customer.version,
+            version: customer.version,
             actions: [
-              { action: "addShippingAddressId", addressId: result.customer.addresses[0].id },
-              { action: "addBillingAddressId", addressId: result.customer.addresses[1].id },
+              { action: "addShippingAddressId", addressId: customer.addresses[0].id },
+              { action: "addBillingAddressId", addressId: customer.addresses[1].id },
             ],
           }),
         }),
@@ -73,12 +68,12 @@ export const loginCustomer = async (body: ICustomerInfoForLogin): Promise<boolea
       },
       body: JSON.stringify(body),
     });
-    const result = await response.json();
+    const customer = (await response.json()).customer;
 
-    if (result && result.customer.id) {
-      const customerStorage: ICustomerStorage = { ID: result.customer.id, email: body.email };
-      localStorage.setItem("customer_info", JSON.stringify(customerStorage));
-    }
+    if (!customer || !customer.id) return null;
+
+    const customerStorage: ICustomerStorage = { ID: customer.id, email: body.email };
+    localStorage.setItem("customer_info", JSON.stringify(customerStorage));
 
     return response.ok;
   } catch (error) {
