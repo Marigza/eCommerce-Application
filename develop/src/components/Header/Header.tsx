@@ -1,37 +1,47 @@
 import "./Header.scss";
 import React, { useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-import { Login } from "../../components/Login";
-import { SignUp } from "../../components/SignUp";
 import UserPopup from "../UserPopup/UserPopup";
 
 const Header: React.FC = () => {
-  const [disableScroll, setDisableScroll] = useState(false);
   const [isUserPopupVisible, setIsUserPopupVisible] = useState(false);
-  const location = useLocation();
-
-  React.useEffect(() => {
-    const scroll = location.pathname === "/login" || location.pathname === "/registration";
-    setDisableScroll(scroll);
-
-    if (disableScroll) {
-      document.body.style.padding = "0 calc(17px - (100vw - 100%)) 0 0";
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.padding = "0";
-      document.body.style.overflowY = "auto";
-    }
-  }, [location, disableScroll]);
 
   const toggleUserPopup = () => {
     setIsUserPopupVisible(!isUserPopupVisible);
+    if (!isUserPopupVisible) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
   };
 
   return (
     <>
       <header className="header">
-        <Link to="/" className="header-logo"></Link>
+        <div className="header-links">
+          <Link to="/" className="header-logo"></Link>
+          <nav>
+            <ul>
+              <NavLink
+                to="catalog"
+                style={({ isActive }) => ({
+                  borderBottom: isActive ? "0.2vh solid black" : "",
+                })}
+              >
+                <li>Catalog</li>
+              </NavLink>
+              <NavLink
+                to="about"
+                style={({ isActive }) => ({
+                  borderBottom: isActive ? "0.2vh solid black" : "",
+                })}
+              >
+                <li>About us</li>
+              </NavLink>
+            </ul>
+          </nav>
+        </div>
         <div>
           <div className="header__search-button" />
           <div className="header__basket-button" />
@@ -49,10 +59,6 @@ const Header: React.FC = () => {
         </div>
         {isUserPopupVisible && <UserPopup onClose={toggleUserPopup} />}
       </header>
-      <Routes>
-        <Route path="registration" element={<SignUp />} />
-        <Route path="login" element={<Login />} />
-      </Routes>
     </>
   );
 };

@@ -23,6 +23,10 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  background-image: url(../../assets/images/png/back.png);
+  background-repeat: repeat;
+  background-size: 30vh;
+  animation: float 60s linear infinite;
 
   &__card {
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
@@ -454,5 +458,13 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+@keyframes float {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 70% 70%;
   }
 }

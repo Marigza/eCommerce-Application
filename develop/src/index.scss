@@ -478,9 +478,23 @@ html {
   box-sizing: inherit;
 }
 
+header {
+  z-index: 1;
+}
+
 body {
   background-color: #ffffff;
   overflow-x: hidden;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
     sans-serif;
+}
+
+main {
+  margin: 0 auto;
+  padding: 10vh 0 2vh 0;
+  width: 80vw;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

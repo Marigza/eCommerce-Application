@@ -22,28 +22,36 @@ const UserPopup: React.FC<IUserPopupProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="user-popup">
-      {userData.logged ? (
-        <Link to="" onClick={handleLogout} className="user-popup__link">
-          Log Out
+    <>
+      <div className="background" onClick={onClose} />
+      <div className="user-popup">
+        {userData.logged ? (
+          <>
+            <Link to="userProfile" className="user-popup__link" onClick={onClose}>
+              Profile
+            </Link>
+            <Link to="" onClick={handleLogout} className="user-popup__link">
+              Log Out
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="registration" className="user-popup__link" onClick={onClose}>
+              <b>Sign up</b>
+            </Link>
+            <Link to="login" className="user-popup__link" onClick={onClose}>
+              Log in
+            </Link>
+          </>
+        )}
+        <Link to="support" className="user-popup__link" onClick={onClose}>
+          Сontact with support
         </Link>
-      ) : (
-        <>
-          <Link to="/registration" className="user-popup__link" onClick={onClose}>
-            <b>Sign up</b>
-          </Link>
-          <Link to="/login" className="user-popup__link" onClick={onClose}>
-            Log in
-          </Link>
-        </>
-      )}
-      <Link to="" className="user-popup__link" onClick={onClose}>
-        Сontact with support
-      </Link>
-      <Link to="" className="user-popup__link" onClick={onClose}>
-        User agreements
-      </Link>
-    </div>
+        <Link to="agreements" className="user-popup__link" onClick={onClose}>
+          User agreements
+        </Link>
+      </div>
+    </>
   );
 };
 

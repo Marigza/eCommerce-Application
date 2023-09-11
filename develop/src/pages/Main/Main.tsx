@@ -1,7 +1,4 @@
-/* eslint-disable import/no-named-as-default */
-import Helmet from "react-helmet";
-
-import { Header } from "../../components/Header";
+import { Helmet } from "react-helmet";
 import { MainContent } from "../../components/MainContent";
 
 const Main: React.FC = () => {
@@ -10,7 +7,6 @@ const Main: React.FC = () => {
       <Helmet>
         <title>JustStore - Homepage</title>
       </Helmet>
-      <Header />
       <MainContent />
     </>
   );
