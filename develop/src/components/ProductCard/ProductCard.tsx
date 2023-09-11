@@ -1,19 +1,21 @@
 import React from "react";
 import { IProductGet } from "../../client_Api/interfaces";
 import Slider from "../Slider/Slider";
+import { Helmet } from "react-helmet";
 
 import "./ProductCard.scss";
-import { Helmet } from "react-helmet";
 
 type ProductType = {
   product: IProductGet;
 };
 
 const ProductCard: React.FC<ProductType> = (props) => {
+  const propsData = props.product.masterData.staged;
+
   return (
     <>
       <Helmet>
-        <title>JustStore - {props.product.masterData.staged.name["en-US"]}</title>
+        <title>JustStore - {propsData.name["en-US"]}</title>
       </Helmet>
       <div className="cardcontent__block">
         <div className="productContent__content">
@@ -22,48 +24,41 @@ const ProductCard: React.FC<ProductType> = (props) => {
               <div
                 className="product-image"
                 style={{
-                  backgroundImage: `url(${props.product.masterData.staged.masterVariant.images[0].url})`,
+                  backgroundImage: `url(${propsData.masterVariant.images[0].url})`,
                 }}
               ></div>
             </div>
-            <Slider images={props.product.masterData.staged.masterVariant.images} />
+            <Slider images={propsData.masterVariant.images} />
           </div>
           <div className="description">
-            <h2 className="product_name">{props.product.masterData.staged.name["en-US"]}</h2>
+            <h2 className="product_name">{propsData.name["en-US"]}</h2>
             <div className="product_description">
               <p>Description:</p>
-              <p>{props.product.masterData.staged.description["en-US"]}</p>
+              <p>{propsData.description["en-US"]}</p>
               <div className="product-description__attributes product_description__description__attributes">
                 <p>Specifications:</p>
-                {props.product.masterData.staged.masterVariant.attributes.map(
-                  (attribute, index) => (
-                    <p key={index}>
-                      {attribute.name}: {attribute.value}
-                    </p>
-                  )
-                )}
+                {propsData.masterVariant.attributes.map((attribute, index) => (
+                  <p key={index}>
+                    {attribute.name}: {attribute.value}
+                  </p>
+                ))}
               </div>
             </div>
             <div className="product-price price">
-              {props.product.masterData.staged.masterVariant.prices[0].discounted && (
+              {propsData.masterVariant.prices[0].discounted && (
                 <div className="product-price__old">
                   <p className="old-price">
-                    {props.product.masterData.staged.masterVariant.prices[0].discounted?.value
-                      .centAmount
-                      ? props.product.masterData.staged.masterVariant.prices[0].value.centAmount /
-                        100
+                    {propsData.masterVariant.prices[0].discounted?.value.centAmount
+                      ? propsData.masterVariant.prices[0].value.centAmount / 100
                       : ""}
                     $
                   </p>
                   <p className="discount-percent">
                     -
-                    {props.product.masterData.staged.masterVariant.prices[0].discounted?.value
-                      .centAmount
-                      ? ((props.product.masterData.staged.masterVariant.prices[0].value.centAmount -
-                          props.product.masterData.staged.masterVariant.prices[0].discounted.value
-                            .centAmount) /
-                          props.product.masterData.staged.masterVariant.prices[0].value
-                            .centAmount) *
+                    {propsData.masterVariant.prices[0].discounted?.value.centAmount
+                      ? ((propsData.masterVariant.prices[0].value.centAmount -
+                          propsData.masterVariant.prices[0].discounted.value.centAmount) /
+                          propsData.masterVariant.prices[0].value.centAmount) *
                         100
                       : ""}
                     %
@@ -72,18 +67,12 @@ const ProductCard: React.FC<ProductType> = (props) => {
               )}
               <p
                 className={
-                  props.product.masterData.staged.masterVariant.prices[0].discounted
-                    ? "discont-price"
-                    : "normal-price"
+                  propsData.masterVariant.prices[0].discounted ? "discont-price" : "normal-price"
                 }
               >
-                {props.product.masterData.staged.masterVariant.prices[0].discounted?.value
-                  .centAmount
-                  ? Math.floor(
-                      props.product.masterData.staged.masterVariant.prices[0].discounted.value
-                        .centAmount / 100
-                    )
-                  : props.product.masterData.staged.masterVariant.prices[0].value.centAmount / 100}
+                {propsData.masterVariant.prices[0].discounted?.value.centAmount
+                  ? Math.floor(propsData.masterVariant.prices[0].discounted.value.centAmount / 100)
+                  : propsData.masterVariant.prices[0].value.centAmount / 100}
                 ,00$
               </p>
             </div>
