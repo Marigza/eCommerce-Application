@@ -31,7 +31,7 @@ const getToken = async (): Promise<IToken | null> => {
 
 export const tokenGenerate = async (): Promise<string | null> => {
   const actionTime = 172790000;
-  const currantTime = Date.now();
+  const currantTime: number = Date.now();
   const tokenStorage = <string | null>localStorage.getItem("token");
 
   if (tokenStorage && currantTime - JSON.parse(tokenStorage).creation_time < actionTime) {

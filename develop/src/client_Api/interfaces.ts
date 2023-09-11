@@ -1,3 +1,5 @@
+import { number, string } from "yup";
+
 export interface IToken {
   access_token: string;
   token_type: string;
@@ -252,6 +254,84 @@ export interface IBodyOfChangeUserAddres {
   flag: boolean;
 }
 
+export interface IproductInCart {
+  addedAt: string;
+  discountedPricePerQuantity: string[];
+  id: string;
+  lastModifiedAt: string;
+  lineItemMode: string;
+  name: { "en-US": string };
+  perMethodTaxRate: string[];
+  price: {
+    discounted: {
+      discount: {
+        typeId: string;
+        id: string;
+      };
+      value: {
+        type: string;
+        currencyCode: string;
+        centAmount: number;
+        fractionDigits: number;
+      };
+    };
+    value: {
+      type: string;
+      currencyCode: string;
+      centAmount: number;
+      fractionDigits: number;
+    };
+    id: string;
+  };
+  priceMode: string;
+  productId: string;
+  productKey: string;
+  productSlug: { "en-US": string };
+  productType: { id: string; typeId: string; version: number };
+  quantity: number;
+  state: {
+    quantity: number;
+    state: {
+      id: string;
+      typeId: string;
+    };
+  }[];
+  taxedPricePortions: string[];
+  totalPrice: { centAmount: number; currencyCode: string; fractionDigits: number; type: string };
+  variant: {
+    assets: string[];
+    attributes: { name: string; value: string }[];
+    id: number;
+    images: {
+      dimensions: { w: number; h: number };
+      url: string;
+    }[];
+    key: string;
+    prices: {
+      discounted: {
+        discount: {
+          typeId: string;
+          id: string;
+        };
+        value: {
+          type: string;
+          currencyCode: string;
+          centAmount: number;
+          fractionDigits: number;
+        };
+      };
+      value: {
+        type: string;
+        currencyCode: string;
+        centAmount: number;
+        fractionDigits: number;
+      };
+      id: string;
+    }[];
+    sku: string;
+  };
+}
+
 export interface ICart {
   anonymousId: string;
   cartState: string;
@@ -275,7 +355,7 @@ export interface ICart {
     isPlatformClient: boolean;
     anonymousId: string;
   };
-  lineItems: IProduct[];
+  lineItems: IproductInCart[];
   origin: string;
   refusedGifts: string[];
   shipping: string[];

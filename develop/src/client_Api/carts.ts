@@ -1,5 +1,5 @@
 import { region, projectKey, tokenGenerate } from "./tokenGenerate";
-import { ICart, ICartError } from "./interfaces";
+import { ICart, ICartError, IproductInCart } from "./interfaces";
 
 const createCart = async (): Promise<ICart | null> => {
   const token: string | null = await tokenGenerate();
@@ -9,7 +9,7 @@ const createCart = async (): Promise<ICart | null> => {
   const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts`;
 
   try {
-    const response = await fetch(url, {
+    const response: Response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -26,7 +26,7 @@ const createCart = async (): Promise<ICart | null> => {
   }
 };
 
-export const getActiveCart = async (): Promise<ICart | null> => {
+const getActiveCart = async (): Promise<ICart | null> => {
   const token: string | null = await tokenGenerate();
 
   if (!token) return null;
@@ -34,7 +34,7 @@ export const getActiveCart = async (): Promise<ICart | null> => {
   const url = `https://api.${region}.commercetools.com/${projectKey}/me/active-cart`;
 
   try {
-    const response = await fetch(url, {
+    const response: Response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -50,56 +50,29 @@ export const getActiveCart = async (): Promise<ICart | null> => {
   }
 };
 
-const getCart = async (): Promise<string | null> => {
-  const anonimousCart: string | null = localStorage.getItem("anonimousCart");
+export const getCart = async (): Promise<ICart | null> => {
+  const cart: ICart | null = await getActiveCart();
 
-  if (anonimousCart) return anonimousCart;
-  const response = await createCart();
+  if (cart) return cart;
 
-  if (!response || !response.id) return null;
-
-  localStorage.setItem("anonimousCart", response.id);
-  return response.id;
+  const newCart: ICart | null = await createCart();
+  return newCart;
 };
 
-const getAnonimousCart = async (): Promise<ICart | null> => {
-  // const IdOfAnonimousCart: string | null = await getIdOfAnonimousCart();
-  const IdOfAnonimousCart = "c41d8b11-a3b2-4376-8754-e4adee26f1e7";
-  const tokenUnknown: string | null = await tokenGenerate();
+export const addProductToCart = async (IdOfProduct: string) => {
+  const token: string | null = await tokenGenerate();
+  const cart: ICart | null = await getCart();
 
-  if (!tokenUnknown || !IdOfAnonimousCart) return null;
-
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts/${IdOfAnonimousCart}`;
-
-  try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenUnknown}`,
-      },
-    });
-
-    return await response.json();
-  } catch (error) {
-    return null;
-  }
-};
-
-export const addProductToAnonimousCart = async (IdOfProduct: string) => {
-  const tokenUnknown: string | null = await tokenGenerate();
-  const cart: ICart | null = await getAnonimousCart();
-
-  if (!tokenUnknown || !cart || !cart.version || !cart.id) return null;
+  if (!token || !cart || !cart.version || !cart.id) return null;
 
   const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts/${cart.id}`;
 
   try {
-    const response = await fetch(url, {
+    const response: Response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenUnknown}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         version: cart.version,
@@ -119,3 +92,83 @@ export const addProductToAnonimousCart = async (IdOfProduct: string) => {
     return null;
   }
 };
+
+export const changeQuantityInCart = async (IdOfProduct: string, quantity: number) => {
+  const token: string | null = await tokenGenerate();
+  const cart: ICart | null = await getActiveCart();
+
+  if (!token || !cart || !cart.id || !cart.version) return null;
+
+  const lineItem: IproductInCart | undefined = cart.lineItems.find(
+    (el) => el.productId === IdOfProduct
+  );
+
+  if (!lineItem || !lineItem.quantity) return null;
+
+  let currantQuantity: number = lineItem.quantity;
+  switch (quantity) {
+    case 1:
+      currantQuantity++;
+      break;
+    case -1:
+      currantQuantity--;
+      break;
+    case 0:
+      currantQuantity = 0;
+      break;
+  }
+  const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts/${cart.id}`;
+
+  try {
+    const response: Response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        version: cart.version,
+        actions: [
+          {
+            action: "changeLineItemQuantity",
+            lineItemId: lineItem.id,
+            variantId: 1,
+            quantity: currantQuantity,
+          },
+        ],
+      }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    return null;
+  }
+};
+
+/*
+
+const getAnonimousCart = async (): Promise<ICart | null> => {
+const IdOfAnonimousCart: string | null = await getIdOfAnonimousCart();
+  const IdOfAnonimousCart = "c41d8b11-a3b2-4376-8754-e4adee26f1e7";
+  const tokenUnknown: string | null = await tokenGenerate();
+
+  if (!tokenUnknown || !IdOfAnonimousCart) return null;
+
+  const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts/${IdOfAnonimousCart}`;
+
+  try {
+    const response: Response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenUnknown}`,
+      },
+    });
+
+    return await response.json();
+  } catch (error) {
+    return null;
+  }
+};
+
+*/
