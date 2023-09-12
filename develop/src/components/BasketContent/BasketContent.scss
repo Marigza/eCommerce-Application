@@ -38,8 +38,63 @@
   }
 }
 
+.total-cost {
+  display: flex;
+  gap: 20px;
+  background: white;
+  border-radius: 2vh;
+  color: black;
+  font-size: 4vw;
+  padding: 1vh 3vh;
+  margin-bottom: 2vh;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4vh;
+  font-size: 2vh;
+  background: white;
+  border-radius: 2vh;
+  padding: 1vh 3vh;
+  margin-bottom: 2vh;
+}
+
+.delete-item {
+  background: hsl(0, 0%, 96%);
+  border-radius: 2vh;
+  padding: 1vh 3vh;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background: hsl(0, 0%, 85%);
+  }
+}
+
+.delete__block {
+  display: flex;
+  justify-content: center;
+}
+
+.delete-all {
+  background: white;
+  border-radius: 2vh;
+  font-size: 4vh;
+  padding: 1vh 3vh;
+  transition: all ease 0.3s;
+
+  &:hover {
+    color: red;
+  }
+}
+
 @media (max-width: 800px) {
   .empty_block-message {
     font-size: 8vw;
+  }
+
+  .item {
+    flex-direction: column;
   }
 }
