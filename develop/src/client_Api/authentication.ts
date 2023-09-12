@@ -2,8 +2,10 @@ import { ICustomerInfoForSingUp, ICustomerInfoForLogin, ICustomerStorage } from 
 import { IUser } from "../components/UserProfile/interfaces";
 import { region, projectKey, tokenGenerate, changeToken } from "./tokenGenerate";
 
+const path = `https://api.${region}.commercetools.com/${projectKey}`;
+
 export const signUpCustomer = async (body: ICustomerInfoForSingUp): Promise<boolean | null> => {
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/signup`;
+  const url = `${path}/me/signup`;
   const token: string | null = await tokenGenerate();
 
   if (!token) return null;
@@ -32,7 +34,7 @@ export const signUpCustomer = async (body: ICustomerInfoForSingUp): Promise<bool
       const newToken: string | null = await tokenGenerate();
 
       await Promise.all([
-        fetch(`https://api.${region}.commercetools.com/${projectKey}/customers/${customer.id}`, {
+        fetch(`${path}/customers/${customer.id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -57,7 +59,7 @@ export const signUpCustomer = async (body: ICustomerInfoForSingUp): Promise<bool
 
 export const loginCustomer = async (body: ICustomerInfoForLogin): Promise<boolean | null> => {
   const token: string | null = await tokenGenerate();
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/login`;
+  const url = `${path}/me/login`;
 
   if (!token) {
     return null;

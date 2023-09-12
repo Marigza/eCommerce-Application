@@ -10,8 +10,10 @@ export const clientIdUnknown = process.env.REACT_APP_CLIENT_ID_UNKNOWN;
 export const clientSecretUnknown = process.env.REACT_APP_CLIENT_SECRET_UNKNOWN;
 export const scopeUnknown = process.env.REACT_APP_SCOPE_UNKNOWN;
 
+const path = `https://auth.${region}.commercetools.com/oauth/${projectKey}`;
+
 const getToken = async (): Promise<IToken | null> => {
-  const url = `https://auth.${region}.commercetools.com/oauth/${projectKey}/anonymous/token`;
+  const url = `${path}/anonymous/token`;
   const requestBody = `grant_type=client_credentials&scope=${scopeUnknown}`;
   try {
     const response: Response = await fetch(url, {
@@ -64,7 +66,7 @@ export const tokenGenerate = async (): Promise<string | null> => {
 };
 
 export const changeToken = async (body: ICustomerInfoForLogin): Promise<void> => {
-  const url = `https://auth.${region}.commercetools.com/oauth/${projectKey}/customers/token`;
+  const url = `${path}/customers/token`;
   const requestBody = `grant_type=password&username=${body.email}&password=${body.password}&scope=${scope}`;
 
   try {
