@@ -1,3 +1,4 @@
+import { changeQuantityInCart } from "../../../client_Api/carts";
 import { ICart } from "../../../client_Api/interfaces";
 
 type CartType = {
@@ -20,7 +21,11 @@ const FillBasket: React.FC<CartType> = (props) => {
             <img src={item.variant.images[0].url} alt={item.name["en-US"]} height="100"></img>
             <span>{item.name["en-US"]}</span>
             <span>
-              <span>{item.price.value.centAmount / 100} </span>
+              <span>
+                {item.price.discounted
+                  ? item.price.discounted.value.centAmount / 100
+                  : item.price.value.centAmount / 100}{" "}
+              </span>
               <span>{item.price.value.currencyCode}</span>
             </span>
             <span>{item.quantity}</span>
@@ -28,7 +33,9 @@ const FillBasket: React.FC<CartType> = (props) => {
               <span>{item.totalPrice.centAmount / 100} </span>
               <span>{item.totalPrice.currencyCode}</span>
             </span>
-            <button className="delete-item">Delete</button>
+            <button className="delete-item" onClick={() => changeQuantityInCart(item.productId, 0)}>
+              Delete
+            </button>
           </div>
         ))}
       </div>
