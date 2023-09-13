@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IProductGet, ICart } from "../../client_Api/interfaces";
 import Slider from "../Slider/Slider";
 import { Helmet } from "react-helmet";
-import { getCart, addProductToCart, changeQuantityInCart } from "../../client_Api/carts";
+import { getActiveCart, addProductToCart, changeQuantityInCart } from "../../client_Api/carts";
 
 import "./ProductCard.scss";
 
@@ -15,7 +15,7 @@ const ProductCard: React.FC<ProductType> = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getCart();
+      const response = await getActiveCart();
       if (!response) return null;
       setCart(response);
     }

@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
-import { getCart, addProductToCart } from "../../client_Api/carts";
+import { getActiveCart, addProductToCart } from "../../client_Api/carts";
 import { ProductType, ICart } from "../../client_Api/interfaces";
+import { Rating } from "@mui/material";
 
 import "./CatalogProduct.scss";
-import { Rating } from "@mui/material";
 
 const writeIdProduct = (ID: string): string => {
   localStorage.setItem("ID", ID);
@@ -18,7 +18,7 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getCart();
+      const response = await getActiveCart();
       if (!response) return null;
       setCart(response);
     }
@@ -108,7 +108,6 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
           className="buy-now"
           onClick={() => {
             addProductToCart(props.product.id);
-            console.log("add to cart", props.product.id);
           }}
         >
           <AddShoppingCartOutlinedIcon style={{ fontSize: "4vh" }} />

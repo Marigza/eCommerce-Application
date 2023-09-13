@@ -2,16 +2,16 @@ import { useState, useEffect } from "react";
 import { EmptyBasket } from "./EmptyBasket";
 import { FillBasket } from "./FillBasket";
 import { ICart } from "../../client_Api/interfaces";
+import { getActiveCart } from "../../client_Api/carts";
 
 import "./BasketContent.scss";
-import { getCart } from "../../client_Api/carts";
 
 const BasketContent: React.FC = () => {
   const [Cart, setCart] = useState<ICart>();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getCart();
+      const response = await getActiveCart();
       if (!response) return null;
       setCart(response);
     }
