@@ -44,7 +44,7 @@ const Header: React.FC = () => {
         </div>
         <div>
           <div className="header__search-button" />
-          <div className="header__basket-button" />
+          <Link to="basket" className="header__basket-button"></Link>
           <button
             className={`customers__button ${isUserPopupVisible ? "active" : ""}`}
             onClick={toggleUserPopup}
