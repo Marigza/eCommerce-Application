@@ -54,7 +54,7 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
                   {props.product.masterVariant.prices[0].discounted?.value.centAmount
                     ? props.product.masterVariant.prices[0].value.centAmount / 100
                     : ""}
-                  $
+                  .00$
                 </p>
                 <p className="discount-percent">
                   -
@@ -74,11 +74,9 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
               }
             >
               {props.product.masterVariant.prices[0].discounted?.value.centAmount
-                ? Math.floor(
-                    props.product.masterVariant.prices[0].discounted.value.centAmount / 100
-                  )
-                : props.product.masterVariant.prices[0].value.centAmount / 100}
-              ,00$
+                ? props.product.masterVariant.prices[0].discounted.value.centAmount / 100 + `0`
+                : props.product.masterVariant.prices[0].value.centAmount / 100 + `.00`}
+              $
             </p>
           </div>
         </div>
