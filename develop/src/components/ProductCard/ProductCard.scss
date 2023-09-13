@@ -139,9 +139,38 @@
   color: rgb(29, 164, 14);
   cursor: pointer;
   transition: all ease 0.3s;
+
   &:hover {
     color: white;
     background-color: rgb(29, 164, 14);
+  }
+}
+
+.product-in-cart {
+  flex-grow: 1;
+  max-width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1vh 2vh;
+  border-radius: 2vh;
+  border: 0.2vh solid red;
+  color: red;
+}
+
+.remove-from-cart {
+  text-align: center;
+  padding: 1vh 2vh;
+  border-radius: 2vh;
+  border: 0.2vh solid red;
+  color: red;
+  margin-top: 0.5vh;
+  cursor: pointer;
+  transition: all ease 0.3s;
+
+  &:hover {
+    color: white;
+    background-color: red;
   }
 }
 

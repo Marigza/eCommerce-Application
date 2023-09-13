@@ -1,8 +1,8 @@
-import React from "react";
-import { IProductGet } from "../../client_Api/interfaces";
+import React, { useState, useEffect } from "react";
+import { IProductGet, ICart } from "../../client_Api/interfaces";
 import Slider from "../Slider/Slider";
 import { Helmet } from "react-helmet";
-import { addProductToCart } from "../../client_Api/carts";
+import { getCart, addProductToCart, changeQuantityInCart } from "../../client_Api/carts";
 
 import "./ProductCard.scss";
 
@@ -11,6 +11,24 @@ type ProductType = {
 };
 
 const ProductCard: React.FC<ProductType> = (props) => {
+  const [Cart, setCart] = useState<ICart>();
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getCart();
+      if (!response) return null;
+      setCart(response);
+    }
+
+    fetchData();
+  }, []);
+
+  const IsInCart = (item: string) => {
+    const itemsID = Cart?.lineItems.map((elem) => elem.productId);
+    const isInclude = itemsID?.includes(item);
+    return isInclude;
+  };
+
   const propsData = props?.product?.masterData?.staged;
 
   return (
@@ -80,14 +98,29 @@ const ProductCard: React.FC<ProductType> = (props) => {
                   $
                 </p>
               </div>
-              <div
-                className="product-cart"
-                onClick={() => {
-                  addProductToCart(props.product.id);
-                }}
-              >
-                Add to cart
-              </div>
+              {!IsInCart(props.product.id) ? (
+                <div
+                  className="product-cart"
+                  onClick={() => {
+                    addProductToCart(props.product.id);
+                  }}
+                >
+                  Add to cart
+                </div>
+              ) : (
+                <div>
+                  <div className="product-in-cart">already in cart</div>
+                  <div
+                    className="remove-from-cart"
+                    onClick={() => {
+                      changeQuantityInCart(props.product.id, 0);
+                      alert("Product is deleted from cart");
+                    }}
+                  >
+                    remove
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
