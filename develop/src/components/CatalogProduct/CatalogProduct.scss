@@ -118,3 +118,14 @@
     border: 0.3vh solid rgb(29, 164, 14);
   }
 }
+
+.alredy-in-cart {
+  position: absolute;
+  bottom: 2vh;
+  right: 2vh;
+  border: 0.3vh solid red;
+  border-radius: 2vh;
+  padding: 1vh;
+  background: white;
+  color: red;
+}

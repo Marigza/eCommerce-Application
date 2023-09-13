@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
-import { addProductToCart } from "../../client_Api/carts";
-import { ProductType } from "../../client_Api/interfaces";
+import { getCart, addProductToCart } from "../../client_Api/carts";
+import { ProductType, ICart } from "../../client_Api/interfaces";
 
 import "./CatalogProduct.scss";
 import { Rating } from "@mui/material";
@@ -13,6 +14,18 @@ const writeIdProduct = (ID: string): string => {
 };
 
 const CatalogProduct: React.FC<ProductType> = (props) => {
+  const [Cart, setCart] = useState<ICart>();
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getCart();
+      if (!response) return null;
+      setCart(response);
+    }
+
+    fetchData();
+  }, []);
+
   const keyFirstChar = props.product.key.charAt(0);
 
   const getPath = (firstChar: string) => {
@@ -29,6 +42,12 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
   };
 
   const toPath = getPath(keyFirstChar);
+
+  const IsInCart = (item: string) => {
+    const itemsID = Cart?.lineItems.map((elem) => elem.productId);
+    const isInclude = itemsID?.includes(item);
+    return isInclude;
+  };
 
   return (
     <Link to={toPath} className="product" onClick={() => writeIdProduct(props.product.id)}>
@@ -84,15 +103,19 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
           free shipping <LocalShippingIcon style={{ fontSize: "2.5vh" }} />
         </p>
       </div>
-      <div
-        className="buy-now"
-        onClick={() => {
-          addProductToCart(props.product.id);
-          console.log("add to cart", props.product.id);
-        }}
-      >
-        <AddShoppingCartOutlinedIcon style={{ fontSize: "4vh" }} />
-      </div>
+      {!IsInCart(props.product.id) ? (
+        <div
+          className="buy-now"
+          onClick={() => {
+            addProductToCart(props.product.id);
+            console.log("add to cart", props.product.id);
+          }}
+        >
+          <AddShoppingCartOutlinedIcon style={{ fontSize: "4vh" }} />
+        </div>
+      ) : (
+        <div className="alredy-in-cart">already in cart</div>
+      )}
     </Link>
   );
 };
