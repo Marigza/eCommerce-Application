@@ -1,15 +1,11 @@
 import { Link } from "react-router-dom";
-import { IProduct } from "../../client_Api/interfaces";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
+import { addProductToCart } from "../../client_Api/carts";
+import { ProductType } from "../../client_Api/interfaces";
 
 import "./CatalogProduct.scss";
 import { Rating } from "@mui/material";
-
-type ProductType = {
-  //delete add import
-  product: IProduct;
-};
 
 const writeIdProduct = (ID: string): string => {
   localStorage.setItem("ID", ID);
@@ -90,7 +86,13 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
           free shipping <LocalShippingIcon style={{ fontSize: "2.5vh" }} />
         </p>
       </div>
-      <div className="buy-now">
+      <div
+        className="buy-now"
+        onClick={() => {
+          addProductToCart(props.product.id);
+          console.log("add to cart", props.product.id);
+        }}
+      >
         <AddShoppingCartOutlinedIcon style={{ fontSize: "4vh" }} />
       </div>
     </Link>
