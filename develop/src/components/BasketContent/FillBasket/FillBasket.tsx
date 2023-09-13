@@ -1,4 +1,4 @@
-import { changeQuantityInCart } from "../../../client_Api/carts";
+import { changeQuantityInCart, cleanCart } from "../../../client_Api/carts";
 import { ICart } from "../../../client_Api/interfaces";
 
 type CartType = {
@@ -40,7 +40,17 @@ const FillBasket: React.FC<CartType> = (props) => {
         ))}
       </div>
       <div className="delete__block">
-        <button className="delete-all">Delete All</button>
+        <button
+          className="delete-all"
+          onClick={() => {
+            const isSure = confirm("Are you really want to clean your cart?");
+            if (isSure) {
+              cleanCart();
+            }
+          }}
+        >
+          Clear shopping cart
+        </button>
       </div>
     </div>
   );
