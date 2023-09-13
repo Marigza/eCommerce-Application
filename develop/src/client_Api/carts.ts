@@ -1,12 +1,14 @@
 import { region, projectKey, tokenGenerate } from "./tokenGenerate";
-import { ICart, ICartError, IproductInCart } from "./interfaces";
+import { ICart, IproductInCart } from "./interfaces";
+
+const path = `https://api.${region}.commercetools.com/${projectKey}/me`;
 
 const createCart = async (): Promise<ICart | null> => {
   const token: string | null = await tokenGenerate();
 
   if (!token) return null;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts`;
+  const url = `${path}/carts`;
 
   try {
     const response: Response = await fetch(url, {
@@ -26,12 +28,12 @@ const createCart = async (): Promise<ICart | null> => {
   }
 };
 
-const getActiveCart = async (): Promise<ICart | null> => {
+export const getActiveCart = async (): Promise<ICart | null> => {
   const token: string | null = await tokenGenerate();
 
   if (!token) return null;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/active-cart`;
+  const url = `${path}/active-cart`;
 
   try {
     const response: Response = await fetch(url, {
@@ -50,7 +52,7 @@ const getActiveCart = async (): Promise<ICart | null> => {
   }
 };
 
-export const getCart = async (): Promise<ICart | null> => {
+const getCart = async (): Promise<ICart | null> => {
   const cart: ICart | null = await getActiveCart();
 
   if (cart) return cart;
@@ -65,7 +67,7 @@ export const addProductToCart = async (IdOfProduct: string) => {
 
   if (!token || !cart || !cart.version || !cart.id) return null;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts/${cart.id}`;
+  const url = `${path}/carts/${cart.id}`;
 
   try {
     const response: Response = await fetch(url, {
@@ -97,10 +99,10 @@ export const changeQuantityInCart = async (IdOfProduct: string, quantity: number
   const token: string | null = await tokenGenerate();
   const cart: ICart | null = await getActiveCart();
 
-  if (!token || !cart || !cart.id || !cart.version) return null;
+  if (!token || !cart || !cart.id || !cart.version || !cart.lineItems) return null;
 
   const lineItem: IproductInCart | undefined = cart.lineItems.find(
-    (el) => el.productId === IdOfProduct
+    (el: IproductInCart): boolean => el.productId === IdOfProduct
   );
 
   if (!lineItem || !lineItem.quantity) return null;
@@ -117,7 +119,7 @@ export const changeQuantityInCart = async (IdOfProduct: string, quantity: number
       currantQuantity = 0;
       break;
   }
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts/${cart.id}`;
+  const url = `${path}/carts/${cart.id}`;
 
   try {
     const response: Response = await fetch(url, {
@@ -145,30 +147,27 @@ export const changeQuantityInCart = async (IdOfProduct: string, quantity: number
   }
 };
 
-/*
+export const cleanCart = async () => {
+  const token: string | null = await tokenGenerate();
+  const cart: ICart | null = await getActiveCart();
 
-const getAnonimousCart = async (): Promise<ICart | null> => {
-const IdOfAnonimousCart: string | null = await getIdOfAnonimousCart();
-  const IdOfAnonimousCart = "c41d8b11-a3b2-4376-8754-e4adee26f1e7";
-  const tokenUnknown: string | null = await tokenGenerate();
+  if (!token || !cart || !cart.id || !cart.version) return null;
 
-  if (!tokenUnknown || !IdOfAnonimousCart) return null;
-
-  const url = `https://api.${region}.commercetools.com/${projectKey}/me/carts/${IdOfAnonimousCart}`;
+  const url = `${path}/carts/${cart.id}?version=${cart.version}`;
 
   try {
     const response: Response = await fetch(url, {
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${tokenUnknown}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
-    return await response.json();
+    if (!response.ok) return null;
+
+    await createCart();
   } catch (error) {
     return null;
   }
 };
-
-*/

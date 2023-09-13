@@ -218,44 +218,28 @@ export interface IproductInCart {
   id: string;
   lastModifiedAt: string;
   lineItemMode: string;
-  name: { "en-US": string };
+  name: ICurrency;
   perMethodTaxRate: string[];
   price: {
     discounted: {
-      discount: {
-        typeId: string;
-        id: string;
-      };
-      value: {
-        type: string;
-        currencyCode: string;
-        centAmount: number;
-        fractionDigits: number;
-      };
+      discount: ITypeIdOfProduct;
+      value: IValuePricesOfProduct;
     };
-    value: {
-      type: string;
-      currencyCode: string;
-      centAmount: number;
-      fractionDigits: number;
-    };
+    value: IValuePricesOfProduct;
     id: string;
   };
   priceMode: string;
   productId: string;
   productKey: string;
-  productSlug: { "en-US": string };
+  productSlug: ICurrency;
   productType: { id: string; typeId: string; version: number };
   quantity: number;
   state: {
     quantity: number;
-    state: {
-      id: string;
-      typeId: string;
-    };
+    state: ITypeIdOfProduct;
   }[];
   taxedPricePortions: string[];
-  totalPrice: { centAmount: number; currencyCode: string; fractionDigits: number; type: string };
+  totalPrice: IValuePricesOfProduct;
   variant: {
     assets: string[];
     attributes: { name: string; value: string }[];
@@ -267,23 +251,10 @@ export interface IproductInCart {
     key: string;
     prices: {
       discounted: {
-        discount: {
-          typeId: string;
-          id: string;
-        };
-        value: {
-          type: string;
-          currencyCode: string;
-          centAmount: number;
-          fractionDigits: number;
-        };
+        discount: ITypeIdOfProduct;
+        value: IValuePricesOfProduct;
       };
-      value: {
-        type: string;
-        currencyCode: string;
-        centAmount: number;
-        fractionDigits: number;
-      };
+      value: IValuePricesOfProduct;
       id: string;
     }[];
     sku: string;
@@ -321,14 +292,8 @@ export interface ICart {
   taxCalculationMode: string;
   taxMode: string;
   taxRoundingMode: string;
-  totalPrice: { type: string; currencyCode: string; centAmount: number; fractionDigits: number };
+  totalPrice: IValuePricesOfProduct;
   type: string;
   version: number;
   versionModifiedAt: string;
-}
-
-export interface ICartError {
-  errors: { code: string; message: string }[];
-  message: string;
-  statusCode: number;
 }
