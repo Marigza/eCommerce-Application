@@ -1,0 +1,36 @@
+.category-sort .MuiFormControl-root {
+  flex: 2;
+  max-width: 20vh;
+  min-width: 15vh;
+
+  fieldset {
+    border: none;
+  }
+
+  .item {
+    padding: 0;
+  }
+}
+.category-sort .MuiFormControl-root > div {
+  padding: 2vh;
+  font-size: 3vh;
+  color: black;
+  height: 100%;
+  border-radius: 4vh;
+  background: hsl(0, 0%, 96%);
+  border: none;
+
+  > div {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+
+  > svg {
+    display: none;
+  }
+}
+
+#demo-simple-select {
+  padding: 0;
+}
