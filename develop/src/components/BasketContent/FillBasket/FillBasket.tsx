@@ -7,8 +7,7 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
     if (!id) {
       await cleanCart().then(() => props.count());
     }
-
-    changeQuantityInCart(id, flag).then(() => props.count());
+    await changeQuantityInCart(id, flag).then(() => props.count());
   };
 
   return (
