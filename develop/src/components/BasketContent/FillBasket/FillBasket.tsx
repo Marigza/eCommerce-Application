@@ -1,11 +1,15 @@
+import React from "react";
 import { changeQuantityInCart, cleanCart } from "../../../client_Api/carts";
 import { ICart } from "../../../client_Api/interfaces";
 
-type CartType = {
-  cart: ICart;
-};
+const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
+  const handlerClick = async (id: string, flag: number) => {
+    if (!id) {
+      await cleanCart().then(() => props.count());
+    }
+    await changeQuantityInCart(id, flag).then(() => props.count());
+  };
 
-const FillBasket: React.FC<CartType> = (props) => {
   return (
     <div className="items_block">
       <div className="total-cost">
@@ -33,7 +37,7 @@ const FillBasket: React.FC<CartType> = (props) => {
               <span>{item.totalPrice.centAmount / 100} </span>
               <span>{item.totalPrice.currencyCode}</span>
             </span>
-            <button className="delete-item" onClick={() => changeQuantityInCart(item.productId, 0)}>
+            <button className="delete-item" onClick={() => handlerClick(item.productId, 0)}>
               Delete
             </button>
           </div>
@@ -45,7 +49,7 @@ const FillBasket: React.FC<CartType> = (props) => {
           onClick={() => {
             const isSure = confirm("Are you really want to clean your cart?");
             if (isSure) {
-              cleanCart();
+              handlerClick("", 0);
             }
           }}
         >
