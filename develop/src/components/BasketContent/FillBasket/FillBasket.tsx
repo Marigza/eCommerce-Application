@@ -32,7 +32,21 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
               </span>
               <span>{item.price.value.currencyCode}</span>
             </span>
-            <span>{item.quantity}</span>
+            <span className="item-quantity">
+              <span
+                className="quantity quantity__btn"
+                onClick={() => handlerClick(item.productId, -1)}
+              >
+                {"-"}
+              </span>
+              <span className="quantity">{item.quantity}</span>
+              <span
+                className="quantity quantity__btn"
+                onClick={() => handlerClick(item.productId, 1)}
+              >
+                {"+"}
+              </span>
+            </span>
             <span>
               <span>{item.totalPrice.centAmount / 100} </span>
               <span>{item.totalPrice.currencyCode}</span>
@@ -47,7 +61,7 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
         <button
           className="delete-all"
           onClick={() => {
-            const isSure = confirm("Are you really want to clean your cart?");
+            const isSure = confirm("Do you really want to clean your cart?");
             if (isSure) {
               handlerClick("", 0);
             }
