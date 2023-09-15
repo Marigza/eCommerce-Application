@@ -89,6 +89,30 @@
   }
 }
 
+.item-quantity {
+  display: flex;
+  gap: 0.2vh;
+  padding: 1vh;
+  border-radius: 2vh;
+  background-color: hsl(0, 0%, 96%);
+}
+
+.quantity {
+  display: block;
+  padding: 0.1vh 1vh;
+  background-color: white;
+  border-radius: 1vh;
+}
+
+.quantity__btn {
+  cursor: pointer;
+  transition: all ease 0.3s;
+
+  &:hover {
+    background-color: hsl(0, 0%, 85%);
+  }
+}
+
 @media (max-width: 800px) {
   .empty_block-message {
     font-size: 8vw;
