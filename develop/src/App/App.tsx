@@ -9,6 +9,7 @@ import { NotFound } from "../pages/NotFound";
 import { Catalog } from "../pages/Catalog";
 import Layout from "../components/Layout/Layout";
 import { ProductPage } from "../pages/ProductPage";
+import About from "../pages/About/About";
 
 const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const App: React.FC = () => {
                 <Route path=":product" element={<ProductPage />} />
               </Route>
             </Route>
+            <Route path="about" element={<About />} />
           </Route>
           <Route path="*" element={<NotFound />} />
           <Route path="login" element={<Login />} />
