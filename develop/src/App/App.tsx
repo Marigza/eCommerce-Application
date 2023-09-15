@@ -10,6 +10,7 @@ import { Catalog } from "../pages/Catalog";
 import Layout from "../components/Layout/Layout";
 import { ProductPage } from "../pages/ProductPage";
 import About from "../pages/About/About";
+import { Basket } from "../pages/Basket";
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
               </Route>
             </Route>
             <Route path="about" element={<About />} />
+            <Route path="basket" element={<Basket />} />
           </Route>
           <Route path="*" element={<NotFound />} />
           <Route path="login" element={<Login />} />

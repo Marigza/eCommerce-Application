@@ -78,6 +78,10 @@
     min-width: 4vh;
     min-height: 4vh;
     cursor: pointer;
+    &:hover {
+      background-color: grey;
+      border-radius: 1vh;
+    }
   }
 }
 

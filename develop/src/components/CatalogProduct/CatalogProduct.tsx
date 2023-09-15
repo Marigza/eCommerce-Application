@@ -1,15 +1,12 @@
 import { Link } from "react-router-dom";
-import { IProduct } from "../../client_Api/interfaces";
+import { useState, useEffect } from "react";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
-
-import "./CatalogProduct.scss";
+import { getActiveCart, addProductToCart } from "../../client_Api/carts";
+import { ProductType, ICart } from "../../client_Api/interfaces";
 import { Rating } from "@mui/material";
 
-type ProductType = {
-  //delete add import
-  product: IProduct;
-};
+import "./CatalogProduct.scss";
 
 const writeIdProduct = (ID: string): string => {
   localStorage.setItem("ID", ID);
@@ -17,6 +14,18 @@ const writeIdProduct = (ID: string): string => {
 };
 
 const CatalogProduct: React.FC<ProductType> = (props) => {
+  const [Cart, setCart] = useState<ICart>();
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getActiveCart();
+      if (!response) return null;
+      setCart(response);
+    }
+
+    fetchData();
+  }, []);
+
   const keyFirstChar = props.product.key.charAt(0);
 
   const getPath = (firstChar: string) => {
@@ -33,6 +42,12 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
   };
 
   const toPath = getPath(keyFirstChar);
+
+  const IsInCart = (item: string) => {
+    const itemsID = Cart?.lineItems.map((elem) => elem.productId);
+    const isInclude = itemsID?.includes(item);
+    return isInclude;
+  };
 
   return (
     <Link to={toPath} className="product" onClick={() => writeIdProduct(props.product.id)}>
@@ -58,7 +73,7 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
                   {props.product.masterVariant.prices[0].discounted?.value.centAmount
                     ? props.product.masterVariant.prices[0].value.centAmount / 100
                     : ""}
-                  $
+                  .00$
                 </p>
                 <p className="discount-percent">
                   -
@@ -78,11 +93,9 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
               }
             >
               {props.product.masterVariant.prices[0].discounted?.value.centAmount
-                ? Math.floor(
-                    props.product.masterVariant.prices[0].discounted.value.centAmount / 100
-                  )
-                : props.product.masterVariant.prices[0].value.centAmount / 100}
-              ,00$
+                ? props.product.masterVariant.prices[0].discounted.value.centAmount / 100 + `0`
+                : props.product.masterVariant.prices[0].value.centAmount / 100 + `.00`}
+              $
             </p>
           </div>
         </div>
@@ -90,9 +103,18 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
           free shipping <LocalShippingIcon style={{ fontSize: "2.5vh" }} />
         </p>
       </div>
-      <div className="buy-now">
-        <AddShoppingCartOutlinedIcon style={{ fontSize: "4vh" }} />
-      </div>
+      {!IsInCart(props.product.id) ? (
+        <div
+          className="buy-now"
+          onClick={() => {
+            addProductToCart(props.product.id);
+          }}
+        >
+          <AddShoppingCartOutlinedIcon style={{ fontSize: "4vh" }} />
+        </div>
+      ) : (
+        <div className="alredy-in-cart">already in cart</div>
+      )}
     </Link>
   );
 };
