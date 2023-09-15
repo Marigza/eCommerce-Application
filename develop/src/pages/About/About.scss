@@ -8,6 +8,7 @@
     margin-top: 0;
     margin-bottom: 2vh;
   }
+
   &_discription {
     font-size: 3vh;
     text-align: center;
@@ -46,6 +47,7 @@
       margin: 0 auto;
     }
   }
+
   &_team-cards {
     border-radius: 4vh;
 
@@ -63,16 +65,20 @@
         .card-image {
           border-radius: 0 4vh 4vh 0;
         }
+
         .card-discription {
           text-align: right;
         }
+
         .card-links {
           flex-direction: row-reverse;
         }
       }
+
       &:last-child {
         margin-bottom: 2vh;
       }
+
       .card-image {
         width: 35%;
         height: 100%;
@@ -94,6 +100,7 @@
           line-height: 2.5vh;
         }
       }
+
       .card-links {
         margin-top: auto;
         margin-bottom: 0;
@@ -104,10 +111,12 @@
         a {
           color: rgb(66, 66, 66);
         }
+
         a:hover {
           color: black;
         }
       }
+
       div {
         margin-bottom: 2vh;
       }
@@ -116,41 +125,50 @@
         font-size: 5vh;
         margin-bottom: 1vh;
       }
+
       h3 {
         font-size: 3.5vh;
         color: rgb(121, 121, 121);
         margin-bottom: 2vh;
       }
+
       h4 {
         margin-top: 3vh;
         font-size: 3.5vh;
         margin-bottom: 1vh;
       }
+
       ul {
         font-size: 2.5vh;
 
         li {
           margin-bottom: 1vh;
         }
+
         li:last-child {
           margin-bottom: 5vh;
         }
       }
+
       p {
         font-size: 2.5vh;
       }
     }
   }
 }
+
 .maksim {
   background-image: url(../../assets/images/jpg/Maksim.jpg);
 }
+
 .marina {
   background-image: url(../../assets/images/jpg/Marina.jpg);
 }
+
 .mikhail {
   background-image: url(../../assets/images/jpg/Mikhail.jpg);
 }
+
 .rs {
   background-image: url(../../assets/images/svg/rs_school.svg);
   background-repeat: no-repeat;
@@ -177,6 +195,7 @@
         width: 100%;
         margin-bottom: 0;
       }
+
       .card-discription {
         width: 100%;
         text-align: justify;
@@ -190,27 +209,34 @@
     h1 {
       font-size: 3.5vh;
     }
+
     &_discription {
       font-size: 2.5vh;
       width: 80vw;
     }
   }
+
   main {
     width: 90vw;
   }
+
   .rs {
     height: 10vh;
     width: 28vh;
   }
+
   .about-page_team-cards__card h2 {
     font-size: 4vh;
   }
+
   .about-page_team-cards__card h3 {
     font-size: 3vh;
   }
+
   .about-page_team-cards__card h4 {
     font-size: 3vh;
   }
+
   .about-page_team-cards__card .card-discription p,
   .about-page_team-cards__card ul {
     font-size: 2vh;
