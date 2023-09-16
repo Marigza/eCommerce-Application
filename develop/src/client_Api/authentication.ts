@@ -22,6 +22,7 @@ export const signUpCustomer = async (body: ICustomerInfoForSingUp): Promise<bool
 
     if (!response.ok) return false;
 
+    localStorage.setItem("new_customer", "true");
     const customer: IUser = (await response.json()).customer;
     await changeToken({ email: body.email, password: body.password });
 
@@ -92,6 +93,6 @@ export const loginCustomer = async (body: ICustomerInfoForLogin): Promise<boolea
 export const logoutCustomer = async (): Promise<void> => {
   localStorage.removeItem("token");
   localStorage.removeItem("customer_info");
-  localStorage.removeItem("cart_info");
+  localStorage.removeItem("new_customer");
   await tokenGenerate();
 };

@@ -261,6 +261,14 @@ export interface IproductInCart {
   };
 }
 
+export interface IDiscountCodeInCart {
+  discountCode: {
+    id: string;
+    typeId: string;
+  };
+  state: string;
+}
+
 export interface ICart {
   anonymousId: string;
   cartState: string;
@@ -273,7 +281,7 @@ export interface ICart {
   customLineItems: string[];
   deleteDaysAfterLastModification: number;
   directDiscounts: string[];
-  discountCodes: string[];
+  discountCodes: IDiscountCodeInCart[];
   id: string;
   inventoryMode: string;
   itemShippingAddresses: string[];
