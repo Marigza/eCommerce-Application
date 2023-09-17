@@ -1,5 +1,3 @@
-import { number, string } from "yup";
-
 export interface IToken {
   access_token: string;
   token_type: string;
@@ -116,7 +114,7 @@ export interface IProductResponse {
   results: IProduct[];
 }
 
-export interface IProductGet {
+export interface IProductDetails {
   id: string;
   version: number;
   versionModifiedAt: string;

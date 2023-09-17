@@ -20,7 +20,7 @@ const Catalog: React.FC = () => {
     all: "a183815d-9753-44e1-9c72-91f8ecda440d",
   };
 
-  const productsPerPage = 9;
+  const productsPerPage = 6;
   const [Products, setProducts] = useState<IProductResponse>({
     count: 0,
     limit: productsPerPage,
@@ -35,6 +35,10 @@ const Catalog: React.FC = () => {
   const handleSortChange = (selectedSort: string): void => {
     setSort(selectedSort);
   };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [location.pathname]);
 
   useEffect(() => {
     const loadProducts = async (): Promise<void> => {

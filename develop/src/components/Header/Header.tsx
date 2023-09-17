@@ -34,7 +34,7 @@ const Header: React.FC = () => {
   const fetchCartItemCount = async () => {
     const cart = await getActiveCart();
     if (cart) {
-      setCartItemCount(cart.totalLineItemQuantity); // Устанавливаем количество товаров в корзине
+      setCartItemCount(cart.totalLineItemQuantity);
     }
   };
 

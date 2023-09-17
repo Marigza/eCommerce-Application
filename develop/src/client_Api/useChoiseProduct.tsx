@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { projectKey, tokenGenerate } from "./tokenGenerate";
-import { IProductGet } from "./interfaces";
+import { IProductDetails } from "./interfaces";
 
 export function useChioseProduct() {
-  const [ProductItem, setProduct] = useState<IProductGet>();
+  const [ProductItem, setProduct] = useState<IProductDetails>();
   const getIDProduct = localStorage.getItem("ID");
 
   const getProduct = async (Id: string) => {
