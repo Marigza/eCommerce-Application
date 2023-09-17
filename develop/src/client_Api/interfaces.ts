@@ -52,7 +52,7 @@ interface ICurrency {
   "en-US": string;
 }
 
-export interface IProduct {
+interface IProduct {
   id: string;
   version: number;
   productType: ITypeIdOfProduct;
@@ -106,6 +106,14 @@ export interface IProduct {
   priceMode: string;
   createdAt: string;
   lastModifiedAt: string;
+}
+
+export interface IProductResponse {
+  count: number;
+  limit: number;
+  offset: number;
+  total: number;
+  results: IProduct[];
 }
 
 export interface IProductGet {
@@ -292,6 +300,7 @@ export interface ICart {
   taxCalculationMode: string;
   taxMode: string;
   taxRoundingMode: string;
+  totalLineItemQuantity: number;
   totalPrice: IValuePricesOfProduct;
   type: string;
   version: number;
