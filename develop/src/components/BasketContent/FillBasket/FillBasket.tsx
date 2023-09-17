@@ -10,6 +10,10 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
     await changeQuantityInCart(id, flag).then(() => props.count());
   };
 
+  const handlerClickPromocode = async () => {
+    console.log("hi");
+  };
+
   return (
     <div className="items_block">
       <div className="total-cost">
@@ -56,6 +60,11 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
             </button>
           </div>
         ))}
+      </div>
+      <div className="basket__promocode_box">
+        <div className="basket__promocode_info"></div>
+        <input placeholder="enter promocode" className="basket__promocode_input" type="text" />
+        <button onClick={handlerClickPromocode} className="basket__promocode_submit"></button>
       </div>
       <div className="delete__block">
         <button

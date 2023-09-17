@@ -113,6 +113,35 @@
   }
 }
 
+.basket {
+  &__promocode {
+    &_box {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 0 0 2vh 0;
+      gap: 1vh;
+    }
+    &_info {
+    }
+    &_input {
+      padding: 1vh;
+      font-size: 3vh;
+      border-radius: 1vh;
+    }
+    &_submit {
+      border-radius: 1vh;
+      width: 5.5vh;
+      height: 5.5vh;
+      background: #ffffff url(../../assets/images/svg/promocode.svg) center / 3.5vh 3.5vh no-repeat;
+      transition-duration: 0.3s;
+      &:hover {
+        background-color: hsl(0, 0%, 85%);
+      }
+    }
+  }
+}
+
 @media (max-width: 800px) {
   .empty_block-message {
     font-size: 8vw;
