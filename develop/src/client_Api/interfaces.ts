@@ -1,5 +1,3 @@
-import { number, string } from "yup";
-
 export interface IToken {
   access_token: string;
   token_type: string;
@@ -52,7 +50,7 @@ interface ICurrency {
   "en-US": string;
 }
 
-export interface IProduct {
+interface IProduct {
   id: string;
   version: number;
   productType: ITypeIdOfProduct;
@@ -108,7 +106,15 @@ export interface IProduct {
   lastModifiedAt: string;
 }
 
-export interface IProductGet {
+export interface IProductResponse {
+  count: number;
+  limit: number;
+  offset: number;
+  total: number;
+  results: IProduct[];
+}
+
+export interface IProductDetails {
   id: string;
   version: number;
   versionModifiedAt: string;
@@ -292,6 +298,7 @@ export interface ICart {
   taxCalculationMode: string;
   taxMode: string;
   taxRoundingMode: string;
+  totalLineItemQuantity: number;
   totalPrice: IValuePricesOfProduct;
   type: string;
   version: number;

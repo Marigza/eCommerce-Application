@@ -7,8 +7,9 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Category } from "../../components/Category";
 import { getProductList } from "../../client_Api/productList";
 import { useEffect, useState } from "react";
-import { IProduct } from "../../client_Api/interfaces";
+import { IProductResponse } from "../../client_Api/interfaces";
 import { Sorting } from "../../components/Sorting";
+import Pagination from "@mui/material/Pagination/Pagination";
 
 const Catalog: React.FC = () => {
   const location = useLocation();
@@ -19,36 +20,51 @@ const Catalog: React.FC = () => {
     all: "a183815d-9753-44e1-9c72-91f8ecda440d",
   };
 
-  const [Products, setProducts] = useState<IProduct[]>([]);
+  const productsPerPage = 6;
+  const [Products, setProducts] = useState<IProductResponse>({
+    count: 0,
+    limit: productsPerPage,
+    offset: 0,
+    total: 0,
+    results: [],
+  });
   const [filterString, setFilterString] = useState<string>("");
   const [sort, setSort] = useState<string>("price asc");
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const handleSortChange = (selectedSort: string): void => {
     setSort(selectedSort);
   };
 
   useEffect(() => {
+    setCurrentPage(1);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const loadProducts = async (): Promise<void> => {
       let path: string;
+      const startIndex = (currentPage - 1) * productsPerPage;
+
       switch (location.pathname) {
         case "/catalog/phones":
-          path = `?filter=categories.id:"${category.phones}"&${filterString}&sort=${sort}`;
+          path = `?filter=categories.id:"${category.phones}"&${filterString}&sort=${sort}&limit=${productsPerPage}&offset=${startIndex}`;
           break;
         case "/catalog/tablets":
-          path = `?filter=categories.id:"${category.tablets}"&${filterString}&sort=${sort}`;
+          path = `?filter=categories.id:"${category.tablets}"&${filterString}&sort=${sort}&limit=${productsPerPage}&offset=${startIndex}`;
           break;
         case "/catalog/laptops":
-          path = `?filter=categories.id:"${category.laptops}"&${filterString}&sort=${sort}`;
+          path = `?filter=categories.id:"${category.laptops}"&${filterString}&sort=${sort}&limit=${productsPerPage}&offset=${startIndex}`;
           break;
         default:
-          path = `?${filterString}&sort=${sort}&sort=${sort}`;
+          path = `?${filterString}&sort=${sort}&limit=${productsPerPage}&offset=${startIndex}`;
       }
 
-      const response: IProduct[] | null = await getProductList(path);
+      const response: IProductResponse | null = await getProductList(path);
       if (!response) return;
 
       setProducts(response);
     };
+
     loadProducts();
   }, [
     location.pathname,
@@ -58,7 +74,12 @@ const Catalog: React.FC = () => {
     category.all,
     filterString,
     sort,
+    currentPage,
   ]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -71,16 +92,21 @@ const Catalog: React.FC = () => {
         {!/\/\d+/.test(location.pathname) && (
           <>
             <div className="category-sort">
+              <Filter onSearch={setFilterString} />
               <Category />
               <Sorting selectedSort={sort} onSortChange={handleSortChange} />
             </div>
             <div className="catalog-wrapper">
-              <Filter onSearch={setFilterString} />
               <div className="catalog-products">
-                {Products.map((product) => (
+                {Products.results.map((product) => (
                   <Product product={product} key={product.id} />
                 ))}
               </div>
+              <Pagination
+                count={Math.ceil(Products.total / productsPerPage)}
+                page={currentPage}
+                onChange={handlePageChange}
+              />
             </div>
           </>
         )}

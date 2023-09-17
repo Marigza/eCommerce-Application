@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IProductGet, ICart } from "../../client_Api/interfaces";
+import { IProductDetails, ICart } from "../../client_Api/interfaces";
 import Slider from "../Slider/Slider";
 import { Helmet } from "react-helmet";
 import { getActiveCart, addProductToCart, changeQuantityInCart } from "../../client_Api/carts";
@@ -7,7 +7,7 @@ import { getActiveCart, addProductToCart, changeQuantityInCart } from "../../cli
 import "./ProductCard.scss";
 
 type ProductType = {
-  product: IProductGet;
+  product: IProductDetails;
 };
 
 const ProductCard: React.FC<ProductType> = (props) => {
