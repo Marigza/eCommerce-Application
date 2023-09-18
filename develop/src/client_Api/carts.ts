@@ -52,7 +52,7 @@ export const getActiveCart = async (): Promise<ICart | null> => {
   }
 };
 
-const getCart = async (): Promise<ICart | null> => {
+export const getCart = async (): Promise<ICart | null> => {
   const cart: ICart | null = await getActiveCart();
 
   if (cart) return cart;

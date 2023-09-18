@@ -1,12 +1,8 @@
 import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select/";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import AbcOutlinedIcon from "@mui/icons-material/AbcOutlined";
-import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
-import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import SwapVertRoundedIcon from "@mui/icons-material/SwapVertRounded";
 import "./Sorting.scss";
 
 interface SortingProps {
@@ -15,34 +11,72 @@ interface SortingProps {
 }
 
 const Sorting: React.FC<SortingProps> = ({ selectedSort, onSortChange }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [activeItem, setActiveItem] = React.useState<string>(selectedSort);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleMenuItemClick = (sort: string) => {
+    onSortChange(sort);
+    setActiveItem(sort);
+    handleClose();
+  };
+
   return (
-    <FormControl>
-      <InputLabel id="demo-simple-select-label"></InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={selectedSort}
-        label="Age"
-        onChange={(event) => onSortChange(event.target.value as string)}
+    <div>
+      <Button
+        aria-controls="sorting-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        sx={{
+          backgroundColor: "hsl(0, 0%, 96%)",
+          borderRadius: "50%",
+          height: "100%",
+          minWidth: "0",
+          width: "8vh",
+          "& .MuiButton-label": {
+            color: "black",
+          },
+          "&:hover": {
+            backgroundColor: "hsl(0, 0%, 96%)",
+          },
+        }}
       >
-        <MenuItem value="price asc" className="item">
-          <AttachMoneyIcon style={{ fontSize: "4vh" }} />
-          <ExpandLessRoundedIcon style={{ fontSize: "4vh" }} />
+        <SwapVertRoundedIcon style={{ color: "black", fontSize: "5vh" }} />
+      </Button>
+      <Menu id="sorting-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        <MenuItem
+          onClick={() => handleMenuItemClick("price asc")}
+          selected={activeItem === "price asc"}
+        >
+          Price: from low to high
         </MenuItem>
-        <MenuItem value="price desc" className="item">
-          <AttachMoneyIcon style={{ fontSize: "4vh" }} />
-          <ExpandMoreRoundedIcon style={{ fontSize: "4vh" }} />
+        <MenuItem
+          onClick={() => handleMenuItemClick("price desc")}
+          selected={activeItem === "price desc"}
+        >
+          Price: from high to low
         </MenuItem>
-        <MenuItem value="name.en-US asc" className="item">
-          <AbcOutlinedIcon style={{ fontSize: "4vh" }} />
-          <ExpandLessRoundedIcon style={{ fontSize: "4vh" }} />
+        <MenuItem
+          onClick={() => handleMenuItemClick("name.en-US asc")}
+          selected={activeItem === "name.en-US asc"}
+        >
+          Alphabet: from beginning
         </MenuItem>
-        <MenuItem value="name.en-US desc" className="item">
-          <AbcOutlinedIcon style={{ fontSize: "4vh" }} />
-          <ExpandMoreRoundedIcon style={{ fontSize: "4vh" }} />
+        <MenuItem
+          onClick={() => handleMenuItemClick("name.en-US desc")}
+          selected={activeItem === "name.en-US desc"}
+        >
+          Alphabet: from the end
         </MenuItem>
-      </Select>
-    </FormControl>
+      </Menu>
+    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 .product {
-  flex-basis: calc(33.33% - 1.4vh);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +10,8 @@
   cursor: pointer;
   position: relative;
   transition: box-shadow 0.3s;
+  flex: 1;
+  flex-basis: 30%;
 
   &:hover {
     box-shadow: rgba(99, 99, 99, 0.2) 0 0.5vh 2vh 0;
@@ -128,4 +129,16 @@
   padding: 1vh;
   background: white;
   color: red;
+}
+
+@media (max-aspect-ratio: 10/9) {
+  .product {
+    flex-basis: 48%;
+  }
+}
+
+@media (max-aspect-ratio: 97/120) {
+  .product {
+    flex-basis: 100%;
+  }
 }
