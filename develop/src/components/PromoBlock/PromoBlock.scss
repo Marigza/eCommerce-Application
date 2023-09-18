@@ -29,7 +29,12 @@
   width: fit-content;
   background-color: white;
   border-radius: 2vh;
-  margin: 3vh auto 0 auto;
+  margin: 3vh auto 2vh auto;
+}
+
+.promo__undertext {
+  font-size: 2vh;
+  text-align: left;
 }
 
 @media (max-width: 600px) {

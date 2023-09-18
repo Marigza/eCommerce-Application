@@ -8,7 +8,7 @@ const PromoBlock: React.FC = () => {
           <span>Just</span> for new customers!
         </div>
         <div className="promo__condition">
-          Register now and take discont for all in cart by promocode
+          Register now and take discont 10% for all in cart by promocode
         </div>
         <div className="promo__text">newcustomer</div>
       </div>
@@ -17,9 +17,10 @@ const PromoBlock: React.FC = () => {
           <span>Just</span> this autumn!
         </div>
         <div className="promo__condition">
-          You can apply a discount to your cart by using secret word
+          You can apply a 10% discount* to your cart by using secret word
         </div>
         <div className="promo__text">hotautumn</div>
+        <div className="promo__undertext">* only for registered customers</div>
       </div>
     </div>
   );
