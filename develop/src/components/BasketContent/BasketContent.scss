@@ -44,7 +44,7 @@
   background: white;
   border-radius: 2vh;
   color: black;
-  font-size: 4vw;
+  font-size: 4vh;
   padding: 1vh 3vh;
   margin-bottom: 2vh;
 }
@@ -113,17 +113,52 @@
   }
 }
 
-.basket {
-  &__promocode {
-    &_box {
-      position: relative;
+.basket-promocode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 2vh 0;
+  gap: 1vh;
+  &__info.invisible {
+    display: none;
+  }
+  &__info {
+    background-color: #ffffff;
+    padding: 1vh 1.5vh;
+    border-radius: 3vh;
+    font-size: 3vh;
+    display: flex;
+    justify-content: center;
+    gap: 1.5vh;
+
+    &_button-box.invisible {
+      display: none;
+    }
+    &_button-box {
+      background-color: hsl(0, 0%, 96%);
+      padding: 0.5vh 2vh;
+      border-radius: 3vh;
       display: flex;
-      justify-content: center;
-      padding: 0 0 2vh 0;
-      gap: 1vh;
+      align-items: center;
     }
-    &_info {
+    &_button {
+      margin: 0 0 0 0.5vh;
+      border-radius: 2vh;
+      width: 2.5vh;
+      height: 2.5vh;
+      background: hsl(0, 0%, 96%) url(../../assets/images/svg/cross.svg) 0 0 / contain no-repeat;
+      box-shadow: 0 0 1vh 0.6vh hsl(0, 0%, 96%);
+      transition-duration: 0.3s;
+      &:hover {
+        background-color: hsl(0, 0%, 85%);
+        box-shadow: 0 0 1vh 0.6vh hsl(0, 0%, 85%);
+      }
     }
+  }
+  &__action {
+    display: flex;
+    justify-content: center;
+    gap: 1vh;
     &_input {
       padding: 1vh;
       font-size: 3vh;
@@ -149,5 +184,63 @@
 
   .item {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .total-cost {
+    font-size: 3vh;
+  }
+
+  .delete-all {
+    font-size: 3vh;
+    padding: 1vh 2vh;
+  }
+
+  .basket-promocode {
+    padding: 0 0 1vh 0;
+    gap: 0.5vh;
+
+    &__info {
+      padding: 0.5vh 1vh;
+      border-radius: 2.5vh;
+      font-size: 2vh;
+      gap: 1vh;
+
+      &_button-box {
+        padding: 0.5vh 1.5vh;
+        border-radius: 2.5vh;
+      }
+      &_button {
+        margin: 0 0 0 0.5vh;
+        border-radius: 2vh;
+        width: 2vh;
+        height: 2vh;
+        box-shadow: 0 0 1vh 0.6vh hsl(0, 0%, 96%);
+        transition-duration: 0.3s;
+      }
+    }
+    &__action {
+      gap: 0.5vh;
+      &_input {
+        padding: 1vh;
+        font-size: 2vh;
+        border-radius: 1vh;
+      }
+      &_submit {
+        border-radius: 1vh;
+        width: 4vh;
+        height: 4vh;
+      }
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  .items_block {
+    min-width: 350px;
+  }
+  .total-cost {
+    font-size: 2.2vh;
   }
 }

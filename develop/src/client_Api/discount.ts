@@ -4,11 +4,7 @@ import { getActiveCart } from "./carts";
 
 const path = `https://api.${region}.commercetools.com/${projectKey}`;
 
-export const applyDiscountCode = async (code: string): Promise<ICart | null> => {
-  const newCustomer: string | null = localStorage.getItem("new_customer");
-
-  if (code === "newcustomer" && !newCustomer) return null;
-
+export const applyDiscountCode = async (code: string): Promise<boolean | null> => {
   const token: string | null = await tokenGenerate();
   const cart: ICart | null = await getActiveCart();
 
@@ -29,13 +25,13 @@ export const applyDiscountCode = async (code: string): Promise<ICart | null> => 
       }),
     });
 
-    return await response.json();
+    return response.ok;
   } catch (error) {
     return null;
   }
 };
 
-export const removeDiscountCode = async (): Promise<ICart | null> => {
+export const removeAllDiscountCode = async (): Promise<ICart | null> => {
   const token: string | null = await tokenGenerate();
   const cart: ICart | null = await getActiveCart();
 
@@ -71,6 +67,41 @@ export const removeDiscountCode = async (): Promise<ICart | null> => {
       body: JSON.stringify({
         version: cart.version,
         actions: actionArray,
+      }),
+    });
+
+    return await response.json();
+  } catch (error) {
+    return null;
+  }
+};
+
+export const removeOneDiscountCode = async (id: string) => {
+  const token: string | null = await tokenGenerate();
+  const cart: ICart | null = await getActiveCart();
+
+  if (!token || !cart || !cart.id || !cart.version || !cart.discountCodes) return null;
+
+  const url = `${path}/carts/${cart.id}`;
+
+  try {
+    const response: Response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        version: cart.version,
+        actions: [
+          {
+            action: "removeDiscountCode",
+            discountCode: {
+              typeId: "discount-code",
+              id: id,
+            },
+          },
+        ],
       }),
     });
 
