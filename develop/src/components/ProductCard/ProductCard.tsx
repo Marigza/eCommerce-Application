@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { IProductDetails, ICart } from "../../client_Api/interfaces";
 import Slider from "../Slider/Slider";
 import { Helmet } from "react-helmet";
@@ -13,6 +13,17 @@ type ProductType = {
 const ProductCard: React.FC<ProductType> = (props) => {
   const [Cart, setCart] = useState<ICart>();
 
+  const IsInCart = useCallback(
+    (item: string) => {
+      const itemsID = Cart?.lineItems.map((elem) => elem.productId);
+      const isInclude = itemsID?.includes(item);
+      return isInclude;
+    },
+    [Cart?.lineItems]
+  );
+
+  const propsData = props?.product?.masterData?.staged;
+
   useEffect(() => {
     async function fetchData() {
       const response = await getActiveCart();
@@ -21,15 +32,7 @@ const ProductCard: React.FC<ProductType> = (props) => {
     }
 
     fetchData();
-  }, []);
-
-  const IsInCart = (item: string) => {
-    const itemsID = Cart?.lineItems.map((elem) => elem.productId);
-    const isInclude = itemsID?.includes(item);
-    return isInclude;
-  };
-
-  const propsData = props?.product?.masterData?.staged;
+  }, [IsInCart]);
 
   return (
     <>
