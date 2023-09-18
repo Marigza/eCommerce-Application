@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { IProductResponse } from "../../client_Api/interfaces";
 import { getProductList } from "../../client_Api/productList";
-import "./MainContent.scss";
+import { PromoBlock } from "../../components/PromoBlock";
 import CatalogProduct from "../CatalogProduct/CatalogProduct";
+import "./MainContent.scss";
 
 const MainContent: React.FC = () => {
   const [Products, setProducts] = useState<IProductResponse>({
@@ -24,6 +25,7 @@ const MainContent: React.FC = () => {
 
   return (
     <main className="mainContent">
+      <PromoBlock />
       <div className="content__block">
         {Products.results.map((product) => (
           <CatalogProduct product={product} key={product.id} />

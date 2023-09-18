@@ -47,6 +47,7 @@ export const tokenGenerate = async (): Promise<string | null> => {
     JSON.parse(tokenStorage).token_type === "customer"
   ) {
     localStorage.removeItem("token");
+    localStorage.removeItem("new_customer");
     // Log Out !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     return null;
   }
