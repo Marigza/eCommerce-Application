@@ -48,6 +48,10 @@
   font-size: 4vh;
   padding: 1vh 3vh;
   margin-bottom: 2vh;
+
+  &__full-price {
+    filter: opacity(0.3);
+  }
 }
 
 .item {
@@ -163,9 +167,24 @@
   }
 
   &__action {
+    margin: 0 0 2vh 0;
     display: flex;
     justify-content: center;
     gap: 1vh;
+    position: relative;
+
+    &_info.invisible {
+      display: none;
+    }
+
+    &_info {
+      display: block;
+      position: absolute;
+      left: 1vh;
+      bottom: -2vh;
+      color: red;
+      font-size: 2vh;
+    }
 
     &_input {
       padding: 1vh;
@@ -235,6 +254,13 @@
     &__action {
       gap: 0.5vh;
 
+      &_info {
+        left: 0.5vh;
+        bottom: -1.5vh;
+        color: red;
+        font-size: 1.5vh;
+      }
+
       &_input {
         padding: 1vh;
         font-size: 2vh;
@@ -254,6 +280,7 @@
   .items_block {
     min-width: 350px;
   }
+
   .total-cost {
     font-size: 2.2vh;
   }

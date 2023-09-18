@@ -12,6 +12,10 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
   };
 
   const [inputValue, setInputValue] = useState("");
+  const [inputInfo, setInputInfo] = useState<{ isClass: boolean; info: string }>({
+    isClass: false,
+    info: "",
+  });
   const [infoState, setInfoState] = useState(false);
   const [autumnPromo, setAutumnPromo] = useState(false);
   const [customerPromo, setCustomerPromo] = useState(false);
@@ -43,11 +47,25 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
   };
 
   const handlerClickAddPromocode = async (): Promise<void> => {
-    if (inputValue === "newcustomer") {
-      const newCustomer: string | null = localStorage.getItem("new_customer");
+    const customer: string | null = localStorage.getItem("customer_info");
+    const newCustomer: string | null = localStorage.getItem("new_customer");
 
+    if (!customer) {
+      setInputInfo({
+        ...inputInfo,
+        isClass: true,
+        info: "You need to be authorised...",
+      });
+      return;
+    }
+
+    if (inputValue === "newcustomer") {
       if (!newCustomer) {
-        alert("Only newly registered users have access to this promocode !");
+        setInputInfo({
+          ...inputInfo,
+          isClass: true,
+          info: "You need to be newly registered user...",
+        });
         return;
       }
 
@@ -68,7 +86,11 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
       return;
     }
 
-    alert("Promo code is not valid...");
+    setInputInfo({
+      ...inputInfo,
+      isClass: true,
+      info: "Promocode is not valid...",
+    });
     return;
   };
 
@@ -76,23 +98,31 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
     await removeOneDiscountCode(id).then(() => checkPromocode());
   };
 
-  const totalPrice = (): JSX.Element => {
-    if (!props.cart.totalPrice.centAmount) return <>0</>;
-    const currantPrice = props.cart.totalPrice.centAmount;
+  const handlerClickRemoveInfo = () => {
+    setInputInfo({
+      ...inputInfo,
+      isClass: false,
+      info: "",
+    });
+  };
 
-    if (props.cart.discountCodes.length === 0) return <>{currantPrice / 100}</>;
+  const totalPrice = () => {
+    if (!props.cart.lineItems || props.cart.lineItems.length === 0) return <>0</>;
 
     const productArray: IproductInCart[] = props.cart.lineItems;
-    const fullPrice: number = productArray
-      .map((el: IproductInCart) => {
-        if (!el.price.value.centAmount || !el.quantity) return 0;
-        return el.price.value.centAmount * el.quantity;
-      })
-      .reduce((a, b) => a + b);
+    const price: { full: number; discount: number } = { full: 0, discount: 0 };
 
-    return (
+    productArray.forEach((el: IproductInCart) => {
+      if (!el.totalPrice.centAmount || !el.price.value.centAmount || !el.quantity) return;
+      price.full = price.full + el.price.value.centAmount * el.quantity;
+      price.discount = price.discount + el.totalPrice.centAmount;
+    });
+
+    return price.full === price.discount ? (
+      <>{price.full / 100}</>
+    ) : (
       <>
-        {<s>{fullPrice / 100}</s>} {currantPrice / 100}
+        {<s className="total-cost__full-price">{price.full / 100}</s>} {price.discount / 100}
       </>
     );
   };
@@ -151,7 +181,11 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
       </div>
       <div className="basket-promocode">
         <div className="basket-promocode__action">
+          <div className={`basket-promocode__action_info ${inputInfo.isClass ? "" : "invisible"}`}>
+            {inputInfo.info}
+          </div>
           <input
+            onClick={handlerClickRemoveInfo}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="enter promocode"
             className="basket-promocode__action_input"
