@@ -1,6 +1,7 @@
 import { ICustomerInfoForSingUp, ICustomerInfoForLogin, ICustomerStorage } from "./interfaces";
 import { IUser } from "../components/UserProfile/interfaces";
 import { region, projectKey, tokenGenerate, changeToken } from "./tokenGenerate";
+import { removeAllDiscountCode } from "./discount";
 
 const path = `https://api.${region}.commercetools.com/${projectKey}`;
 
@@ -22,6 +23,7 @@ export const signUpCustomer = async (body: ICustomerInfoForSingUp): Promise<bool
 
     if (!response.ok) return false;
 
+    localStorage.setItem("new_customer", "true");
     const customer: IUser = (await response.json()).customer;
     await changeToken({ email: body.email, password: body.password });
 
@@ -90,8 +92,9 @@ export const loginCustomer = async (body: ICustomerInfoForLogin): Promise<boolea
 };
 
 export const logoutCustomer = async (): Promise<void> => {
+  await removeAllDiscountCode();
   localStorage.removeItem("token");
   localStorage.removeItem("customer_info");
-  localStorage.removeItem("cart_info");
+  localStorage.removeItem("new_customer");
   await tokenGenerate();
 };
