@@ -40,10 +40,10 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     fetchCartItemCount();
-    const intervalId = setInterval(() => {
-      fetchCartItemCount();
-    }, 500);
-    return () => clearInterval(intervalId);
+    // const intervalId = setInterval(() => {
+    fetchCartItemCount();
+    // }, 500);
+    // return () => clearInterval(intervalId);
   }, []);
 
   return (
