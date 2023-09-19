@@ -53,3 +53,17 @@
   background-size: cover;
   height: 7vh;
 }
+
+@media (max-aspect-ratio: 20/27) {
+  .category-sort {
+    gap: 0.5vh;
+  }
+
+  .catalog-categories {
+    a {
+      p {
+        display: none;
+      }
+    }
+  }
+}

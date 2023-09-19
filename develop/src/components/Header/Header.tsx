@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import UserPopup from "../UserPopup/UserPopup";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
-import { getActiveCart } from "../../client_Api/carts";
+import { getCart } from "../../client_Api/carts";
 
 const Header: React.FC = () => {
   const [isUserPopupVisible, setIsUserPopupVisible] = useState(false);
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
   }));
 
   const fetchCartItemCount = async () => {
-    const cart = await getActiveCart();
+    const cart = await getCart();
     if (cart) {
       setCartItemCount(cart.totalLineItemQuantity);
     }

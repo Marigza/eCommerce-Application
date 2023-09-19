@@ -143,7 +143,7 @@ const Filter: React.FC<FilterProps> = ({ onSearch }) => {
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <Button className="filter-menu" onClick={toggleDrawer(anchor, true)}>
-            <FilterAltRoundedIcon style={{ fontSize: "5vh" }} />
+            <FilterAltRoundedIcon style={{ fontSize: "4vh" }} />
           </Button>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
