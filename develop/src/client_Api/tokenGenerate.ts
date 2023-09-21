@@ -48,7 +48,7 @@ export const tokenGenerate = async (): Promise<string | null> => {
   ) {
     localStorage.removeItem("token");
     localStorage.removeItem("new_customer");
-    // Log Out !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     return null;
   }
 

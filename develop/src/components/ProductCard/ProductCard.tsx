@@ -6,10 +6,6 @@ import { getActiveCart, addProductToCart, changeQuantityInCart } from "../../cli
 
 import "./ProductCard.scss";
 
-type ProductType = {
-  product: IProductDetails;
-};
-
 const ProductCard: React.FC<{
   product: IProductDetails;
   state: boolean;

@@ -204,10 +204,6 @@ export interface IProductDetails {
   lastVariantId: number;
 }
 
-// export type ProductType = {
-//   product: IProduct;
-// };
-
 export interface IBodyOfChangeUserAddres {
   city: string;
   country: string;
