@@ -50,7 +50,7 @@ interface ICurrency {
   "en-US": string;
 }
 
-interface IProduct {
+export interface IProduct {
   id: string;
   version: number;
   productType: ITypeIdOfProduct;
@@ -203,10 +203,6 @@ export interface IProductDetails {
   priceMode: string;
   lastVariantId: number;
 }
-
-export type ProductType = {
-  product: IProduct;
-};
 
 export interface IBodyOfChangeUserAddres {
   city: string;

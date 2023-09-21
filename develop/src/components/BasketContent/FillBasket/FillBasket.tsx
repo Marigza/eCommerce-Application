@@ -3,12 +3,12 @@ import { changeQuantityInCart, cleanCart, getActiveCart } from "../../../client_
 import { applyDiscountCode, removeOneDiscountCode } from "../../../client_Api/discount";
 import { ICart, IDiscountCodeInCart, IproductInCart } from "../../../client_Api/interfaces";
 
-const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
+const FillBasket: React.FC<{ cart: ICart; changeState: () => void }> = (props) => {
   const handlerClick = async (id: string, flag: number) => {
     if (!id) {
-      await cleanCart().then(() => props.count());
+      await cleanCart().then(() => props.changeState());
     }
-    await changeQuantityInCart(id, flag).then(() => props.count());
+    await changeQuantityInCart(id, flag).then(() => props.changeState());
   };
 
   const [inputValue, setInputValue] = useState("");
@@ -43,7 +43,7 @@ const FillBasket: React.FC<{ cart: ICart; count: () => void }> = (props) => {
       });
     }
 
-    props.count();
+    props.changeState();
   };
 
   const handlerClickAddPromocode = async (): Promise<void> => {

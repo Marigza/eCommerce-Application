@@ -8,7 +8,7 @@ const PromoBlock: React.FC = () => {
           <span>Just</span> for new customers!
         </div>
         <div className="promo__condition">
-          Register now and take discont 10% for all in cart by promocode
+          Register now and take discont 5% for all in cart by promocode
         </div>
         <div className="promo__text">newcustomer</div>
       </div>

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import { getActiveCart, addProductToCart } from "../../client_Api/carts";
-import { ProductType, ICart } from "../../client_Api/interfaces";
+import { IProduct, ICart } from "../../client_Api/interfaces";
 import { Rating } from "@mui/material";
 
 import "./CatalogProduct.scss";
@@ -13,17 +13,13 @@ const writeIdProduct = (ID: string): string => {
   return ID;
 };
 
-const CatalogProduct: React.FC<ProductType> = (props) => {
+const CatalogProduct: React.FC<{
+  product: IProduct;
+  key: string;
+  state: boolean;
+  changeState: () => void;
+}> = (props) => {
   const [Cart, setCart] = useState<ICart>();
-
-  const IsInCart = useCallback(
-    (item: string) => {
-      const itemsID = Cart?.lineItems.map((elem) => elem.productId);
-      const isInclude = itemsID?.includes(item);
-      return isInclude;
-    },
-    [Cart?.lineItems]
-  );
 
   const keyFirstChar = props.product.key.charAt(0);
 
@@ -42,6 +38,16 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
 
   const toPath = getPath(keyFirstChar);
 
+  const IsInCart = (item: string) => {
+    const itemsID = Cart?.lineItems.map((elem) => elem.productId);
+    const isInclude = itemsID?.includes(item);
+    return isInclude;
+  };
+
+  const handleClick = async () => {
+    await addProductToCart(props.product.id).then(() => props.changeState());
+  };
+
   useEffect(() => {
     async function fetchData() {
       const response = await getActiveCart();
@@ -50,7 +56,7 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
     }
 
     fetchData();
-  }, [IsInCart]);
+  }, [props.state]);
 
   return (
     <div className="product__wpapper">
@@ -112,12 +118,7 @@ const CatalogProduct: React.FC<ProductType> = (props) => {
       </Link>
       <div>
         {!IsInCart(props.product.id) ? (
-          <div
-            className="buy-now"
-            onClick={() => {
-              addProductToCart(props.product.id);
-            }}
-          >
+          <div className="buy-now" onClick={() => handleClick()}>
             <AddShoppingCartOutlinedIcon style={{ fontSize: "4vh" }} />
           </div>
         ) : (

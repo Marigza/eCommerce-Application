@@ -37,7 +37,8 @@ export function useChioseProduct() {
     if (getIDProduct) {
       getProduct(getIDProduct);
     }
-  }, [getIDProduct]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { ProductItem };
 }

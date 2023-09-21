@@ -6,9 +6,11 @@ import { getActiveCart } from "../../client_Api/carts";
 
 import "./BasketContent.scss";
 
-const BasketContent: React.FC = () => {
+const BasketContent: React.FC<{
+  state: boolean;
+  changeState: () => void;
+}> = (props) => {
   const [Cart, setCart] = useState<ICart>();
-  const [count, setCount] = useState(0);
 
   const fetchData = async () => {
     const response = await getActiveCart();
@@ -16,18 +18,14 @@ const BasketContent: React.FC = () => {
     setCart(response);
   };
 
-  const countIncrease = () => {
-    setCount(count + 1);
-  };
-
   useEffect(() => {
     fetchData().then(() => {});
-  }, [count]);
+  }, [props.state]);
 
   return (
     <main className="BasketContent">
       <h2 className="basket_header">Basket</h2>
-      {Cart?.lineItems.length && <FillBasket cart={Cart} count={countIncrease} />}
+      {Cart?.lineItems.length && <FillBasket cart={Cart} changeState={props.changeState} />}
       {!Cart?.lineItems.length && <EmptyBasket />}
     </main>
   );
