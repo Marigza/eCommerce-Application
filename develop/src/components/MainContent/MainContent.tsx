@@ -5,7 +5,10 @@ import { PromoBlock } from "../../components/PromoBlock";
 import CatalogProduct from "../CatalogProduct/CatalogProduct";
 import "./MainContent.scss";
 
-const MainContent: React.FC = () => {
+const MainContent: React.FC<{
+  state: boolean;
+  changeState: () => void;
+}> = (props) => {
   const [Products, setProducts] = useState<IProductResponse>({
     count: 0,
     limit: 0,
@@ -21,14 +24,19 @@ const MainContent: React.FC = () => {
     }
 
     fetchData();
-  }, []);
+  }, [props.state]);
 
   return (
     <main className="mainContent">
       <PromoBlock />
       <div className="content__block">
         {Products.results.map((product) => (
-          <CatalogProduct product={product} key={product.id} />
+          <CatalogProduct
+            product={product}
+            key={product.id}
+            state={props.state}
+            changeState={props.changeState}
+          />
         ))}
       </div>
     </main>

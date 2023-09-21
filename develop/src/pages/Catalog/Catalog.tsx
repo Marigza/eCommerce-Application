@@ -11,7 +11,10 @@ import { IProductResponse } from "../../client_Api/interfaces";
 import { Sorting } from "../../components/Sorting";
 import Pagination from "@mui/material/Pagination/Pagination";
 
-const Catalog: React.FC = () => {
+const Catalog: React.FC<{
+  state: boolean;
+  changeState: () => void;
+}> = (props) => {
   const location = useLocation();
   const category = {
     phones: "9951a67d-1629-4606-8896-6b22232f09c9",
@@ -99,7 +102,12 @@ const Catalog: React.FC = () => {
             <div className="catalog-wrapper">
               <div className="catalog-products">
                 {Products.results.map((product) => (
-                  <Product product={product} key={product.id} />
+                  <Product
+                    product={product}
+                    key={product.id}
+                    state={props.state}
+                    changeState={props.changeState}
+                  />
                 ))}
               </div>
               <Pagination

@@ -7,7 +7,10 @@ import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import { getActiveCart } from "../../client_Api/carts";
 
-const Header: React.FC = () => {
+const Header: React.FC<{
+  state: boolean;
+  changeState: () => void;
+}> = (props) => {
   const [isUserPopupVisible, setIsUserPopupVisible] = useState(false);
   const [cartItemCount, setCartItemCount] = useState<number | null>(null);
 
@@ -40,7 +43,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     fetchCartItemCount();
-  }, []);
+  }, [props.state]);
 
   return (
     <>

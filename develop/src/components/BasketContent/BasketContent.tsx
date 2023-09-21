@@ -6,7 +6,10 @@ import { getActiveCart } from "../../client_Api/carts";
 
 import "./BasketContent.scss";
 
-const BasketContent: React.FC = () => {
+const BasketContent: React.FC<{
+  state: boolean;
+  changeState: () => void;
+}> = (props) => {
   const [Cart, setCart] = useState<ICart>();
   const [count, setCount] = useState(0);
 
