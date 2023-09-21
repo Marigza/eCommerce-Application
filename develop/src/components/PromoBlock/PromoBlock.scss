@@ -1,0 +1,44 @@
+.promo__block {
+  display: flex;
+  gap: 4vh;
+  font-size: 4vh;
+}
+
+.promo__item {
+  flex-grow: 1;
+  text-align: center;
+  background-color: hsl(0, 0%, 96%);
+  border-radius: 4vh;
+  padding: 3vh;
+}
+
+.promo__header {
+  font-weight: 700;
+  font-style: italic;
+  margin-bottom: 2vh;
+
+  & > span {
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 900;
+  }
+}
+
+.promo__text {
+  padding: 2vh;
+  width: fit-content;
+  background-color: white;
+  border-radius: 2vh;
+  margin: 3vh auto 2vh auto;
+}
+
+.promo__undertext {
+  font-size: 2vh;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .promo__block {
+    flex-direction: column;
+  }
+}

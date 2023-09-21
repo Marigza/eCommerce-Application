@@ -1,0 +1,244 @@
+.about-page {
+  margin: 0 auto;
+
+  h1 {
+    text-align: center;
+    font-size: 5vh;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 2vh;
+  }
+
+  &_discription {
+    font-size: 3vh;
+    text-align: center;
+    width: 60vw;
+    margin: 0 auto;
+    margin-bottom: 2vh;
+
+    p {
+      a {
+        position: relative;
+        color: black;
+        font-weight: bolder;
+      }
+
+      a:not(:last-child):before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 0.3vh;
+        border-radius: 0.1vh;
+        background-color: #18272f;
+        bottom: 0.2vh;
+        left: 0;
+        transform-origin: right;
+        transform: scaleX(0);
+        transition: transform 0.2s ease-in-out;
+      }
+
+      a:hover::before {
+        transform-origin: left;
+        transform: scaleX(1);
+      }
+    }
+
+    div {
+      margin: 0 auto;
+    }
+  }
+
+  &_team-cards {
+    border-radius: 4vh;
+
+    &__card {
+      width: 100%;
+      height: 85vh;
+      background: hsla(0, 0%, 96%);
+      border-radius: 4vh;
+      display: flex;
+      margin-bottom: 4vh;
+
+      &:not(:nth-last-child(2)) {
+        flex-direction: row-reverse;
+
+        .card-image {
+          border-radius: 0 4vh 4vh 0;
+        }
+
+        .card-discription {
+          text-align: right;
+        }
+
+        .card-links {
+          flex-direction: row-reverse;
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 2vh;
+      }
+
+      .card-image {
+        width: 35%;
+        height: 100%;
+        border-radius: 4vh 0vh 0 4vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-color: black;
+      }
+
+      .card-discription {
+        width: 65%;
+        padding: 4vh;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0;
+
+        p {
+          line-height: 2.5vh;
+        }
+      }
+
+      .card-links {
+        margin-top: auto;
+        margin-bottom: 0;
+        display: flex;
+        gap: 2vh;
+        flex-direction: row;
+
+        a {
+          color: rgb(66, 66, 66);
+        }
+
+        a:hover {
+          color: black;
+        }
+      }
+
+      div {
+        margin-bottom: 2vh;
+      }
+
+      h2 {
+        font-size: 5vh;
+        margin-bottom: 1vh;
+      }
+
+      h3 {
+        font-size: 3.5vh;
+        color: rgb(121, 121, 121);
+        margin-bottom: 2vh;
+      }
+
+      h4 {
+        margin-top: 3vh;
+        font-size: 3.5vh;
+        margin-bottom: 1vh;
+      }
+
+      ul {
+        font-size: 2.5vh;
+
+        li {
+          margin-bottom: 1vh;
+        }
+
+        li:last-child {
+          margin-bottom: 5vh;
+        }
+      }
+
+      p {
+        font-size: 2.5vh;
+      }
+    }
+  }
+}
+
+.maksim {
+  background-image: url(../../assets/images/jpg/Maksim.jpg);
+}
+
+.marina {
+  background-image: url(../../assets/images/jpg/Marina.jpg);
+}
+
+.mikhail {
+  background-image: url(../../assets/images/jpg/Mikhail.jpg);
+}
+
+.rs {
+  background-image: url(../../assets/images/svg/rs_school.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 15vh;
+  width: 42vh;
+}
+
+@media (max-aspect-ratio: 13/10) {
+  .about-page_team-cards {
+    &__card,
+    &__card:not(:nth-last-child(2)) {
+      flex-direction: column;
+      height: 170vh;
+      font-size: 2vh;
+
+      .card-links {
+        justify-content: space-around;
+        flex-direction: row;
+      }
+
+      .card-image {
+        border-radius: 4vh 4vh 0 0;
+        width: 100%;
+        margin-bottom: 0;
+      }
+
+      .card-discription {
+        width: 100%;
+        text-align: justify;
+      }
+    }
+  }
+}
+
+@media (max-aspect-ratio: 25/38) {
+  .about-page {
+    h1 {
+      font-size: 3.5vh;
+    }
+
+    &_discription {
+      font-size: 2.5vh;
+      width: 80vw;
+    }
+  }
+
+  main {
+    width: 90vw;
+  }
+
+  .rs {
+    height: 10vh;
+    width: 28vh;
+  }
+
+  .about-page_team-cards__card h2 {
+    font-size: 4vh;
+  }
+
+  .about-page_team-cards__card h3 {
+    font-size: 3vh;
+  }
+
+  .about-page_team-cards__card h4 {
+    font-size: 3vh;
+  }
+
+  .about-page_team-cards__card .card-discription p,
+  .about-page_team-cards__card ul {
+    font-size: 2vh;
+  }
+}

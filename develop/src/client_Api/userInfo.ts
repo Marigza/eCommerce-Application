@@ -2,6 +2,8 @@ import { region, projectKey, tokenGenerate } from "./tokenGenerate";
 import { IUser } from "../components/UserProfile/interfaces";
 import { IBodyOfChangeUserAddres } from "./interfaces";
 
+const path = `https://api.${region}.commercetools.com/${projectKey}/customers`;
+
 export const getUserInfo = async (): Promise<IUser | null> => {
   const customerStorage = <string | null>localStorage.getItem("customer_info");
   const token: string | null = await tokenGenerate();
@@ -10,10 +12,10 @@ export const getUserInfo = async (): Promise<IUser | null> => {
 
   const ID: string = JSON.parse(customerStorage).ID;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${ID}`;
+  const url = `${path}/${ID}`;
 
   try {
-    const response = await fetch(url, {
+    const response: Response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -28,11 +30,11 @@ export const getUserInfo = async (): Promise<IUser | null> => {
 };
 
 export const changeEmailOfUser = async (body: { email: string }): Promise<void> => {
-  const user = await getUserInfo();
+  const user: IUser | null = await getUserInfo();
   const token: string | null = await tokenGenerate();
   if (!token || !user) return;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+  const url = `${path}/${user.id}`;
 
   try {
     await Promise.all([
@@ -58,11 +60,11 @@ export const changeDataOfUser = async (body: {
   lastName: string;
   dateOfBirth: string;
 }): Promise<void> => {
-  const user = await getUserInfo();
+  const user: IUser | null = await getUserInfo();
   const token: string | null = await tokenGenerate();
   if (!token || !user) return;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+  const url = `${path}/${user.id}`;
 
   try {
     await Promise.all([
@@ -88,15 +90,15 @@ export const changeDataOfUser = async (body: {
 };
 
 export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres): Promise<void> => {
-  const user = await getUserInfo();
+  const user: IUser | null = await getUserInfo();
   const token: string | null = await tokenGenerate();
 
   if (!token || !user) return;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+  const url = `${path}/${user.id}`;
 
   try {
-    const response = await fetch(url, {
+    const response: Response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -121,7 +123,7 @@ export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres): Promis
 
     if (!response.ok) return;
 
-    const result = await response.json();
+    const result: IUser = await response.json();
 
     if (result.addresses && result.version && result.addresses[result.addresses.length - 1].id) {
       {
@@ -151,14 +153,14 @@ export const changeAddressOfUser = async (body: IBodyOfChangeUserAddres): Promis
 };
 
 export const addAddressOfUser = async (body: IBodyOfChangeUserAddres): Promise<void> => {
-  const user = await getUserInfo();
+  const user: IUser | null = await getUserInfo();
   const token: string | null = await tokenGenerate();
 
   if (!token || !user) return;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+  const url = `${path}/${user.id}`;
   try {
-    const response = await fetch(url, {
+    const response: Response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -182,7 +184,7 @@ export const addAddressOfUser = async (body: IBodyOfChangeUserAddres): Promise<v
 
     if (!response.ok) return;
 
-    const result = await response.json();
+    const result: IUser = await response.json();
 
     if (result.addresses && result.version && result.addresses[result.addresses.length - 1].id) {
       {
@@ -212,11 +214,11 @@ export const addAddressOfUser = async (body: IBodyOfChangeUserAddres): Promise<v
 };
 
 export const removeAddressOfUser = async (id: string): Promise<void> => {
-  const user = await getUserInfo();
+  const user: IUser | null = await getUserInfo();
   const token: string | null = await tokenGenerate();
   if (!token || !user) return;
 
-  const url = `https://api.${region}.commercetools.com/${projectKey}/customers/${user.id}`;
+  const url = `${path}/${user.id}`;
 
   try {
     await Promise.all([

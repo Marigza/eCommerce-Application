@@ -32,10 +32,18 @@
     border-bottom: 0.2vh solid black;
     padding-bottom: 1.5vh;
   }
+  .user-popup__link:nth-last-child(5) {
+    border-bottom: 0.2vh solid black;
+    padding-bottom: 1.5vh;
+  }
 
   &__link:first-child {
     border-radius: 3vh 3vh 0vh 0vh;
   }
+}
+
+.one-to-one {
+  display: none;
 }
 
 @keyframes popupUp {
@@ -46,5 +54,17 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@media (max-aspect-ratio: 32/45) {
+  .user-popup {
+    right: 2vh;
+  }
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .one-to-one {
+    display: block;
   }
 }

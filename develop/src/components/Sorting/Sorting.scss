@@ -1,8 +1,4 @@
 .category-sort .MuiFormControl-root {
-  flex: 2;
-  max-width: 20vh;
-  min-width: 15vh;
-
   fieldset {
     border: none;
   }
@@ -12,7 +8,6 @@
   }
 }
 .category-sort .MuiFormControl-root > div {
-  padding: 2vh;
   font-size: 3vh;
   color: black;
   height: 100%;

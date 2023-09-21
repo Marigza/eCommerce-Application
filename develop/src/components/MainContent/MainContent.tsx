@@ -1,11 +1,21 @@
 import { useState, useEffect } from "react";
-import { IProduct } from "../../client_Api/interfaces";
+import { IProductResponse } from "../../client_Api/interfaces";
 import { getProductList } from "../../client_Api/productList";
-import "./MainContent.scss";
+import { PromoBlock } from "../../components/PromoBlock";
 import CatalogProduct from "../CatalogProduct/CatalogProduct";
+import "./MainContent.scss";
 
-const MainContent: React.FC = () => {
-  const [Products, setProducts] = useState<IProduct[]>([]);
+const MainContent: React.FC<{
+  state: boolean;
+  changeState: () => void;
+}> = (props) => {
+  const [Products, setProducts] = useState<IProductResponse>({
+    count: 0,
+    limit: 0,
+    offset: 0,
+    total: 0,
+    results: [],
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -14,13 +24,19 @@ const MainContent: React.FC = () => {
     }
 
     fetchData();
-  }, []);
+  }, [props.state]);
 
   return (
     <main className="mainContent">
+      <PromoBlock />
       <div className="content__block">
-        {Products.map((product) => (
-          <CatalogProduct product={product} key={product.id} />
+        {Products.results.map((product) => (
+          <CatalogProduct
+            product={product}
+            key={product.id}
+            state={props.state}
+            changeState={props.changeState}
+          />
         ))}
       </div>
     </main>

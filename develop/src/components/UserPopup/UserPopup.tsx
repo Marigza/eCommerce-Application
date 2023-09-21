@@ -3,6 +3,7 @@ import "./UserPopup.scss";
 import { Link } from "react-router-dom";
 
 import { useUserContext } from "../../context/UserContext";
+import { logoutCustomer } from "../../client_Api/authentication";
 
 interface IUserPopupProps {
   onClose: () => void;
@@ -11,13 +12,14 @@ interface IUserPopupProps {
 const UserPopup: React.FC<IUserPopupProps> = ({ onClose }) => {
   const { userData, setUserData } = useUserContext();
 
-  const handleLogout = (): void => {
+  const handleLogout = async (): Promise<void> => {
     setUserData({
       email: "",
       password: "",
       incorrect: false,
       logged: false,
     });
+    await logoutCustomer();
     onClose();
   };
 
@@ -44,6 +46,12 @@ const UserPopup: React.FC<IUserPopupProps> = ({ onClose }) => {
             </Link>
           </>
         )}
+        <Link to="catalog" className="user-popup__link one-to-one" onClick={onClose}>
+          Catalog
+        </Link>
+        <Link to="about" className="user-popup__link one-to-one" onClick={onClose}>
+          About us
+        </Link>
         <Link to="support" className="user-popup__link" onClick={onClose}>
           Сontact with support
         </Link>

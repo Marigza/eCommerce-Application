@@ -19,7 +19,7 @@ export const getProductList = async (endPath: string) => {
 
     if (!products.results) return null;
 
-    return products.results;
+    return products;
   } catch (error) {
     return null;
   }

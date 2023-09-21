@@ -78,6 +78,11 @@
     min-width: 4vh;
     min-height: 4vh;
     cursor: pointer;
+
+    &::after {
+      content: "";
+      position: absolute;
+    }
   }
 }
 
@@ -163,9 +168,27 @@
   gap: 10px;
 }
 
-@media (max-aspect-ratio: 32/45) {
-  .header-logo {
-    background-image: url(../../assets/images/png/short_logo.png);
-    min-width: 10vh;
+@media (max-aspect-ratio: 1/1) {
+  .header-links {
+    nav {
+      display: none;
+    }
+  }
+
+  @media (max-aspect-ratio: 32/45) {
+    .header {
+      padding: 0 2vh 0 2vh;
+    }
+
+    .user-popup {
+      right: 2vh;
+    }
+  }
+
+  @media (max-aspect-ratio: 43/70) {
+    .header-logo {
+      background-image: url(../../assets/images/png/short_logo.png);
+      min-width: 10vh;
+    }
   }
 }

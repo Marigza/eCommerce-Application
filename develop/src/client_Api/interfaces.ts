@@ -1,7 +1,14 @@
 export interface IToken {
   access_token: string;
+  token_type: string;
   expires_in: number;
-  scope: string[];
+  refresh_token: string;
+  scope: string;
+}
+
+export interface ITokenStorage {
+  access_token: string;
+  creation_time: number;
   token_type: string;
 }
 
@@ -20,11 +27,6 @@ export interface ICustomerInfoForSingUp extends ICustomerInfoForLogin {
     postalCode: string;
     city: string;
   }[];
-}
-
-export interface ITokenStorage {
-  access_token: string;
-  creation_time: number;
 }
 
 export interface ICustomerStorage {
@@ -104,7 +106,15 @@ export interface IProduct {
   lastModifiedAt: string;
 }
 
-export interface IProductGet {
+export interface IProductResponse {
+  count: number;
+  limit: number;
+  offset: number;
+  total: number;
+  results: IProduct[];
+}
+
+export interface IProductDetails {
   id: string;
   version: number;
   versionModifiedAt: string;
@@ -194,10 +204,6 @@ export interface IProductGet {
   lastVariantId: number;
 }
 
-export type ProductType = {
-  product: IProduct;
-};
-
 export interface IBodyOfChangeUserAddres {
   city: string;
   country: string;
@@ -206,4 +212,99 @@ export interface IBodyOfChangeUserAddres {
   id: string;
   type: string;
   flag: boolean;
+}
+
+export interface IproductInCart {
+  addedAt: string;
+  discountedPricePerQuantity: string[];
+  id: string;
+  lastModifiedAt: string;
+  lineItemMode: string;
+  name: ICurrency;
+  perMethodTaxRate: string[];
+  price: {
+    discounted: {
+      discount: ITypeIdOfProduct;
+      value: IValuePricesOfProduct;
+    };
+    value: IValuePricesOfProduct;
+    id: string;
+  };
+  priceMode: string;
+  productId: string;
+  productKey: string;
+  productSlug: ICurrency;
+  productType: { id: string; typeId: string; version: number };
+  quantity: number;
+  state: {
+    quantity: number;
+    state: ITypeIdOfProduct;
+  }[];
+  taxedPricePortions: string[];
+  totalPrice: IValuePricesOfProduct;
+  variant: {
+    assets: string[];
+    attributes: { name: string; value: string }[];
+    id: number;
+    images: {
+      dimensions: { w: number; h: number };
+      url: string;
+    }[];
+    key: string;
+    prices: {
+      discounted: {
+        discount: ITypeIdOfProduct;
+        value: IValuePricesOfProduct;
+      };
+      value: IValuePricesOfProduct;
+      id: string;
+    }[];
+    sku: string;
+  };
+}
+
+export interface IDiscountCodeInCart {
+  discountCode: {
+    id: string;
+    typeId: string;
+  };
+  state: string;
+}
+
+export interface ICart {
+  anonymousId: string;
+  cartState: string;
+  createdAt: string;
+  createdBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+    anonymousId: string;
+  };
+  customLineItems: string[];
+  deleteDaysAfterLastModification: number;
+  directDiscounts: string[];
+  discountCodes: IDiscountCodeInCart[];
+  id: string;
+  inventoryMode: string;
+  itemShippingAddresses: string[];
+  lastMessageSequenceNumber: number;
+  lastModifiedAt: string;
+  lastModifiedBy: {
+    clientId: string;
+    isPlatformClient: boolean;
+    anonymousId: string;
+  };
+  lineItems: IproductInCart[];
+  origin: string;
+  refusedGifts: string[];
+  shipping: string[];
+  shippingMode: string;
+  taxCalculationMode: string;
+  taxMode: string;
+  taxRoundingMode: string;
+  totalLineItemQuantity: number;
+  totalPrice: IValuePricesOfProduct;
+  type: string;
+  version: number;
+  versionModifiedAt: string;
 }
